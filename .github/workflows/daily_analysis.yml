@@ -37,7 +37,6 @@ jobs:
       - name: 检出代码
         uses: actions/checkout@v4
         with:
-          # 关键：获取全部历史以确保 push 成功
           fetch-depth: 0
 
       - name: 设置 Python 环境
@@ -103,43 +102,6 @@ jobs:
             FORCE_RUN_ARG="--force-run"
           fi
 
-          # 核心执行指令
+          # 执行分析命令
           if [ "$MODE" = "market-only" ]; then
-            python main.py --market-review $FORCE_RUN_ARG
-          elif [ "$MODE" = "stocks-only" ]; then
-            python main.py --no-market-review $FORCE_RUN_ARG
-          else
-            python main.py $FORCE_RUN_ARG
-          fi
-
-      - name: 提交报告到仓库
-        if: always()
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          
-          # 确保不因目录不存在报错
-          mkdir -p reports logs
-          
-          # 暂存所有生成的报告和日志
-          git add reports/* logs/* || true
-          
-          # 检查是否有内容需要提交
-          if git diff --staged --quiet; then
-            echo "没有检测到新生成的报告文件，跳过推送。"
-          else
-            git commit -m "📊 自动生成股票分析报告: $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')"
-            # 使用 pull --rebase 避免多人操作导致的冲突
-            git pull --rebase origin ${{ github.ref_name }}
-            git push origin ${{ github.ref_name }}
-            echo "✅ 报告已成功推送到仓库 reports/ 文件夹"
-          fi
-
-      - name: 故障归档（Artifacts）
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: error-logs-${{ github.run_number }}
-          path: |
-            logs/
-          retention-days: 5
+            python main.py --market-
