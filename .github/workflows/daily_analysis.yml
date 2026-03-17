@@ -23,10 +23,14 @@ on:
         default: false
         type: boolean
 
-# 并发控制：同一时间只运行一个分析任务
+# 并发控制
 concurrency:
   group: stock-analysis
   cancel-in-progress: false
+
+env:
+  # 提前启用 Node.js 24，消除过时警告
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   analyze:
@@ -35,12 +39,12 @@ jobs:
     
     steps:
       - name: 检出代码
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5  # 升级到 v5
         with:
           fetch-depth: 0
 
       - name: 设置 Python 环境
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6  # 升级到 v6
         with:
           python-version: '3.11'
           cache: 'pip'
@@ -78,7 +82,7 @@ jobs:
           # 通知渠道
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
           WECHAT_WEBHOOK_URL: ${{ secrets.WECHAT_WEBHOOK_URL }}
-          # 自选股配置
+          # 业务配置
           STOCK_LIST: ${{ vars.STOCK_LIST || secrets.STOCK_LIST || '600519' }}
           MARKET_REVIEW_REGION: ${{ vars.MARKET_REVIEW_REGION || secrets.MARKET_REVIEW_REGION || 'cn' }}
           REPORT_TYPE: ${{ vars.REPORT_TYPE || secrets.REPORT_TYPE || 'simple' }}
@@ -90,7 +94,6 @@ jobs:
           MAX_WORKERS: '1'
 
         run: |
-          # 写入 LiteLLM 配置
           if [ -n "$LITELLM_CONFIG_YAML" ] && [ -n "$LITELLM_CONFIG" ]; then
             mkdir -p "$(dirname "$LITELLM_CONFIG")"
             echo "$LITELLM_CONFIG_YAML" > "$LITELLM_CONFIG"
@@ -102,6 +105,38 @@ jobs:
             FORCE_RUN_ARG="--force-run"
           fi
 
-          # 执行分析命令
           if [ "$MODE" = "market-only" ]; then
-            python main.py --market-
+            python main.py --market-review $FORCE_RUN_ARG
+          elif [ "$MODE" = "stocks-only" ]; then
+            python main.py --no-market-review $FORCE_RUN_ARG
+          else
+            python main.py $FORCE_RUN_ARG
+          fi
+
+      - name: 强制提交报告到仓库
+        if: always()
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          mkdir -p reports logs
+          
+          # 强制添加，无视 .gitignore
+          git add -f reports/* logs/* || true
+          
+          if git diff --staged --quiet; then
+            echo "⚠️ 没有检测到新生成的报告文件。"
+          else
+            git commit -m "📊 自动生成股票分析报告: $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')"
+            git pull --rebase origin ${{ github.ref_name }}
+            git push origin ${{ github.ref_name }}
+            echo "✅ 成功！报告已强制推送到仓库 reports/ 文件夹。"
+          fi
+
+      - name: 故障归档（Artifacts）
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: error-logs-${{ github.run_number }}
+          path: logs/
+          retention-days: 5
