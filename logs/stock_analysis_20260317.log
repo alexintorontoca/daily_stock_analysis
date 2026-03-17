@@ -1,0 +1,547 @@
+2026-03-17 23:08:51 | INFO     | src/logging_config.py:153 | 日志系统初始化完成，日志目录: logs
+2026-03-17 23:08:51 | INFO     | src/logging_config.py:154 | 常规日志: logs/stock_analysis_20260317.log
+2026-03-17 23:08:51 | INFO     | src/logging_config.py:155 | 调试日志: logs/stock_analysis_debug_20260317.log
+2026-03-17 23:08:51 | INFO     | main.py:526 | ============================================================
+2026-03-17 23:08:51 | INFO     | main.py:527 | A股自选股智能分析系统 启动
+2026-03-17 23:08:51 | INFO     | main.py:528 | 运行时间: 2026-03-17 23:08:51
+2026-03-17 23:08:51 | INFO     | main.py:529 | ============================================================
+2026-03-17 23:08:51 | WARNING  | main.py:534 | 未配置 Tushare Token，将使用其他数据源
+2026-03-17 23:08:51 | WARNING  | main.py:534 | LITELLM_MODEL 已配置，但当前渠道/配置文件中不存在该模型。 当前可用模型：gemini-pro, groq-llama, deepseek-chat
+2026-03-17 23:08:51 | WARNING  | main.py:534 | LITELLM_FALLBACK_MODELS 中包含未在当前渠道声明的模型：gemini/gemini-2.5-flash
+2026-03-17 23:08:51 | WARNING  | main.py:534 | 未配置通知渠道，将不发送推送通知
+2026-03-17 23:08:52 | INFO     | src/storage.py:675 | 数据库初始化完成: sqlite:////home/runner/work/daily_stock_analysis/daily_stock_analysis/data/stock_analysis.db
+2026-03-17 23:08:52 | WARNING  | data_provider/tushare_fetcher.py:124 | Tushare Token 未配置，此数据源不可用
+2026-03-17 23:08:52 | INFO     | data_provider/base.py:706 | 已初始化 6 个数据源（按优先级）: EfinanceFetcher(P0), AkshareFetcher(P1), TushareFetcher(P2), PytdxFetcher(P2), BaostockFetcher(P3), YfinanceFetcher(P4)
+2026-03-17 23:08:52 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/router.py:760 | Routing strategy: simple-shuffle
+2026-03-17 23:08:52 | INFO     | src/analyzer.py:731 | Analyzer LLM: Router initialized from channels/YAML — 3 deployment(s), models: ['gemini/gemini-1.5-pro', 'groq/llama-3.3-70b-versatile', 'deepseek/deepseek-chat']
+2026-03-17 23:08:52 | WARNING  | src/notification.py:155 | 未配置有效的通知渠道，将不发送推送通知
+2026-03-17 23:08:52 | INFO     | src/search_service.py:1398 | 已配置 Bocha 搜索，共 1 个 API Key
+2026-03-17 23:08:52 | INFO     | src/search_service.py:1432 | 新闻时效策略已启用: profile=short, profile_days=3, NEWS_MAX_AGE_DAYS=3, effective_window=3
+2026-03-17 23:08:52 | INFO     | src/core/pipeline.py:97 | 调度器初始化完成，最大并发数: 1
+2026-03-17 23:08:52 | INFO     | src/core/pipeline.py:98 | 已启用趋势分析器 (MA5>MA10>MA20 多头判断)
+2026-03-17 23:08:52 | INFO     | src/core/pipeline.py:101 | 实时行情已启用 (优先级: tencent,akshare_sina,efinance,akshare_em)
+2026-03-17 23:08:52 | INFO     | src/core/pipeline.py:105 | 筹码分布分析已启用
+2026-03-17 23:08:52 | INFO     | src/core/pipeline.py:109 | 搜索服务已启用 (Tavily/SerpAPI)
+2026-03-17 23:08:52 | INFO     | src/core/pipeline.py:1120 | ===== 开始分析 3 只股票 =====
+2026-03-17 23:08:52 | INFO     | src/core/pipeline.py:1121 | 股票列表: PM, ENB, 688249
+2026-03-17 23:08:52 | INFO     | src/core/pipeline.py:1122 | 并发数: 1, 模式: 完整分析
+2026-03-17 23:08:52 | WARNING  | data_provider/tushare_fetcher.py:487 | Tushare API 未初始化，无法获取股票名称
+2026-03-17 23:09:27 | WARNING  | data_provider/pytdx_fetcher.py:403 | Pytdx 获取股票名称失败 PM: Pytdx 无法连接任何服务器
+2026-03-17 23:09:27 | WARNING  | data_provider/baostock_fetcher.py:165 | 无法确定股票 PM 的市场，默认使用深市
+2026-03-17 23:09:28 | WARNING  | data_provider/base.py:1240 | [股票名称] 所有数据源都无法获取 PM 的名称
+2026-03-17 23:09:28 | WARNING  | data_provider/tushare_fetcher.py:487 | Tushare API 未初始化，无法获取股票名称
+2026-03-17 23:10:04 | WARNING  | data_provider/pytdx_fetcher.py:403 | Pytdx 获取股票名称失败 ENB: Pytdx 无法连接任何服务器
+2026-03-17 23:10:04 | WARNING  | data_provider/baostock_fetcher.py:165 | 无法确定股票 ENB 的市场，默认使用深市
+2026-03-17 23:10:05 | WARNING  | data_provider/base.py:1240 | [股票名称] 所有数据源都无法获取 ENB 的名称
+2026-03-17 23:10:05 | WARNING  | data_provider/tushare_fetcher.py:487 | Tushare API 未初始化，无法获取股票名称
+2026-03-17 23:10:40 | WARNING  | data_provider/pytdx_fetcher.py:403 | Pytdx 获取股票名称失败 688249: Pytdx 无法连接任何服务器
+2026-03-17 23:10:41 | INFO     | data_provider/base.py:1233 | [股票名称] 从 BaostockFetcher 获取: 688249 -> 晶合集成
+2026-03-17 23:10:41 | INFO     | src/core/pipeline.py:1027 | ========== 开始处理 PM ==========
+2026-03-17 23:10:42 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 PM 实时行情成功: 价格=172.8300018310547
+2026-03-17 23:10:42 | INFO     | data_provider/base.py:968 | [实时行情] 美股 PM 成功获取 (来源: yfinance)
+2026-03-17 23:10:42 | INFO     | data_provider/base.py:1219 | [股票名称] 从实时行情获取: PM -> Philip Morris International Inc
+2026-03-17 23:10:42 | INFO     | src/core/pipeline.py:158 | Philip Morris International Inc(PM) 开始从数据源获取数据...
+2026-03-17 23:10:42 | INFO     | data_provider/base.py:756 | [数据源尝试 6/6] [YfinanceFetcher] 美股/美股指数 PM 直接路由...
+2026-03-17 23:10:42 | INFO     | data_provider/base.py:357 | [YfinanceFetcher] 开始获取 PM 日线数据: 范围=2026-01-16 ~ 2026-03-17
+2026-03-17 23:10:42 | INFO     | data_provider/base.py:376 | [YfinanceFetcher] PM 获取成功: 范围=2026-01-16 ~ 2026-03-17, rows=40, elapsed=0.12s
+2026-03-17 23:10:42 | INFO     | data_provider/base.py:768 | [数据源完成] PM 使用 [YfinanceFetcher] 获取成功: rows=40, elapsed=0.12s
+2026-03-17 23:10:42 | INFO     | src/storage.py:1387 | 保存 PM 数据成功，新增 40 条
+2026-03-17 23:10:42 | INFO     | src/core/pipeline.py:166 | Philip Morris International Inc(PM) 数据保存成功（来源: YfinanceFetcher，新增 40 条）
+2026-03-17 23:10:43 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 PM 实时行情成功: 价格=172.8300018310547
+2026-03-17 23:10:43 | INFO     | data_provider/base.py:968 | [实时行情] 美股 PM 成功获取 (来源: yfinance)
+2026-03-17 23:10:43 | INFO     | src/core/pipeline.py:210 | Philip Morris International Inc(PM) 实时行情: 价格=172.8300018310547, 量比=None, 换手率=None% (来源: fallback)
+2026-03-17 23:10:43 | WARNING  | data_provider/tushare_fetcher.py:1055 | [Tushare] TushareFetcher 不支持美股 PM 的筹码分布
+2026-03-17 23:10:43 | WARNING  | data_provider/base.py:1180 | [筹码分布] PM 所有数据源均失败
+2026-03-17 23:10:43 | INFO     | src/core/pipeline.py:284 | Philip Morris International Inc(PM) 趋势分析: 空头排列, 买入信号=持有, 评分=52
+2026-03-17 23:10:43 | INFO     | src/core/pipeline.py:305 | Philip Morris International Inc(PM) 开始多维度情报搜索...
+2026-03-17 23:10:43 | INFO     | src/search_service.py:1966 | 开始多维度情报搜索: Philip Morris International Inc(PM), 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=3), 目标条数=3, provider请求条数=6
+2026-03-17 23:10:43 | INFO     | src/search_service.py:1995 | [情报搜索] 最新消息: 使用 Bocha
+2026-03-17 23:10:45 | WARNING  | src/search_service.py:635 | [Bocha] 搜索失败: 余额不足: You do not have enough money or package quota
+2026-03-17 23:10:45 | WARNING  | src/search_service.py:201 | [Bocha] API Key sk-50a7b... 错误计数: 1
+2026-03-17 23:10:45 | WARNING  | src/search_service.py:2019 | [情报搜索] 最新消息: 搜索失败 - 余额不足: You do not have enough money or package quota
+2026-03-17 23:10:46 | INFO     | src/search_service.py:1995 | [情报搜索] 机构分析: 使用 Bocha
+2026-03-17 23:10:47 | WARNING  | src/search_service.py:635 | [Bocha] 搜索失败: 余额不足: You do not have enough money or package quota
+2026-03-17 23:10:47 | WARNING  | src/search_service.py:201 | [Bocha] API Key sk-50a7b... 错误计数: 2
+2026-03-17 23:10:47 | WARNING  | src/search_service.py:2019 | [情报搜索] 机构分析: 搜索失败 - 余额不足: You do not have enough money or package quota
+2026-03-17 23:10:47 | INFO     | src/search_service.py:1995 | [情报搜索] 风险排查: 使用 Bocha
+2026-03-17 23:10:49 | WARNING  | src/search_service.py:635 | [Bocha] 搜索失败: 余额不足: You do not have enough money or package quota
+2026-03-17 23:10:49 | WARNING  | src/search_service.py:201 | [Bocha] API Key sk-50a7b... 错误计数: 3
+2026-03-17 23:10:49 | WARNING  | src/search_service.py:2019 | [情报搜索] 风险排查: 搜索失败 - 余额不足: You do not have enough money or package quota
+2026-03-17 23:10:49 | INFO     | src/search_service.py:1995 | [情报搜索] 业绩预期: 使用 Bocha
+2026-03-17 23:10:49 | WARNING  | src/search_service.py:187 | [Bocha] 所有 API Key 都有错误记录，重置错误计数
+2026-03-17 23:10:50 | WARNING  | src/search_service.py:635 | [Bocha] 搜索失败: 余额不足: You do not have enough money or package quota
+2026-03-17 23:10:50 | WARNING  | src/search_service.py:201 | [Bocha] API Key sk-50a7b... 错误计数: 1
+2026-03-17 23:10:50 | WARNING  | src/search_service.py:2019 | [情报搜索] 业绩预期: 搜索失败 - 余额不足: You do not have enough money or package quota
+2026-03-17 23:10:51 | INFO     | src/search_service.py:1995 | [情报搜索] 行业分析: 使用 Bocha
+2026-03-17 23:10:52 | WARNING  | src/search_service.py:635 | [Bocha] 搜索失败: 余额不足: You do not have enough money or package quota
+2026-03-17 23:10:52 | WARNING  | src/search_service.py:201 | [Bocha] API Key sk-50a7b... 错误计数: 2
+2026-03-17 23:10:52 | WARNING  | src/search_service.py:2019 | [情报搜索] 行业分析: 搜索失败 - 余额不足: You do not have enough money or package quota
+2026-03-17 23:10:53 | INFO     | src/core/pipeline.py:320 | Philip Morris International Inc(PM) 情报搜索完成: 共 0 条结果
+2026-03-17 23:10:56 | INFO     | src/analyzer.py:952 | ========== AI 分析 Philip Morris International Inc(PM) ==========
+2026-03-17 23:10:56 | INFO     | src/analyzer.py:953 | [LLM配置] 模型: gemini/gemini-3-flash-preview
+2026-03-17 23:10:56 | INFO     | src/analyzer.py:954 | [LLM配置] Prompt 长度: 2722 字符
+2026-03-17 23:10:56 | INFO     | src/analyzer.py:955 | [LLM配置] 是否包含新闻: 是
+2026-03-17 23:10:56 | INFO     | src/analyzer.py:959 | [LLM Prompt 预览]
+# 决策仪表盘分析请求
+
+## 📊 股票基础信息
+| 项目 | 数据 |
+|------|------|
+| 股票代码 | **PM** |
+| 股票名称 | **Philip Morris International Inc** |
+| 分析日期 | 2026-03-17 |
+
+---
+
+## 📈 技术面数据
+
+### 今日行情
+| 指标 | 数值 |
+|------|------|
+| 收盘价 | 172.8300018310547 元 |
+| 开盘价 | 176.14999389648438 元 |
+| 最高价 | 176.7989959716797 元 |
+| 最低价 | 172.52000427246094 元 |
+| 涨跌幅 | -1.35% |
+| 成交量 | 342.80 万股 |
+| 成交额 | 6.02 亿元 |
+
+### 均线系统（关键判断指标）
+| 均线 | 数值 | 说明 |
+|------|------|------|
+| MA5 | 172.2220001220703 | 短期趋势线 |
+| MA10 | 172.59499816894532 | 中短期趋...
+2026-03-17 23:10:56 | INFO     | src/analyzer.py:968 | [LLM调用] 开始调用 gemini/gemini-3-flash-preview...
+2026-03-17 23:10:56 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3932 | 
+LiteLLM completion() model= gemini-3-flash-preview; provider = gemini
+2026-03-17 23:10:56 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py:1007 | Warning: Setting temperature < 1.0 for Gemini 3 models (gemini-3-flash-preview) can cause infinite loops, degraded reasoning performance, and failure on complex tasks. Strongly recommended to use temperature = 1.0 (default).
+2026-03-17 23:10:56 | WARNING  | src/analyzer.py:850 | [LiteLLM] gemini/gemini-3-flash-preview failed: litellm.RateLimitError: litellm.RateLimitError: geminiException - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3-flash\nPlease retry in 3.666859781s.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "model": "gemini-3-flash",
+              "location": "global"
+            },
+            "quotaValue": "20"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "3s"
+      }
+    ]
+  }
+}
+
+2026-03-17 23:10:56 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3932 | 
+LiteLLM completion() model= gemini-2.5-flash; provider = gemini
+2026-03-17 23:11:32 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:1656 | Wrapper: Completed Call, calling success_handler
+2026-03-17 23:11:32 | INFO     | src/analyzer.py:981 | [LLM返回] gemini/gemini-3-flash-preview 响应成功, 耗时 36.48s, 响应长度 3347 字符
+2026-03-17 23:11:32 | INFO     | src/analyzer.py:985 | [LLM返回 预览]
+```json
+{
+    "stock_name": "菲利普莫里斯国际（PM）",
+    "sentiment_score": 25,
+    "trend_prediction": "强烈看空",
+    "operation_advice": "观望/减仓",
+    "decision_type": "sell",
+    "confidence_level": "高",
+
+    "dashboard": {
+        "core_conclusion": {
+            "one_sentence": "该股处于空头排列，不符合趋势交易原则，建议观望或减持。"...
+2026-03-17 23:11:32 | INFO     | src/analyzer.py:1025 | [LLM解析] Philip Morris International Inc(PM) 分析完成: 强烈看空, 评分 25
+2026-03-17 23:11:32 | INFO     | src/core/pipeline.py:1051 | [PM] 分析完成: 观望/减仓, 评分 25
+2026-03-17 23:11:32 | INFO     | src/core/pipeline.py:1027 | ========== 开始处理 ENB ==========
+2026-03-17 23:11:33 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 ENB 实时行情成功: 价格=54.04999923706055
+2026-03-17 23:11:33 | INFO     | data_provider/base.py:968 | [实时行情] 美股 ENB 成功获取 (来源: yfinance)
+2026-03-17 23:11:33 | INFO     | data_provider/base.py:1219 | [股票名称] 从实时行情获取: ENB -> Enbridge Inc
+2026-03-17 23:11:33 | INFO     | src/core/pipeline.py:158 | Enbridge Inc(ENB) 开始从数据源获取数据...
+2026-03-17 23:11:33 | INFO     | data_provider/base.py:756 | [数据源尝试 6/6] [YfinanceFetcher] 美股/美股指数 ENB 直接路由...
+2026-03-17 23:11:33 | INFO     | data_provider/base.py:357 | [YfinanceFetcher] 开始获取 ENB 日线数据: 范围=2026-01-16 ~ 2026-03-17
+2026-03-17 23:11:33 | INFO     | data_provider/base.py:376 | [YfinanceFetcher] ENB 获取成功: 范围=2026-01-16 ~ 2026-03-17, rows=40, elapsed=0.12s
+2026-03-17 23:11:33 | INFO     | data_provider/base.py:768 | [数据源完成] ENB 使用 [YfinanceFetcher] 获取成功: rows=40, elapsed=0.12s
+2026-03-17 23:11:33 | INFO     | src/storage.py:1387 | 保存 ENB 数据成功，新增 40 条
+2026-03-17 23:11:33 | INFO     | src/core/pipeline.py:166 | Enbridge Inc(ENB) 数据保存成功（来源: YfinanceFetcher，新增 40 条）
+2026-03-17 23:11:33 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 ENB 实时行情成功: 价格=54.04999923706055
+2026-03-17 23:11:33 | INFO     | data_provider/base.py:968 | [实时行情] 美股 ENB 成功获取 (来源: yfinance)
+2026-03-17 23:11:33 | INFO     | src/core/pipeline.py:210 | Enbridge Inc(ENB) 实时行情: 价格=54.04999923706055, 量比=None, 换手率=None% (来源: fallback)
+2026-03-17 23:11:33 | WARNING  | data_provider/tushare_fetcher.py:1055 | [Tushare] TushareFetcher 不支持美股 ENB 的筹码分布
+2026-03-17 23:11:33 | WARNING  | data_provider/base.py:1180 | [筹码分布] ENB 所有数据源均失败
+2026-03-17 23:11:33 | INFO     | src/core/pipeline.py:284 | Enbridge Inc(ENB) 趋势分析: 多头排列, 买入信号=强烈买入, 评分=80
+2026-03-17 23:11:33 | INFO     | src/core/pipeline.py:305 | Enbridge Inc(ENB) 开始多维度情报搜索...
+2026-03-17 23:11:33 | INFO     | src/search_service.py:1966 | 开始多维度情报搜索: Enbridge Inc(ENB), 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=3), 目标条数=3, provider请求条数=6
+2026-03-17 23:11:33 | INFO     | src/search_service.py:1995 | [情报搜索] 最新消息: 使用 Bocha
+2026-03-17 23:11:34 | WARNING  | src/search_service.py:635 | [Bocha] 搜索失败: 余额不足: You do not have enough money or package quota
+2026-03-17 23:11:34 | WARNING  | src/search_service.py:201 | [Bocha] API Key sk-50a7b... 错误计数: 3
+2026-03-17 23:11:34 | WARNING  | src/search_service.py:2019 | [情报搜索] 最新消息: 搜索失败 - 余额不足: You do not have enough money or package quota
+2026-03-17 23:11:35 | INFO     | src/search_service.py:1995 | [情报搜索] 机构分析: 使用 Bocha
+2026-03-17 23:11:35 | WARNING  | src/search_service.py:187 | [Bocha] 所有 API Key 都有错误记录，重置错误计数
+2026-03-17 23:11:36 | WARNING  | src/search_service.py:635 | [Bocha] 搜索失败: 余额不足: You do not have enough money or package quota
+2026-03-17 23:11:36 | WARNING  | src/search_service.py:201 | [Bocha] API Key sk-50a7b... 错误计数: 1
+2026-03-17 23:11:36 | WARNING  | src/search_service.py:2019 | [情报搜索] 机构分析: 搜索失败 - 余额不足: You do not have enough money or package quota
+2026-03-17 23:11:37 | INFO     | src/search_service.py:1995 | [情报搜索] 风险排查: 使用 Bocha
+2026-03-17 23:11:38 | WARNING  | src/search_service.py:635 | [Bocha] 搜索失败: 余额不足: You do not have enough money or package quota
+2026-03-17 23:11:38 | WARNING  | src/search_service.py:201 | [Bocha] API Key sk-50a7b... 错误计数: 2
+2026-03-17 23:11:38 | WARNING  | src/search_service.py:2019 | [情报搜索] 风险排查: 搜索失败 - 余额不足: You do not have enough money or package quota
+2026-03-17 23:11:38 | INFO     | src/search_service.py:1995 | [情报搜索] 业绩预期: 使用 Bocha
+2026-03-17 23:11:39 | WARNING  | src/search_service.py:635 | [Bocha] 搜索失败: 余额不足: You do not have enough money or package quota
+2026-03-17 23:11:39 | WARNING  | src/search_service.py:201 | [Bocha] API Key sk-50a7b... 错误计数: 3
+2026-03-17 23:11:39 | WARNING  | src/search_service.py:2019 | [情报搜索] 业绩预期: 搜索失败 - 余额不足: You do not have enough money or package quota
+2026-03-17 23:11:40 | INFO     | src/search_service.py:1995 | [情报搜索] 行业分析: 使用 Bocha
+2026-03-17 23:11:40 | WARNING  | src/search_service.py:187 | [Bocha] 所有 API Key 都有错误记录，重置错误计数
+2026-03-17 23:11:46 | WARNING  | src/search_service.py:635 | [Bocha] 搜索失败: 余额不足: You do not have enough money or package quota
+2026-03-17 23:11:46 | WARNING  | src/search_service.py:201 | [Bocha] API Key sk-50a7b... 错误计数: 1
+2026-03-17 23:11:46 | WARNING  | src/search_service.py:2019 | [情报搜索] 行业分析: 搜索失败 - 余额不足: You do not have enough money or package quota
+2026-03-17 23:11:47 | INFO     | src/core/pipeline.py:320 | Enbridge Inc(ENB) 情报搜索完成: 共 0 条结果
+2026-03-17 23:11:50 | INFO     | src/analyzer.py:952 | ========== AI 分析 Enbridge Inc(ENB) ==========
+2026-03-17 23:11:50 | INFO     | src/analyzer.py:953 | [LLM配置] 模型: gemini/gemini-3-flash-preview
+2026-03-17 23:11:50 | INFO     | src/analyzer.py:954 | [LLM配置] Prompt 长度: 2631 字符
+2026-03-17 23:11:50 | INFO     | src/analyzer.py:955 | [LLM配置] 是否包含新闻: 是
+2026-03-17 23:11:50 | INFO     | src/analyzer.py:959 | [LLM Prompt 预览]
+# 决策仪表盘分析请求
+
+## 📊 股票基础信息
+| 项目 | 数据 |
+|------|------|
+| 股票代码 | **ENB** |
+| 股票名称 | **Enbridge Inc** |
+| 分析日期 | 2026-03-17 |
+
+---
+
+## 📈 技术面数据
+
+### 今日行情
+| 指标 | 数值 |
+|------|------|
+| 收盘价 | 54.04999923706055 元 |
+| 开盘价 | 54.70000076293945 元 |
+| 最高价 | 54.70000076293945 元 |
+| 最低价 | 53.93000030517578 元 |
+| 涨跌幅 | -1.03% |
+| 成交量 | 267.43 万股 |
+| 成交额 | 2.12 亿元 |
+
+### 均线系统（关键判断指标）
+| 均线 | 数值 | 说明 |
+|------|------|------|
+| MA5 | 53.98800048828125 | 短期趋势线 |
+| MA10 | 53.969000244140624 | 中短期趋势线 |
+| MA20 | 53.226...
+2026-03-17 23:11:50 | INFO     | src/analyzer.py:968 | [LLM调用] 开始调用 gemini/gemini-3-flash-preview...
+2026-03-17 23:11:50 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3932 | 
+LiteLLM completion() model= gemini-3-flash-preview; provider = gemini
+2026-03-17 23:11:50 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py:1007 | Warning: Setting temperature < 1.0 for Gemini 3 models (gemini-3-flash-preview) can cause infinite loops, degraded reasoning performance, and failure on complex tasks. Strongly recommended to use temperature = 1.0 (default).
+2026-03-17 23:11:50 | WARNING  | src/analyzer.py:850 | [LiteLLM] gemini/gemini-3-flash-preview failed: litellm.RateLimitError: litellm.RateLimitError: geminiException - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3-flash\nPlease retry in 9.816508519s.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "location": "global",
+              "model": "gemini-3-flash"
+            },
+            "quotaValue": "20"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "9s"
+      }
+    ]
+  }
+}
+
+2026-03-17 23:11:50 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3932 | 
+LiteLLM completion() model= gemini-2.5-flash; provider = gemini
+2026-03-17 23:12:16 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:1656 | Wrapper: Completed Call, calling success_handler
+2026-03-17 23:12:16 | INFO     | src/analyzer.py:981 | [LLM返回] gemini/gemini-3-flash-preview 响应成功, 耗时 26.48s, 响应长度 4302 字符
+2026-03-17 23:12:16 | INFO     | src/analyzer.py:985 | [LLM返回 预览]
+```json
+{
+    "stock_name": "Enbridge Inc (ENB)",
+    "sentiment_score": 80,
+    "trend_prediction": "强烈看多",
+    "operation_advice": "买入",
+    "decision_type": "buy",
+    "confidence_level": "高",
+
+    "dashboard": {
+        "core_conclusion": {
+            "one_sentence": "Enbridge Inc (ENB) 均线多头排列，...
+2026-03-17 23:12:16 | INFO     | src/analyzer.py:1025 | [LLM解析] Enbridge Inc(ENB) 分析完成: 强烈看多, 评分 80
+2026-03-17 23:12:16 | INFO     | src/core/pipeline.py:1051 | [ENB] 分析完成: 买入, 评分 80
+2026-03-17 23:12:16 | INFO     | src/core/pipeline.py:1027 | ========== 开始处理 688249 ==========
+2026-03-17 23:12:16 | INFO     | src/core/pipeline.py:158 | 晶合集成(688249) 开始从数据源获取数据...
+2026-03-17 23:12:16 | INFO     | data_provider/base.py:790 | [数据源尝试 1/6] [EfinanceFetcher] 获取 688249...
+2026-03-17 23:12:16 | INFO     | data_provider/base.py:357 | [EfinanceFetcher] 开始获取 688249 日线数据: 范围=2026-01-16 ~ 2026-03-17
+2026-03-17 23:12:18 | INFO     | data_provider/efinance_fetcher.py:389 | [API调用] ef.stock.get_quote_history(stock_codes=688249, beg=20260116, end=20260317, klt=101, fqt=1)
+2026-03-17 23:12:20 | INFO     | data_provider/efinance_fetcher.py:411 | [API返回] Eastmoney 历史K线成功: endpoint=push2his.eastmoney.com/api/qt/stock/kline/get, stock_code=688249, range=20260116~20260317, rows=37, elapsed=2.05s
+2026-03-17 23:12:20 | INFO     | data_provider/efinance_fetcher.py:416 | [API返回] 列名: ['股票名称', '股票代码', '日期', '开盘', '收盘', '最高', '最低', '成交量', '成交额', '振幅', '涨跌幅', '涨跌额', '换手率']
+2026-03-17 23:12:20 | INFO     | data_provider/efinance_fetcher.py:418 | [API返回] 日期范围: 2026-01-16 ~ 2026-03-17
+2026-03-17 23:12:20 | INFO     | data_provider/base.py:376 | [EfinanceFetcher] 688249 获取成功: 范围=2026-01-16 ~ 2026-03-17, rows=37, elapsed=4.35s
+2026-03-17 23:12:20 | INFO     | data_provider/base.py:800 | [数据源完成] 688249 使用 [EfinanceFetcher] 获取成功: rows=37, elapsed=4.35s
+2026-03-17 23:12:20 | INFO     | src/storage.py:1387 | 保存 688249 数据成功，新增 37 条
+2026-03-17 23:12:20 | INFO     | src/core/pipeline.py:166 | 晶合集成(688249) 数据保存成功（来源: EfinanceFetcher，新增 37 条）
+2026-03-17 23:12:20 | INFO     | data_provider/akshare_fetcher.py:1099 | [API调用] 腾讯财经接口获取 688249 实时行情: endpoint=qt.gtimg.cn/q, symbol=sh688249
+2026-03-17 23:12:25 | INFO     | data_provider/akshare_fetcher.py:1204 | [实时行情-腾讯] 688249 晶合集成: endpoint=qt.gtimg.cn/q, 价格=30.62, 涨跌=-6.16%, 量比=1.1, 换手率=2.72%, elapsed=4.67s
+2026-03-17 23:12:25 | INFO     | data_provider/base.py:1054 | [实时行情] 688249 成功获取 (来源: tencent)
+2026-03-17 23:12:25 | INFO     | src/core/pipeline.py:210 | 晶合集成(688249) 实时行情: 价格=30.62, 量比=1.1, 换手率=2.72% (来源: tencent)
+2026-03-17 23:12:30 | INFO     | data_provider/akshare_fetcher.py:1447 | [API调用] ak.stock_cyq_em(symbol=688249) 获取筹码分布...
+2026-03-17 23:12:31 | INFO     | data_provider/akshare_fetcher.py:1459 | [API返回] ak.stock_cyq_em 成功: 返回 90 天数据, 耗时 1.32s
+2026-03-17 23:12:31 | INFO     | data_provider/akshare_fetcher.py:1479 | [筹码分布] 688249 日期=2026-03-17: 获利比例=4.2%, 平均成本=35.13, 90%集中度=10.94%, 70%集中度=7.64%
+2026-03-17 23:12:31 | INFO     | data_provider/base.py:1173 | [筹码分布] 688249 成功获取 (来源: AkshareFetcher)
+2026-03-17 23:12:31 | INFO     | src/core/pipeline.py:227 | 晶合集成(688249) 筹码分布: 获利比例=4.2%, 90%集中度=10.94%
+2026-03-17 23:12:31 | INFO     | data_provider/akshare_fetcher.py:1099 | [API调用] 腾讯财经接口获取 688249 实时行情: endpoint=qt.gtimg.cn/q, symbol=sh688249
+2026-03-17 23:12:32 | INFO     | src/core/pipeline.py:284 | 晶合集成(688249) 趋势分析: 空头排列, 买入信号=观望, 评分=32
+2026-03-17 23:12:32 | INFO     | src/core/pipeline.py:305 | 晶合集成(688249) 开始多维度情报搜索...
+2026-03-17 23:12:32 | INFO     | src/search_service.py:1966 | 开始多维度情报搜索: 晶合集成(688249), 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=3), 目标条数=3, provider请求条数=6
+2026-03-17 23:12:32 | INFO     | src/search_service.py:1995 | [情报搜索] 最新消息: 使用 Bocha
+2026-03-17 23:12:33 | WARNING  | src/search_service.py:635 | [Bocha] 搜索失败: 余额不足: You do not have enough money or package quota
+2026-03-17 23:12:33 | WARNING  | src/search_service.py:201 | [Bocha] API Key sk-50a7b... 错误计数: 2
+2026-03-17 23:12:33 | WARNING  | src/search_service.py:2019 | [情报搜索] 最新消息: 搜索失败 - 余额不足: You do not have enough money or package quota
+2026-03-17 23:12:34 | INFO     | src/search_service.py:1995 | [情报搜索] 机构分析: 使用 Bocha
+2026-03-17 23:12:35 | WARNING  | src/search_service.py:635 | [Bocha] 搜索失败: 余额不足: You do not have enough money or package quota
+2026-03-17 23:12:35 | WARNING  | src/search_service.py:201 | [Bocha] API Key sk-50a7b... 错误计数: 3
+2026-03-17 23:12:35 | WARNING  | src/search_service.py:2019 | [情报搜索] 机构分析: 搜索失败 - 余额不足: You do not have enough money or package quota
+2026-03-17 23:12:36 | INFO     | src/search_service.py:1995 | [情报搜索] 风险排查: 使用 Bocha
+2026-03-17 23:12:36 | WARNING  | src/search_service.py:187 | [Bocha] 所有 API Key 都有错误记录，重置错误计数
+2026-03-17 23:12:36 | INFO     | data_provider/akshare_fetcher.py:1204 | [实时行情-腾讯] 688249 晶合集成: endpoint=qt.gtimg.cn/q, 价格=30.62, 涨跌=-6.16%, 量比=1.1, 换手率=2.72%, elapsed=5.11s
+2026-03-17 23:12:36 | INFO     | data_provider/base.py:1054 | [实时行情] 688249 成功获取 (来源: tencent)
+2026-03-17 23:12:37 | WARNING  | src/search_service.py:635 | [Bocha] 搜索失败: 余额不足: You do not have enough money or package quota
+2026-03-17 23:12:37 | WARNING  | src/search_service.py:201 | [Bocha] API Key sk-50a7b... 错误计数: 1
+2026-03-17 23:12:37 | WARNING  | src/search_service.py:2019 | [情报搜索] 风险排查: 搜索失败 - 余额不足: You do not have enough money or package quota
+2026-03-17 23:12:37 | INFO     | src/search_service.py:1995 | [情报搜索] 业绩预期: 使用 Bocha
+2026-03-17 23:12:38 | WARNING  | src/search_service.py:635 | [Bocha] 搜索失败: 余额不足: You do not have enough money or package quota
+2026-03-17 23:12:38 | WARNING  | src/search_service.py:201 | [Bocha] API Key sk-50a7b... 错误计数: 2
+2026-03-17 23:12:38 | WARNING  | src/search_service.py:2019 | [情报搜索] 业绩预期: 搜索失败 - 余额不足: You do not have enough money or package quota
+2026-03-17 23:12:39 | INFO     | src/search_service.py:1995 | [情报搜索] 行业分析: 使用 Bocha
+2026-03-17 23:12:40 | WARNING  | src/search_service.py:635 | [Bocha] 搜索失败: 余额不足: You do not have enough money or package quota
+2026-03-17 23:12:40 | WARNING  | src/search_service.py:201 | [Bocha] API Key sk-50a7b... 错误计数: 3
+2026-03-17 23:12:40 | WARNING  | src/search_service.py:2019 | [情报搜索] 行业分析: 搜索失败 - 余额不足: You do not have enough money or package quota
+2026-03-17 23:12:41 | INFO     | src/core/pipeline.py:320 | 晶合集成(688249) 情报搜索完成: 共 0 条结果
+2026-03-17 23:12:44 | INFO     | src/analyzer.py:952 | ========== AI 分析 晶合集成(688249) ==========
+2026-03-17 23:12:44 | INFO     | src/analyzer.py:953 | [LLM配置] 模型: gemini/gemini-3-flash-preview
+2026-03-17 23:12:44 | INFO     | src/analyzer.py:954 | [LLM配置] Prompt 长度: 2754 字符
+2026-03-17 23:12:44 | INFO     | src/analyzer.py:955 | [LLM配置] 是否包含新闻: 是
+2026-03-17 23:12:44 | INFO     | src/analyzer.py:959 | [LLM Prompt 预览]
+# 决策仪表盘分析请求
+
+## 📊 股票基础信息
+| 项目 | 数据 |
+|------|------|
+| 股票代码 | **688249** |
+| 股票名称 | **晶合集成** |
+| 分析日期 | 2026-03-17 |
+
+---
+
+## 📈 技术面数据
+
+### 今日行情
+| 指标 | 数值 |
+|------|------|
+| 收盘价 | 30.62 元 |
+| 开盘价 | 32.51 元 |
+| 最高价 | 32.66 元 |
+| 最低价 | 30.55 元 |
+| 涨跌幅 | -6.16% |
+| 成交量 | 32.27 亿股 |
+| 成交额 | 10.14 亿元 |
+
+### 均线系统（关键判断指标）
+| 均线 | 数值 | 说明 |
+|------|------|------|
+| MA5 | 32.116 | 短期趋势线 |
+| MA10 | 32.131 | 中短期趋势线 |
+| MA20 | 34.028 | 中期趋势线 |
+| 均线形态 | 空头排列 📉 | 多头/空头/缠绕 |
+
+### 实时行情增强数据
+| 指标 | 数值 | 解读 |
+|----...
+2026-03-17 23:12:44 | INFO     | src/analyzer.py:968 | [LLM调用] 开始调用 gemini/gemini-3-flash-preview...
+2026-03-17 23:12:44 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3932 | 
+LiteLLM completion() model= gemini-3-flash-preview; provider = gemini
+2026-03-17 23:12:44 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py:1007 | Warning: Setting temperature < 1.0 for Gemini 3 models (gemini-3-flash-preview) can cause infinite loops, degraded reasoning performance, and failure on complex tasks. Strongly recommended to use temperature = 1.0 (default).
+2026-03-17 23:12:44 | WARNING  | src/analyzer.py:850 | [LiteLLM] gemini/gemini-3-flash-preview failed: litellm.RateLimitError: litellm.RateLimitError: geminiException - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3-flash\nPlease retry in 15.842609673s.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "model": "gemini-3-flash",
+              "location": "global"
+            },
+            "quotaValue": "20"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "15s"
+      }
+    ]
+  }
+}
+
+2026-03-17 23:12:44 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3932 | 
+LiteLLM completion() model= gemini-2.5-flash; provider = gemini
+2026-03-17 23:13:12 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:1656 | Wrapper: Completed Call, calling success_handler
+2026-03-17 23:13:12 | INFO     | src/analyzer.py:981 | [LLM返回] gemini/gemini-3-flash-preview 响应成功, 耗时 28.66s, 响应长度 4926 字符
+2026-03-17 23:13:12 | INFO     | src/analyzer.py:985 | [LLM返回 预览]
+```json
+{
+    "stock_name": "晶合集成",
+    "sentiment_score": 20,
+    "trend_prediction": "强烈看空",
+    "operation_advice": "卖出",
+    "decision_type": "sell",
+    "confidence_level": "高",
+    "dashboard": {
+        "core_conclusion": {
+            "one_sentence": "晶合集成（688249）空头排列，放量下跌，坚决回避。",
+          ...
+2026-03-17 23:13:12 | INFO     | src/analyzer.py:1025 | [LLM解析] 晶合集成(688249) 分析完成: 强烈看空, 评分 20
+2026-03-17 23:13:12 | INFO     | src/core/pipeline.py:1051 | [688249] 分析完成: 卖出, 评分 20
+2026-03-17 23:13:12 | INFO     | src/core/pipeline.py:1202 | ===== 分析完成 =====
+2026-03-17 23:13:12 | INFO     | src/core/pipeline.py:1203 | 成功: 3, 失败: 0, 耗时: 260.50 秒
+2026-03-17 23:13:12 | INFO     | src/notification.py:1655 | 日报已保存到: /home/runner/work/daily_stock_analysis/daily_stock_analysis/reports/report_20260317.md
+2026-03-17 23:13:12 | INFO     | src/core/pipeline.py:1233 | 决策仪表盘日报已保存: /home/runner/work/daily_stock_analysis/daily_stock_analysis/reports/report_20260317.md
+2026-03-17 23:13:12 | INFO     | src/core/pipeline.py:1253 | 生成决策仪表盘日报...
+2026-03-17 23:13:12 | INFO     | src/core/pipeline.py:1422 | 通知渠道未配置，跳过推送
+2026-03-17 23:13:12 | INFO     | src/core/market_review.py:49 | 开始执行大盘复盘分析...
+2026-03-17 23:13:12 | WARNING  | data_provider/tushare_fetcher.py:124 | Tushare Token 未配置，此数据源不可用
+2026-03-17 23:13:12 | INFO     | data_provider/base.py:706 | 已初始化 6 个数据源（按优先级）: EfinanceFetcher(P0), AkshareFetcher(P1), TushareFetcher(P2), PytdxFetcher(P2), BaostockFetcher(P3), YfinanceFetcher(P4)
+2026-03-17 23:13:12 | INFO     | src/market_analyzer.py:680 | ========== 开始大盘复盘分析 ==========
+2026-03-17 23:13:12 | INFO     | src/market_analyzer.py:146 | [大盘] 获取主要指数实时行情...
+2026-03-17 23:13:13 | INFO     | data_provider/yfinance_fetcher.py:366 | [Yfinance] 成功获取 4 个美股指数行情
+2026-03-17 23:13:13 | INFO     | data_provider/base.py:1355 | [YfinanceFetcher] 获取指数行情成功
+2026-03-17 23:13:13 | INFO     | src/market_analyzer.py:172 | [大盘] 获取到 4 个指数行情
+2026-03-17 23:13:13 | INFO     | src/market_analyzer.py:256 | [大盘] 开始搜索市场新闻...
+2026-03-17 23:13:13 | INFO     | src/search_service.py:1778 | 搜索股票新闻: US market(market), query='美股 大盘', 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=3), 目标条数=3, provider请求条数=6
+2026-03-17 23:13:13 | WARNING  | src/search_service.py:187 | [Bocha] 所有 API Key 都有错误记录，重置错误计数
+2026-03-17 23:13:14 | WARNING  | src/search_service.py:635 | [Bocha] 搜索失败: 余额不足: You do not have enough money or package quota
+2026-03-17 23:13:14 | WARNING  | src/search_service.py:201 | [Bocha] API Key sk-50a7b... 错误计数: 1
+2026-03-17 23:13:14 | WARNING  | src/search_service.py:1826 | Bocha 搜索失败: 余额不足: You do not have enough money or package quota，尝试下一个引擎
+2026-03-17 23:13:14 | INFO     | src/search_service.py:1778 | 搜索股票新闻: US market(market), query='US stock market', 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=3), 目标条数=3, provider请求条数=6
+2026-03-17 23:13:15 | WARNING  | src/search_service.py:635 | [Bocha] 搜索失败: 余额不足: You do not have enough money or package quota
+2026-03-17 23:13:15 | WARNING  | src/search_service.py:201 | [Bocha] API Key sk-50a7b... 错误计数: 2
+2026-03-17 23:13:15 | WARNING  | src/search_service.py:1826 | Bocha 搜索失败: 余额不足: You do not have enough money or package quota，尝试下一个引擎
+2026-03-17 23:13:15 | INFO     | src/search_service.py:1778 | 搜索股票新闻: US market(market), query='S&P 500 NASDAQ', 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=3), 目标条数=3, provider请求条数=6
+2026-03-17 23:13:16 | WARNING  | src/search_service.py:635 | [Bocha] 搜索失败: 余额不足: You do not have enough money or package quota
+2026-03-17 23:13:16 | WARNING  | src/search_service.py:201 | [Bocha] API Key sk-50a7b... 错误计数: 3
+2026-03-17 23:13:16 | WARNING  | src/search_service.py:1826 | Bocha 搜索失败: 余额不足: You do not have enough money or package quota，尝试下一个引擎
+2026-03-17 23:13:16 | INFO     | src/market_analyzer.py:271 | [大盘] 共获取 0 条市场新闻
+2026-03-17 23:13:16 | INFO     | src/market_analyzer.py:296 | [大盘] 调用大模型生成复盘报告...
+2026-03-17 23:13:16 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3932 | 
+LiteLLM completion() model= gemini-3-flash-preview; provider = gemini
+2026-03-17 23:13:16 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py:1007 | Warning: Setting temperature < 1.0 for Gemini 3 models (gemini-3-flash-preview) can cause infinite loops, degraded reasoning performance, and failure on complex tasks. Strongly recommended to use temperature = 1.0 (default).
+2026-03-17 23:13:16 | WARNING  | src/analyzer.py:850 | [LiteLLM] gemini/gemini-3-flash-preview failed: litellm.RateLimitError: litellm.RateLimitError: geminiException - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3-flash\nPlease retry in 43.043937199s.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "location": "global",
+              "model": "gemini-3-flash"
+            },
+            "quotaValue": "20"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "43s"
+      }
+    ]
+  }
+}
+
+2026-03-17 23:13:17 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3932 | 
+LiteLLM completion() model= gemini-2.5-flash; provider = gemini
+2026-03-17 23:13:27 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:1656 | Wrapper: Completed Call, calling success_handler
+2026-03-17 23:13:27 | INFO     | src/market_analyzer.py:301 | [大盘] 复盘报告生成成功，长度: 3237 字符
+2026-03-17 23:13:27 | INFO     | src/market_analyzer.py:691 | ========== 大盘复盘分析完成 ==========
+2026-03-17 23:13:27 | INFO     | src/notification.py:1655 | 日报已保存到: /home/runner/work/daily_stock_analysis/daily_stock_analysis/reports/market_review_20260317.md
+2026-03-17 23:13:27 | INFO     | src/core/market_review.py:97 | 大盘复盘报告已保存: /home/runner/work/daily_stock_analysis/daily_stock_analysis/reports/market_review_20260317.md
+2026-03-17 23:13:27 | INFO     | main.py:372 | 
+===== 分析结果摘要 =====
+2026-03-17 23:13:27 | INFO     | main.py:375 | 🟢 Enbridge Inc(ENB): 买入 | 评分 80 | 强烈看多
+2026-03-17 23:13:27 | INFO     | main.py:375 | ⚪ Philip Morris International Inc(PM): 观望/减仓 | 评分 25 | 强烈看空
+2026-03-17 23:13:27 | INFO     | main.py:375 | 🔴 晶合集成(688249): 卖出 | 评分 20 | 强烈看空
+2026-03-17 23:13:27 | INFO     | main.py:380 | 
+任务执行完成
+2026-03-17 23:13:28 | INFO     | main.py:426 | 开始自动回测...
+2026-03-17 23:13:28 | INFO     | main.py:434 | 自动回测完成: processed=0 saved=0 completed=0 insufficient=0 errors=0
+2026-03-17 23:13:28 | INFO     | main.py:697 | 
+程序执行完成
