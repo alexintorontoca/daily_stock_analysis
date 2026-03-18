@@ -3,9 +3,6 @@
 ===================================
 数据源基类与管理器 - 强制分流版
 ===================================
-核心改动：
-1. 彻底拦截：只要股票代码是纯字母（美股），严禁调用 Tushare/Baostock/Pytdx。
-2. 自动纠错：不再需要外部环境变量，代码内部自动识别市场并分配最强 Fetcher。
 """
 
 import logging
@@ -19,29 +16,63 @@ from typing import Optional, List, Tuple, Dict, Any
 
 import pandas as pd
 import numpy as np
-from .fundamental_adapter import AkshareFundamentalAdapter
 
 logger = logging.getLogger(__name__)
 
-# === 基础工具函数 ===
+# === 标准化列名定义 ===
+STANDARD_COLUMNS = ['date', 'open', 'high', 'low', 'close', 'volume', 'amount', 'pct_chg']
+
+# === 异常类定义 (修复 ImportError) ===
+
+class DataFetchError(Exception):
+    """数据获取异常基类"""
+    pass
+
+class RateLimitError(DataFetchError):
+    """API 速率限制异常"""
+    pass
+
+class DataSourceUnavailableError(DataFetchError):
+    """数据源不可用异常"""
+    pass
+
+# === 市场判定工具函数 (修复 ImportError) ===
 
 def normalize_stock_code(stock_code: str) -> str:
     """标准化代码，去掉 .SH/.SZ 等后缀"""
     code = str(stock_code).strip().upper()
     if '.' in code:
         base, suffix = code.rsplit('.', 1)
-        # 如果后缀是 US 或者是纯字母（美股），返回 base
-        if suffix in ('US', 'SH', 'SZ', 'SS', 'BJ'):
+        if suffix in ('US', 'SH', 'SZ', 'SS', 'BJ', 'HK'):
             return base
+    
+    # 处理前缀形式如 SH600519
+    if code.startswith(('SH', 'SZ', 'BJ')) and code[2:].isdigit():
+        return code[2:]
+        
     return code
+
+def canonical_stock_code(code: str) -> str:
+    """返回规范化的大写代码（用于主程序入口）"""
+    return (code or "").strip().upper()
 
 def is_us_pure_ticker(code: str) -> bool:
     """判定是否为美股纯字母代码 (如 AAPL, PM)"""
-    # 匹配 1-5 位纯大写字母
     return bool(re.match(r'^[A-Z]{1,5}$', code))
 
-class DataFetchError(Exception):
-    pass
+def is_bse_code(code: str) -> bool:
+    """判定是否为北交所代码"""
+    c = normalize_stock_code(code)
+    return c.startswith(("8", "4", "92"))
+
+def is_st_stock(name: str) -> bool:
+    """判定是否为 ST 股"""
+    return 'ST' in (name or "").upper()
+
+def is_kc_cy_stock(code: str) -> bool:
+    """判定是否为科创板/创业板"""
+    c = normalize_stock_code(code)
+    return c.startswith("688") or c.startswith("30")
 
 # === Fetcher 基类 ===
 
@@ -70,15 +101,30 @@ class BaseFetcher(ABC):
             if raw_df is None or raw_df.empty:
                 return pd.DataFrame()
             df = self._normalize_data(raw_df, stock_code)
-            # 数据清洗与指标计算...
+            
+            # 基础指标计算
+            df['date'] = pd.to_datetime(df['date'])
+            for col in ['open', 'high', 'low', 'close', 'volume', 'pct_chg']:
+                if col in df.columns:
+                    df[col] = pd.to_numeric(df[col], errors='coerce')
+            
+            df = df.dropna(subset=['close']).sort_values('date')
+            
+            # MA 计算
+            df['ma5'] = df['close'].rolling(5, min_periods=1).mean().round(2)
+            df['ma10'] = df['close'].rolling(10, min_periods=1).mean().round(2)
+            df['ma20'] = df['close'].rolling(20, min_periods=1).mean().round(2)
+            
             return df
         except Exception as e:
-            raise DataFetchError(f"[{self.name}] 获取 {stock_code} 失败: {str(e)}")
+            logger.error(f"[{self.name}] 获取 {stock_code} 报错: {str(e)}")
+            return pd.DataFrame()
 
-# === 策略管理器 (核心分流逻辑所在) ===
+# === 策略管理器 ===
 
 class DataFetcherManager:
     def __init__(self, fetchers: Optional[List[BaseFetcher]] = None):
+        # 延迟加载，防止循环引用
         from .efinance_fetcher import EfinanceFetcher
         from .akshare_fetcher import AkshareFetcher
         from .tushare_fetcher import TushareFetcher
@@ -86,12 +132,11 @@ class DataFetcherManager:
         from .baostock_fetcher import BaostockFetcher
         from .yfinance_fetcher import YfinanceFetcher
 
-        # 这里的顺序就是默认优先级
         self._fetchers = [
-            YfinanceFetcher(),  # 美股之王，排第一
-            EfinanceFetcher(),  # A股/港股 东方财富接口，备选之王
+            YfinanceFetcher(),
+            EfinanceFetcher(),
             AkshareFetcher(),
-            TushareFetcher(),   # 只有 A 股且 Efinance 挂了才会轮到它
+            TushareFetcher(),
             PytdxFetcher(),
             BaostockFetcher()
         ]
@@ -102,12 +147,11 @@ class DataFetcherManager:
         
         errors = []
         for fetcher in self._fetchers:
-            # --- 核心拦截：美股代码绝对不走国内数据源 ---
+            # 核心分流：美股不调 A 股源
             if is_us and fetcher.name in ["TushareFetcher", "BaostockFetcher", "PytdxFetcher"]:
-                logger.debug(f"跳过国内源 {fetcher.name} 处理美股 {normalized_code}")
                 continue
-
-            # --- 核心拦截：A股数字代码（如 600519）没必要走 Yfinance ---
+            
+            # A股不调 Yfinance
             if not is_us and fetcher.name == "YfinanceFetcher":
                 continue
 
@@ -118,10 +162,9 @@ class DataFetcherManager:
             except Exception as e:
                 errors.append(f"{fetcher.name}: {str(e)}")
         
-        raise DataFetchError(f"{stock_code} 所有数据源均失效: {'; '.join(errors)}")
+        raise DataFetchError(f"{stock_code} 获取失败: {'; '.join(errors)}")
 
     def get_realtime_quote(self, stock_code: str):
-        """获取实时行情，应用相同的拦截逻辑"""
         normalized_code = normalize_stock_code(stock_code)
         is_us = is_us_pure_ticker(normalized_code)
 
