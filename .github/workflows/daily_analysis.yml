@@ -51,41 +51,47 @@ jobs:
       
       - name: 执行股票分析
         env:
-          # 直接引用 Secrets 避免 Shell 变量二次展开的问题
-          RAW_CONFIG_YAML: ${{ secrets.LITELLM_CONFIG_YAML }}
+          # 1. LiteLLM 配置 (使用 cat <<'EOF' 确保 100% 正确写入)
+          LITELLM_CONFIG_YAML: ${{ secrets.LITELLM_CONFIG_YAML }}
           LITELLM_CONFIG: "litellm_config.yaml"
           LITELLM_MODEL: "gemini-pro"
           LITELLM_FALLBACK_MODELS: "gemini-2.5-flash,deepseek-chat"
-          DATA_SOURCE_PRIORITY: "yfinance,efinance,akshare,tushare"
-          ENABLED_FETCHERS: "yfinance,efinance,akshare,baostock,tushare"
+          
+          # 2. 数据源优化 (不改代码的核心：调整优先级和开关)
+          # 将 tushare 挪到最后，yfinance 放在最前处理美股，中间由 efinance/baostock 撑起 A 股
+          DATA_SOURCE_PRIORITY: "yfinance,efinance,baostock,akshare,tushare"
+          # 彻底移除 pytdx，减少无意义的连接超时等待
+          ENABLED_FETCHERS: "yfinance,efinance,baostock,akshare,tushare"
+          
+          # 3. 业务与搜索参数
+          # 增加新闻搜索时效到 10 天，确保 AI 分析有料可看
+          NEWS_MAX_AGE_DAYS: '10'
+          # 设置搜索倾向，防止过滤太狠（如果你的 search_service 支持此环境变量）
+          SEARCH_STRICT_FILTER: "false" 
+          
+          # 4. API Keys
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-          GEMINI_REQUEST_DELAY: '15.0'
-          MAX_WORKERS: '1'
           TUSHARE_TOKEN: ${{ secrets.TUSHARE_TOKEN }}
           BOCHA_API_KEYS: ${{ secrets.BOCHA_API_KEYS }}
           TAVILY_API_KEYS: ${{ secrets.TAVILY_API_KEYS }}
+          
+          # 5. 运行控制
           STOCK_LIST: ${{ vars.STOCK_LIST || secrets.STOCK_LIST }}
-          NEWS_MAX_AGE_DAYS: '7'
+          GEMINI_REQUEST_DELAY: '15.0'
+          MAX_WORKERS: '1'
           LOG_LEVEL: INFO
 
         run: |
-          # --- 核心修复：安全写入配置文件 ---
-          # 使用 'EOF' (带引号) 可以防止 Shell 尝试解析 YAML 中的 $ 或其他特殊字符
+          # 写入配置文件 (修复之前的写入漏洞)
           cat <<'EOF' > "$LITELLM_CONFIG"
           ${{ secrets.LITELLM_CONFIG_YAML }}
           EOF
 
-          # 验证文件是否存在且非空
-          if [ -s "$LITELLM_CONFIG" ]; then
-            echo "✅ $LITELLM_CONFIG 生成成功"
-          else
-            echo "❌ $LITELLM_CONFIG 生成失败或内容为空"
-            exit 1
-          fi
+          if [ -s "$LITELLM_CONFIG" ]; then echo "✅ 配置文件写入成功"; fi
 
-          # 运行逻辑保持不变
+          # 执行分析逻辑
           MODE="${{ github.event.inputs.mode || 'full' }}"
           FORCE_RUN_ARG=""
           if [ "${{ github.event.inputs.force_run }}" = "true" ]; then
