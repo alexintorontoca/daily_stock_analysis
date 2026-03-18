@@ -3153,3 +3153,41 @@ AttributeError: 'DataFetcherManager' object has no attribute 'prefetch_realtime_
 2026-03-18 01:24:32 | INFO     | main.py:697 | 
 程序执行完成
 2026-03-18 01:24:32 | DEBUG    | src/storage.py:709 | 数据库引擎已清理
+2026-03-18 01:30:24 | INFO     | src/logging_config.py:153 | 日志系统初始化完成，日志目录: logs
+2026-03-18 01:30:24 | INFO     | src/logging_config.py:154 | 常规日志: logs/stock_analysis_20260318.log
+2026-03-18 01:30:24 | INFO     | src/logging_config.py:155 | 调试日志: logs/stock_analysis_debug_20260318.log
+2026-03-18 01:30:24 | INFO     | main.py:526 | ============================================================
+2026-03-18 01:30:24 | INFO     | main.py:527 | A股自选股智能分析系统 启动
+2026-03-18 01:30:24 | INFO     | main.py:528 | 运行时间: 2026-03-18 01:30:24
+2026-03-18 01:30:24 | INFO     | main.py:529 | ============================================================
+2026-03-18 01:30:24 | WARNING  | main.py:534 | 未配置通知渠道，将不发送推送通知
+2026-03-18 01:30:25 | INFO     | src/storage.py:675 | 数据库初始化完成: sqlite:////home/runner/work/daily_stock_analysis/daily_stock_analysis/data/stock_analysis.db
+2026-03-18 01:30:25 | DEBUG    | data_provider/tushare_fetcher.py:181 | Tushare API endpoint patched to http://api.tushare.pro
+2026-03-18 01:30:25 | INFO     | data_provider/tushare_fetcher.py:141 | Tushare API 初始化成功
+2026-03-18 01:30:25 | INFO     | data_provider/tushare_fetcher.py:198 | ✅ 检测到 TUSHARE_TOKEN 且 API 初始化成功，Tushare 数据源优先级提升为最高 (Priority -1)
+2026-03-18 01:30:25 | INFO     | src/analyzer.py:766 | Analyzer LLM: litellm initialized (model=gemini-pro, API key from environment)
+2026-03-18 01:30:25 | WARNING  | src/notification.py:155 | 未配置有效的通知渠道，将不发送推送通知
+2026-03-18 01:30:25 | INFO     | src/search_service.py:1398 | 已配置 Bocha 搜索，共 1 个 API Key
+2026-03-18 01:30:25 | INFO     | src/search_service.py:1403 | 已配置 Tavily 搜索，共 1 个 API Key
+2026-03-18 01:30:25 | INFO     | src/search_service.py:1432 | 新闻时效策略已启用: profile=short, profile_days=3, NEWS_MAX_AGE_DAYS=7, effective_window=3
+2026-03-18 01:30:25 | INFO     | src/core/pipeline.py:97 | 调度器初始化完成，最大并发数: 1
+2026-03-18 01:30:25 | INFO     | src/core/pipeline.py:98 | 已启用趋势分析器 (MA5>MA10>MA20 多头判断)
+2026-03-18 01:30:25 | INFO     | src/core/pipeline.py:101 | 实时行情已启用 (优先级: tushare,tencent,akshare_sina,efinance,akshare_em)
+2026-03-18 01:30:25 | INFO     | src/core/pipeline.py:105 | 筹码分布分析已启用
+2026-03-18 01:30:25 | INFO     | src/core/pipeline.py:109 | 搜索服务已启用 (Tavily/SerpAPI)
+2026-03-18 01:30:25 | INFO     | src/core/pipeline.py:1120 | ===== 开始分析 22 只股票 =====
+2026-03-18 01:30:25 | INFO     | src/core/pipeline.py:1121 | 股票列表: PM, ENB, ADUS, MMM, MSFT, COST, ABBV, GLD, PFE, O, BIOA, VZ, 688249, 002756, 600183, 603271, 300684, 002126, 603197, 002773, 001335, 000651
+2026-03-18 01:30:25 | INFO     | src/core/pipeline.py:1122 | 并发数: 1, 模式: 完整分析
+2026-03-18 01:30:25 | INFO     | src/core/pipeline.py:1129 | 已启用批量预取架构：一次拉取全市场数据，22 只股票共享缓存
+2026-03-18 01:30:25 | ERROR    | main.py:442 | 分析流程执行失败: 'DataFetcherManager' object has no attribute 'prefetch_stock_names'
+Traceback (most recent call last):
+  File "/home/runner/work/daily_stock_analysis/daily_stock_analysis/main.py", line 314, in run_full_analysis
+    results = pipeline.run(
+              ^^^^^^^^^^^^^
+  File "/home/runner/work/daily_stock_analysis/daily_stock_analysis/src/core/pipeline.py", line 1134, in run
+    self.fetcher_manager.prefetch_stock_names(stock_codes, use_bulk=False)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataFetcherManager' object has no attribute 'prefetch_stock_names'
+2026-03-18 01:30:25 | INFO     | main.py:697 | 
+程序执行完成
+2026-03-18 01:30:25 | DEBUG    | src/storage.py:709 | 数据库引擎已清理
