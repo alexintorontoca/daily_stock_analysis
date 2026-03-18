@@ -51,45 +51,42 @@ jobs:
       
       - name: 执行股票分析
         env:
-          # 1. LiteLLM 配置 (使用 cat <<'EOF' 确保 100% 正确写入)
+          # 1. 模型配置
           LITELLM_CONFIG_YAML: ${{ secrets.LITELLM_CONFIG_YAML }}
           LITELLM_CONFIG: "litellm_config.yaml"
           LITELLM_MODEL: "gemini-pro"
           LITELLM_FALLBACK_MODELS: "gemini-2.5-flash,deepseek-chat"
           
-          # 2. 数据源优化 (不改代码的核心：调整优先级和开关)
-          # 将 tushare 挪到最后，yfinance 放在最前处理美股，中间由 efinance/baostock 撑起 A 股
-          DATA_SOURCE_PRIORITY: "yfinance,efinance,baostock,akshare,tushare"
-          # 彻底移除 pytdx，减少无意义的连接超时等待
-          ENABLED_FETCHERS: "yfinance,efinance,baostock,akshare,tushare"
+          # 2. 数据源强制修正 (关键：移除 tushare 和 pytdx)
+          # 既然 Tushare 会强行设为 Priority -1 拦截美股，我们直接不启动它
+          # A 股将由 baostock (P3) 和 efinance (P0) 稳定接管
+          ENABLED_FETCHERS: "yfinance,efinance,baostock,akshare"
+          DATA_SOURCE_PRIORITY: "yfinance,efinance,baostock,akshare"
           
-          # 3. 业务与搜索参数
-          # 增加新闻搜索时效到 10 天，确保 AI 分析有料可看
+          # 3. 搜索与时效 (调优到 10 天，确保 AI 有料)
           NEWS_MAX_AGE_DAYS: '10'
-          # 设置搜索倾向，防止过滤太狠（如果你的 search_service 支持此环境变量）
-          SEARCH_STRICT_FILTER: "false" 
           
-          # 4. API Keys
+          # 4. 核心 API Keys (注意：此处去掉了 TUSHARE_TOKEN 注入)
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-          TUSHARE_TOKEN: ${{ secrets.TUSHARE_TOKEN }}
           BOCHA_API_KEYS: ${{ secrets.BOCHA_API_KEYS }}
           TAVILY_API_KEYS: ${{ secrets.TAVILY_API_KEYS }}
           
-          # 5. 运行控制
+          # 5. 运行参数
           STOCK_LIST: ${{ vars.STOCK_LIST || secrets.STOCK_LIST }}
           GEMINI_REQUEST_DELAY: '15.0'
           MAX_WORKERS: '1'
           LOG_LEVEL: INFO
 
         run: |
-          # 写入配置文件 (修复之前的写入漏洞)
+          # 安全写入 LiteLLM 配置
           cat <<'EOF' > "$LITELLM_CONFIG"
           ${{ secrets.LITELLM_CONFIG_YAML }}
           EOF
 
-          if [ -s "$LITELLM_CONFIG" ]; then echo "✅ 配置文件写入成功"; fi
+          # 强制清理环境中的 Tushare 痕迹，防止底层代码通过其它路径读取
+          unset TUSHARE_TOKEN
 
           # 执行分析逻辑
           MODE="${{ github.event.inputs.mode || 'full' }}"
