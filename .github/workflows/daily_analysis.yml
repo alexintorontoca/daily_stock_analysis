@@ -22,6 +22,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
+  # 解决 Node.js 24 警告
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
@@ -51,33 +52,39 @@ jobs:
       
       - name: 执行股票分析
         env:
-          # 加载配置
-          LITELLM_CONFIG_YAML: ${{ vars.LITELLM_CONFIG_YAML || secrets.LITELLM_CONFIG_YAML }}
+          # 从 Secrets 获取 LiteLLM 配置
+          LITELLM_CONFIG_YAML: ${{ secrets.LITELLM_CONFIG_YAML }}
           LITELLM_CONFIG: "litellm_config.yaml"
           
-          # 【关键修复点】模型名必须与 YAML 中的 model_name 一致
+          # 模型别名必须与 Secrets 中的 model_name 一致
           LITELLM_MODEL: "gemini-pro"
-          # 如果你要指定 fallback，也要用 YAML 里的名字
           LITELLM_FALLBACK_MODELS: "gemini-2.5-flash,deepseek-chat"
+          
+          # 【方案 B 核心修复】调整数据源优先级，yfinance 置顶处理字母代码
+          DATA_SOURCE_PRIORITY: "yfinance,efinance,akshare,tushare"
+          # 禁用海外连接极其不稳定的 pytdx
+          ENABLED_FETCHERS: "yfinance,efinance,akshare,baostock,tushare"
           
           # API Keys
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           
-          # 频率控制（针对免费额度极其重要）
-          GEMINI_REQUEST_DELAY: '12.0'
+          # 频率控制与并发
+          GEMINI_REQUEST_DELAY: '15.0'
           MAX_WORKERS: '1'
           
-          # 其他业务配置
+          # 业务参数
           TUSHARE_TOKEN: ${{ secrets.TUSHARE_TOKEN }}
           BOCHA_API_KEYS: ${{ secrets.BOCHA_API_KEYS }}
           TAVILY_API_KEYS: ${{ secrets.TAVILY_API_KEYS }}
           STOCK_LIST: ${{ vars.STOCK_LIST || secrets.STOCK_LIST }}
+          # 稍微放宽新闻时效，防止 3 天内无新闻导致分析失败
+          NEWS_MAX_AGE_DAYS: '7'
           LOG_LEVEL: INFO
 
         run: |
-          # 将环境变量中的 YAML 写入实际文件供 LiteLLM 读取
+          # 写入配置文件
           if [ -n "$LITELLM_CONFIG_YAML" ]; then
             echo "$LITELLM_CONFIG_YAML" > "$LITELLM_CONFIG"
           fi
@@ -88,7 +95,6 @@ jobs:
             FORCE_RUN_ARG="--force-run"
           fi
 
-          # 启动分析
           if [ "$MODE" = "market-only" ]; then
             python main.py --market-review $FORCE_RUN_ARG
           elif [ "$MODE" = "stocks-only" ]; then
@@ -97,29 +103,16 @@ jobs:
             python main.py $FORCE_RUN_ARG
           fi
 
-      - name: 强制提交报告到仓库
+      - name: 提交并推送报告
         if: always()
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          mkdir -p reports logs
-          
-          # 强制添加，无视 .gitignore
           git add -f reports/* logs/* || true
-          
           if git diff --staged --quiet; then
-            echo "⚠️ 没有新生成的分析报告。"
+            echo "没有新内容需要提交。"
           else
-            git commit -m "📊 自动生成股票报告: $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')"
+            git commit -m "📊 自动报告: $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')"
             git pull --rebase origin ${{ github.ref_name }}
             git push origin ${{ github.ref_name }}
-            echo "✅ 报告已成功推送到仓库 reports/ 文件夹。"
           fi
-
-      - name: 异常归档
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: error-logs
-          path: logs/
-          retention-days: 5
