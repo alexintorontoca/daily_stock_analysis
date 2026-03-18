@@ -22,7 +22,6 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  # 解决 Node.js 24 警告
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
@@ -52,43 +51,41 @@ jobs:
       
       - name: 执行股票分析
         env:
-          # 从 Secrets 获取 LiteLLM 配置
-          LITELLM_CONFIG_YAML: ${{ secrets.LITELLM_CONFIG_YAML }}
+          # 直接引用 Secrets 避免 Shell 变量二次展开的问题
+          RAW_CONFIG_YAML: ${{ secrets.LITELLM_CONFIG_YAML }}
           LITELLM_CONFIG: "litellm_config.yaml"
-          
-          # 模型别名必须与 Secrets 中的 model_name 一致
           LITELLM_MODEL: "gemini-pro"
           LITELLM_FALLBACK_MODELS: "gemini-2.5-flash,deepseek-chat"
-          
-          # 【方案 B 核心修复】调整数据源优先级，yfinance 置顶处理字母代码
           DATA_SOURCE_PRIORITY: "yfinance,efinance,akshare,tushare"
-          # 禁用海外连接极其不稳定的 pytdx
           ENABLED_FETCHERS: "yfinance,efinance,akshare,baostock,tushare"
-          
-          # API Keys
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-          
-          # 频率控制与并发
           GEMINI_REQUEST_DELAY: '15.0'
           MAX_WORKERS: '1'
-          
-          # 业务参数
           TUSHARE_TOKEN: ${{ secrets.TUSHARE_TOKEN }}
           BOCHA_API_KEYS: ${{ secrets.BOCHA_API_KEYS }}
           TAVILY_API_KEYS: ${{ secrets.TAVILY_API_KEYS }}
           STOCK_LIST: ${{ vars.STOCK_LIST || secrets.STOCK_LIST }}
-          # 稍微放宽新闻时效，防止 3 天内无新闻导致分析失败
           NEWS_MAX_AGE_DAYS: '7'
           LOG_LEVEL: INFO
 
         run: |
-          # 写入配置文件
-          if [ -n "$LITELLM_CONFIG_YAML" ]; then
-            echo "$LITELLM_CONFIG_YAML" > "$LITELLM_CONFIG"
+          # --- 核心修复：安全写入配置文件 ---
+          # 使用 'EOF' (带引号) 可以防止 Shell 尝试解析 YAML 中的 $ 或其他特殊字符
+          cat <<'EOF' > "$LITELLM_CONFIG"
+          ${{ secrets.LITELLM_CONFIG_YAML }}
+          EOF
+
+          # 验证文件是否存在且非空
+          if [ -s "$LITELLM_CONFIG" ]; then
+            echo "✅ $LITELLM_CONFIG 生成成功"
+          else
+            echo "❌ $LITELLM_CONFIG 生成失败或内容为空"
+            exit 1
           fi
 
+          # 运行逻辑保持不变
           MODE="${{ github.event.inputs.mode || 'full' }}"
           FORCE_RUN_ARG=""
           if [ "${{ github.event.inputs.force_run }}" = "true" ]; then
