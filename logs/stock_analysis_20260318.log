@@ -4296,3 +4296,569 @@ ImportError: Google Cloud SDK not found. Install it with: pip install 'litellm[g
 2026-03-18 02:32:43 | INFO     | main.py:434 | 自动回测完成: processed=0 saved=0 completed=0 insufficient=0 errors=0
 2026-03-18 02:32:43 | INFO     | main.py:697 | 
 程序执行完成
+2026-03-18 02:39:28 | INFO     | src/logging_config.py:153 | 日志系统初始化完成，日志目录: logs
+2026-03-18 02:39:28 | INFO     | src/logging_config.py:154 | 常规日志: logs/stock_analysis_20260318.log
+2026-03-18 02:39:28 | INFO     | src/logging_config.py:155 | 调试日志: logs/stock_analysis_debug_20260318.log
+2026-03-18 02:39:28 | INFO     | main.py:526 | ============================================================
+2026-03-18 02:39:28 | INFO     | main.py:527 | A股自选股智能分析系统 启动
+2026-03-18 02:39:28 | INFO     | main.py:528 | 运行时间: 2026-03-18 02:39:28
+2026-03-18 02:39:28 | INFO     | main.py:529 | ============================================================
+2026-03-18 02:39:28 | WARNING  | main.py:534 | 未配置通知渠道，将不发送推送通知
+2026-03-18 02:39:28 | INFO     | src/storage.py:675 | 数据库初始化完成: sqlite:////home/runner/work/daily_stock_analysis/daily_stock_analysis/data/stock_analysis.db
+2026-03-18 02:39:28 | INFO     | data_provider/tushare_fetcher.py:141 | Tushare API 初始化成功
+2026-03-18 02:39:28 | INFO     | data_provider/tushare_fetcher.py:198 | ✅ 检测到 TUSHARE_TOKEN 且 API 初始化成功，Tushare 数据源优先级提升为最高 (Priority -1)
+2026-03-18 02:39:28 | INFO     | data_provider/base.py:706 | 已初始化 6 个数据源（按优先级）: TushareFetcher(P-1), EfinanceFetcher(P0), AkshareFetcher(P1), PytdxFetcher(P2), BaostockFetcher(P3), YfinanceFetcher(P4)
+2026-03-18 02:39:28 | INFO     | src/analyzer.py:766 | Analyzer LLM: litellm initialized (model=gemini-pro, API key from environment)
+2026-03-18 02:39:28 | WARNING  | src/notification.py:155 | 未配置有效的通知渠道，将不发送推送通知
+2026-03-18 02:39:28 | INFO     | src/search_service.py:1398 | 已配置 Bocha 搜索，共 1 个 API Key
+2026-03-18 02:39:28 | INFO     | src/search_service.py:1403 | 已配置 Tavily 搜索，共 1 个 API Key
+2026-03-18 02:39:28 | INFO     | src/search_service.py:1432 | 新闻时效策略已启用: profile=short, profile_days=3, NEWS_MAX_AGE_DAYS=7, effective_window=3
+2026-03-18 02:39:28 | INFO     | src/core/pipeline.py:97 | 调度器初始化完成，最大并发数: 1
+2026-03-18 02:39:28 | INFO     | src/core/pipeline.py:98 | 已启用趋势分析器 (MA5>MA10>MA20 多头判断)
+2026-03-18 02:39:28 | INFO     | src/core/pipeline.py:101 | 实时行情已启用 (优先级: tushare,tencent,akshare_sina,efinance,akshare_em)
+2026-03-18 02:39:28 | INFO     | src/core/pipeline.py:105 | 筹码分布分析已启用
+2026-03-18 02:39:28 | INFO     | src/core/pipeline.py:109 | 搜索服务已启用 (Tavily/SerpAPI)
+2026-03-18 02:39:28 | INFO     | src/core/pipeline.py:1120 | ===== 开始分析 2 只股票 =====
+2026-03-18 02:39:28 | INFO     | src/core/pipeline.py:1121 | 股票列表: PM, 000651
+2026-03-18 02:39:28 | INFO     | src/core/pipeline.py:1122 | 并发数: 1, 模式: 完整分析
+2026-03-18 02:39:28 | WARNING  | data_provider/tushare_fetcher.py:354 | 无法确定股票 PM 的市场，默认使用深市
+2026-03-18 02:39:29 | WARNING  | data_provider/tushare_fetcher.py:528 | Tushare 获取股票名称失败 PM: 抱歉，您每小时最多访问该接口1次，权限的具体详情访问：https://tushare.pro/document/1?doc_id=108。
+2026-03-18 02:40:05 | WARNING  | data_provider/pytdx_fetcher.py:403 | Pytdx 获取股票名称失败 PM: Pytdx 无法连接任何服务器
+2026-03-18 02:40:05 | WARNING  | data_provider/baostock_fetcher.py:165 | 无法确定股票 PM 的市场，默认使用深市
+2026-03-18 02:40:05 | WARNING  | data_provider/base.py:1240 | [股票名称] 所有数据源都无法获取 PM 的名称
+2026-03-18 02:40:06 | WARNING  | data_provider/tushare_fetcher.py:528 | Tushare 获取股票名称失败 000651: 抱歉，您每分钟最多访问该接口1次，权限的具体详情访问：https://tushare.pro/document/1?doc_id=108。
+2026-03-18 02:40:41 | WARNING  | data_provider/pytdx_fetcher.py:403 | Pytdx 获取股票名称失败 000651: Pytdx 无法连接任何服务器
+2026-03-18 02:40:44 | INFO     | data_provider/base.py:1233 | [股票名称] 从 BaostockFetcher 获取: 000651 -> 格力电器
+2026-03-18 02:40:44 | INFO     | src/core/pipeline.py:1027 | ========== 开始处理 PM ==========
+2026-03-18 02:40:45 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 PM 实时行情成功: 价格=172.8300018310547
+2026-03-18 02:40:45 | INFO     | data_provider/base.py:968 | [实时行情] 美股 PM 成功获取 (来源: yfinance)
+2026-03-18 02:40:45 | INFO     | data_provider/base.py:1219 | [股票名称] 从实时行情获取: PM -> Philip Morris International Inc
+2026-03-18 02:40:45 | INFO     | src/core/pipeline.py:158 | Philip Morris International Inc(PM) 开始从数据源获取数据...
+2026-03-18 02:40:45 | INFO     | data_provider/base.py:756 | [数据源尝试 6/6] [YfinanceFetcher] 美股/美股指数 PM 直接路由...
+2026-03-18 02:40:45 | INFO     | data_provider/base.py:357 | [YfinanceFetcher] 开始获取 PM 日线数据: 范围=2026-01-17 ~ 2026-03-18
+2026-03-18 02:40:45 | INFO     | data_provider/base.py:376 | [YfinanceFetcher] PM 获取成功: 范围=2026-01-17 ~ 2026-03-18, rows=40, elapsed=0.10s
+2026-03-18 02:40:45 | INFO     | data_provider/base.py:768 | [数据源完成] PM 使用 [YfinanceFetcher] 获取成功: rows=40, elapsed=0.10s
+2026-03-18 02:40:46 | INFO     | src/storage.py:1387 | 保存 PM 数据成功，新增 40 条
+2026-03-18 02:40:46 | INFO     | src/core/pipeline.py:166 | Philip Morris International Inc(PM) 数据保存成功（来源: YfinanceFetcher，新增 40 条）
+2026-03-18 02:40:46 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 PM 实时行情成功: 价格=172.8300018310547
+2026-03-18 02:40:46 | INFO     | data_provider/base.py:968 | [实时行情] 美股 PM 成功获取 (来源: yfinance)
+2026-03-18 02:40:46 | INFO     | src/core/pipeline.py:210 | Philip Morris International Inc(PM) 实时行情: 价格=172.8300018310547, 量比=None, 换手率=None% (来源: fallback)
+2026-03-18 02:40:46 | WARNING  | data_provider/tushare_fetcher.py:1055 | [Tushare] TushareFetcher 不支持美股 PM 的筹码分布
+2026-03-18 02:40:47 | WARNING  | data_provider/base.py:1180 | [筹码分布] PM 所有数据源均失败
+2026-03-18 02:40:47 | INFO     | src/core/pipeline.py:284 | Philip Morris International Inc(PM) 趋势分析: 弱势多头, 买入信号=买入, 评分=63
+2026-03-18 02:40:47 | INFO     | src/core/pipeline.py:305 | Philip Morris International Inc(PM) 开始多维度情报搜索...
+2026-03-18 02:40:47 | INFO     | src/search_service.py:1966 | 开始多维度情报搜索: Philip Morris International Inc(PM), 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=7), 目标条数=3, provider请求条数=6
+2026-03-18 02:40:47 | INFO     | src/search_service.py:1995 | [情报搜索] 最新消息: 使用 Bocha
+2026-03-18 02:40:48 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Philip Morris International Inc PM latest news events'
+2026-03-18 02:40:48 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-18 02:40:48 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Philip Morris International Inc PM latest news events' 成功，返回 6 条结果，耗时 1.66s
+2026-03-18 02:40:48 | INFO     | src/search_service.py:1720 | [新闻过滤] PM:Bocha:latest_news: provider=Bocha, total=6, kept=0, drop_unknown=0, drop_old=6, drop_future=0, window=[2026-03-16,2026-03-19]
+2026-03-18 02:40:48 | INFO     | src/search_service.py:2012 | [情报搜索] 最新消息: 原始=6条, 过滤后=0条
+2026-03-18 02:40:49 | INFO     | src/search_service.py:1995 | [情报搜索] 机构分析: 使用 Tavily
+2026-03-18 02:40:49 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='Philip Morris International Inc analyst rating target price report', 返回 6 条结果
+2026-03-18 02:40:49 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'Philip Morris International Inc analyst rating target price report' 成功，返回 6 条结果，耗时 0.28s
+2026-03-18 02:40:49 | INFO     | src/search_service.py:1720 | [新闻过滤] PM:Tavily:market_analysis: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-16,2026-03-19]
+2026-03-18 02:40:49 | INFO     | src/search_service.py:2012 | [情报搜索] 机构分析: 原始=6条, 过滤后=0条
+2026-03-18 02:40:49 | INFO     | src/search_service.py:1995 | [情报搜索] 风险排查: 使用 Bocha
+2026-03-18 02:40:51 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Philip Morris International Inc risk insider selling lawsuit litigation'
+2026-03-18 02:40:51 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-18 02:40:51 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Philip Morris International Inc risk insider selling lawsuit litigation' 成功，返回 6 条结果，耗时 1.04s
+2026-03-18 02:40:51 | INFO     | src/search_service.py:1720 | [新闻过滤] PM:Bocha:risk_check: provider=Bocha, total=6, kept=1, drop_unknown=0, drop_old=5, drop_future=0, window=[2026-03-16,2026-03-19]
+2026-03-18 02:40:51 | INFO     | src/search_service.py:2012 | [情报搜索] 风险排查: 原始=6条, 过滤后=1条
+2026-03-18 02:40:51 | INFO     | src/search_service.py:1995 | [情报搜索] 业绩预期: 使用 Tavily
+2026-03-18 02:40:51 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='Philip Morris International Inc earnings revenue profit growth forecast', 返回 6 条结果
+2026-03-18 02:40:51 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'Philip Morris International Inc earnings revenue profit growth forecast' 成功，返回 6 条结果，耗时 0.34s
+2026-03-18 02:40:51 | INFO     | src/search_service.py:1720 | [新闻过滤] PM:Tavily:earnings: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-16,2026-03-19]
+2026-03-18 02:40:51 | INFO     | src/search_service.py:2012 | [情报搜索] 业绩预期: 原始=6条, 过滤后=0条
+2026-03-18 02:40:52 | INFO     | src/search_service.py:1995 | [情报搜索] 行业分析: 使用 Bocha
+2026-03-18 02:40:53 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Philip Morris International Inc industry competitors market share outlook'
+2026-03-18 02:40:53 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-18 02:40:53 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Philip Morris International Inc industry competitors market share outlook' 成功，返回 6 条结果，耗时 1.06s
+2026-03-18 02:40:53 | INFO     | src/search_service.py:1720 | [新闻过滤] PM:Bocha:industry: provider=Bocha, total=6, kept=1, drop_unknown=0, drop_old=5, drop_future=0, window=[2026-03-16,2026-03-19]
+2026-03-18 02:40:53 | INFO     | src/search_service.py:2012 | [情报搜索] 行业分析: 原始=6条, 过滤后=1条
+2026-03-18 02:40:53 | INFO     | src/core/pipeline.py:320 | Philip Morris International Inc(PM) 情报搜索完成: 共 2 条结果
+2026-03-18 02:40:53 | INFO     | src/storage.py:922 | 保存新闻情报成功: PM, 新增 1 条
+2026-03-18 02:40:53 | INFO     | src/storage.py:922 | 保存新闻情报成功: PM, 新增 1 条
+2026-03-18 02:41:08 | INFO     | src/analyzer.py:952 | ========== AI 分析 Philip Morris International Inc(PM) ==========
+2026-03-18 02:41:08 | INFO     | src/analyzer.py:953 | [LLM配置] 模型: gemini-pro
+2026-03-18 02:41:08 | INFO     | src/analyzer.py:954 | [LLM配置] Prompt 长度: 3117 字符
+2026-03-18 02:41:08 | INFO     | src/analyzer.py:955 | [LLM配置] 是否包含新闻: 是
+2026-03-18 02:41:08 | INFO     | src/analyzer.py:959 | [LLM Prompt 预览]
+# 决策仪表盘分析请求
+
+## 📊 股票基础信息
+| 项目 | 数据 |
+|------|------|
+| 股票代码 | **PM** |
+| 股票名称 | **Philip Morris International Inc** |
+| 分析日期 | 2026-03-18 |
+
+---
+
+## 📈 技术面数据
+
+### 今日行情
+| 指标 | 数值 |
+|------|------|
+| 收盘价 | 172.8300018310547 元 |
+| 开盘价 | 176.14999389648438 元 |
+| 最高价 | 176.7989959716797 元 |
+| 最低价 | 172.52000427246094 元 |
+| 涨跌幅 | -1.35% |
+| 成交量 | 342.80 万股 |
+| 成交额 | 5.92 亿元 |
+
+### 均线系统（关键判断指标）
+| 均线 | 数值 | 说明 |
+|------|------|------|
+| MA5 | 173.4200012207031 | 短期趋势线 |
+| MA10 | 171.9739990234375 | 中短期趋势...
+2026-03-18 02:41:08 | INFO     | src/analyzer.py:968 | [LLM调用] 开始调用 gemini-pro...
+2026-03-18 02:41:08 | WARNING  | src/analyzer.py:850 | [LiteLLM] gemini-pro failed: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=gemini-pro
+ Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers
+2026-03-18 02:41:08 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3932 | 
+LiteLLM completion() model= gemini-2.5-flash; provider = vertex_ai
+2026-03-18 02:41:09 | ERROR    | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py:609 | Failed to load vertex credentials. Check to see if credentials containing partial/invalid information. Error: Google Cloud SDK not found. Install it with: pip install 'litellm[google]' or pip install google-cloud-aiplatform
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 226, in _credentials_from_default_auth
+    import google.auth as google_auth
+ModuleNotFoundError: No module named 'google.auth'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 605, in get_access_token
+    _credentials, credential_project_id = self.load_auth(
+                                          ^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 163, in load_auth
+    creds, creds_project_id = self._credentials_from_default_auth(
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 228, in _credentials_from_default_auth
+    raise ImportError(GOOGLE_IMPORT_ERROR_MESSAGE)
+ImportError: Google Cloud SDK not found. Install it with: pip install 'litellm[google]' or pip install google-cloud-aiplatform
+2026-03-18 02:41:09 | WARNING  | src/analyzer.py:850 | [LiteLLM] gemini-2.5-flash failed: litellm.APIConnectionError: Google Cloud SDK not found. Install it with: pip install 'litellm[google]' or pip install google-cloud-aiplatform
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 226, in _credentials_from_default_auth
+    import google.auth as google_auth
+ModuleNotFoundError: No module named 'google.auth'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/main.py", line 3509, in completion
+    model_response = vertex_chat_completion.completion(  # type: ignore
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py", line 2792, in completion
+    _auth_header, vertex_project = self._ensure_access_token(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 343, in _ensure_access_token
+    return self.get_access_token(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 612, in get_access_token
+    raise e
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 605, in get_access_token
+    _credentials, credential_project_id = self.load_auth(
+                                          ^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 163, in load_auth
+    creds, creds_project_id = self._credentials_from_default_auth(
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 228, in _credentials_from_default_auth
+    raise ImportError(GOOGLE_IMPORT_ERROR_MESSAGE)
+ImportError: Google Cloud SDK not found. Install it with: pip install 'litellm[google]' or pip install google-cloud-aiplatform
+
+2026-03-18 02:41:09 | WARNING  | src/analyzer.py:850 | [LiteLLM] deepseek-chat failed: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=deepseek-chat
+ Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers
+2026-03-18 02:41:09 | ERROR    | src/analyzer.py:1030 | AI 分析 Philip Morris International Inc(PM) 失败: All LLM models failed (tried 3 model(s)). Last error: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=deepseek-chat
+ Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers
+2026-03-18 02:41:09 | INFO     | src/analyzer.py:243 | [price_position] Filled placeholder fields from computed data
+2026-03-18 02:41:09 | WARNING  | src/core/pipeline.py:1047 | [PM] 分析未成功: All LLM models failed (tried 3 model(s)). Last error: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=deepseek-chat
+ Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers
+2026-03-18 02:41:09 | INFO     | src/core/pipeline.py:1027 | ========== 开始处理 000651 ==========
+2026-03-18 02:41:09 | INFO     | src/core/pipeline.py:158 | 格力电器(000651) 开始从数据源获取数据...
+2026-03-18 02:41:09 | INFO     | data_provider/base.py:790 | [数据源尝试 1/6] [TushareFetcher] 获取 000651...
+2026-03-18 02:41:09 | INFO     | data_provider/base.py:357 | [TushareFetcher] 开始获取 000651 日线数据: 范围=2026-01-17 ~ 2026-03-18
+2026-03-18 02:41:09 | INFO     | data_provider/base.py:376 | [TushareFetcher] 000651 获取成功: 范围=2026-01-17 ~ 2026-03-18, rows=36, elapsed=0.56s
+2026-03-18 02:41:09 | INFO     | data_provider/base.py:800 | [数据源完成] 000651 使用 [TushareFetcher] 获取成功: rows=36, elapsed=0.56s
+2026-03-18 02:41:09 | INFO     | src/storage.py:1387 | 保存 000651 数据成功，新增 36 条
+2026-03-18 02:41:09 | INFO     | src/core/pipeline.py:166 | 格力电器(000651) 数据保存成功（来源: TushareFetcher，新增 36 条）
+2026-03-18 02:41:10 | INFO     | data_provider/base.py:1054 | [实时行情] 000651 成功获取 (来源: tushare)
+2026-03-18 02:41:10 | INFO     | data_provider/akshare_fetcher.py:1099 | [API调用] 腾讯财经接口获取 000651 实时行情: endpoint=qt.gtimg.cn/q, symbol=sz000651
+2026-03-18 02:41:15 | INFO     | data_provider/akshare_fetcher.py:1204 | [实时行情-腾讯] 000651 格力电器: endpoint=qt.gtimg.cn/q, 价格=38.95, 涨跌=0.03%, 量比=1.25, 换手率=0.27%, elapsed=5.15s
+2026-03-18 02:41:15 | INFO     | data_provider/base.py:1069 | [实时行情] 000651 从 tencent 补充了缺失字段: ['volume_ratio', 'turnover_rate', 'pe_ratio', 'pb_ratio', 'total_mv', 'circ_mv', 'amplitude']
+2026-03-18 02:41:15 | INFO     | src/core/pipeline.py:210 | 格力电器(000651) 实时行情: 价格=38.94, 量比=1.25, 换手率=0.27% (来源: tushare)
+2026-03-18 02:41:16 | WARNING  | data_provider/tushare_fetcher.py:1107 | [Tushare] 获取筹码分布失败 000651: 抱歉，您没有接口访问权限，权限的具体详情访问：https://tushare.pro/document/1?doc_id=108。
+2026-03-18 02:41:21 | INFO     | data_provider/akshare_fetcher.py:1447 | [API调用] ak.stock_cyq_em(symbol=000651) 获取筹码分布...
+2026-03-18 02:41:22 | ERROR    | data_provider/akshare_fetcher.py:1485 | [API错误] 获取 000651 筹码分布失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-03-18 02:41:22 | WARNING  | data_provider/base.py:1180 | [筹码分布] 000651 所有数据源均失败
+2026-03-18 02:41:23 | INFO     | data_provider/base.py:1054 | [实时行情] 000651 成功获取 (来源: tushare)
+2026-03-18 02:41:23 | INFO     | data_provider/akshare_fetcher.py:1099 | [API调用] 腾讯财经接口获取 000651 实时行情: endpoint=qt.gtimg.cn/q, symbol=sz000651
+2026-03-18 02:41:23 | INFO     | src/core/pipeline.py:284 | 格力电器(000651) 趋势分析: 多头排列, 买入信号=买入, 评分=66
+2026-03-18 02:41:23 | INFO     | src/core/pipeline.py:305 | 格力电器(000651) 开始多维度情报搜索...
+2026-03-18 02:41:23 | INFO     | src/search_service.py:1966 | 开始多维度情报搜索: 格力电器(000651), 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=7), 目标条数=3, provider请求条数=6
+2026-03-18 02:41:23 | INFO     | src/search_service.py:1995 | [情报搜索] 最新消息: 使用 Bocha
+2026-03-18 02:41:24 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='格力电器 000651 最新 新闻 重大 事件'
+2026-03-18 02:41:24 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-18 02:41:24 | INFO     | src/search_service.py:237 | [Bocha] 搜索 '格力电器 000651 最新 新闻 重大 事件' 成功，返回 6 条结果，耗时 1.02s
+2026-03-18 02:41:24 | INFO     | src/search_service.py:1720 | [新闻过滤] 000651:Bocha:latest_news: provider=Bocha, total=6, kept=3, drop_unknown=0, drop_old=3, drop_future=0, window=[2026-03-16,2026-03-19]
+2026-03-18 02:41:24 | INFO     | src/search_service.py:2012 | [情报搜索] 最新消息: 原始=6条, 过滤后=3条
+2026-03-18 02:41:25 | INFO     | src/search_service.py:1995 | [情报搜索] 机构分析: 使用 Tavily
+2026-03-18 02:41:25 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='格力电器 研报 目标价 评级 深度分析', 返回 6 条结果
+2026-03-18 02:41:25 | INFO     | src/search_service.py:237 | [Tavily] 搜索 '格力电器 研报 目标价 评级 深度分析' 成功，返回 6 条结果，耗时 0.32s
+2026-03-18 02:41:25 | INFO     | src/search_service.py:1720 | [新闻过滤] 000651:Tavily:market_analysis: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-16,2026-03-19]
+2026-03-18 02:41:25 | INFO     | src/search_service.py:2012 | [情报搜索] 机构分析: 原始=6条, 过滤后=0条
+2026-03-18 02:41:26 | INFO     | src/search_service.py:1995 | [情报搜索] 风险排查: 使用 Bocha
+2026-03-18 02:41:26 | INFO     | data_provider/akshare_fetcher.py:1204 | [实时行情-腾讯] 000651 格力电器: endpoint=qt.gtimg.cn/q, 价格=38.95, 涨跌=0.03%, 量比=1.25, 换手率=0.27%, elapsed=3.49s
+2026-03-18 02:41:26 | INFO     | data_provider/base.py:1069 | [实时行情] 000651 从 tencent 补充了缺失字段: ['volume_ratio', 'turnover_rate', 'pe_ratio', 'pb_ratio', 'total_mv', 'circ_mv', 'amplitude']
+2026-03-18 02:41:27 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='格力电器 减持 处罚 违规 诉讼 利空 风险'
+2026-03-18 02:41:27 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-18 02:41:27 | INFO     | src/search_service.py:237 | [Bocha] 搜索 '格力电器 减持 处罚 违规 诉讼 利空 风险' 成功，返回 6 条结果，耗时 1.18s
+2026-03-18 02:41:27 | INFO     | src/search_service.py:1720 | [新闻过滤] 000651:Bocha:risk_check: provider=Bocha, total=6, kept=1, drop_unknown=0, drop_old=5, drop_future=0, window=[2026-03-16,2026-03-19]
+2026-03-18 02:41:27 | INFO     | src/search_service.py:2012 | [情报搜索] 风险排查: 原始=6条, 过滤后=1条
+2026-03-18 02:41:27 | INFO     | src/search_service.py:1995 | [情报搜索] 业绩预期: 使用 Tavily
+2026-03-18 02:41:28 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='格力电器 业绩预告 财报 营收 净利润 同比增长', 返回 6 条结果
+2026-03-18 02:41:28 | INFO     | src/search_service.py:237 | [Tavily] 搜索 '格力电器 业绩预告 财报 营收 净利润 同比增长' 成功，返回 6 条结果，耗时 0.32s
+2026-03-18 02:41:28 | INFO     | src/search_service.py:1720 | [新闻过滤] 000651:Tavily:earnings: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-16,2026-03-19]
+2026-03-18 02:41:28 | INFO     | src/search_service.py:2012 | [情报搜索] 业绩预期: 原始=6条, 过滤后=0条
+2026-03-18 02:41:28 | INFO     | src/search_service.py:1995 | [情报搜索] 行业分析: 使用 Bocha
+2026-03-18 02:41:29 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='格力电器 所在行业 竞争对手 市场份额 行业前景'
+2026-03-18 02:41:29 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-18 02:41:29 | INFO     | src/search_service.py:237 | [Bocha] 搜索 '格力电器 所在行业 竞争对手 市场份额 行业前景' 成功，返回 6 条结果，耗时 1.06s
+2026-03-18 02:41:29 | INFO     | src/search_service.py:1720 | [新闻过滤] 000651:Bocha:industry: provider=Bocha, total=6, kept=2, drop_unknown=0, drop_old=4, drop_future=0, window=[2026-03-16,2026-03-19]
+2026-03-18 02:41:29 | INFO     | src/search_service.py:2012 | [情报搜索] 行业分析: 原始=6条, 过滤后=2条
+2026-03-18 02:41:30 | INFO     | src/core/pipeline.py:320 | 格力电器(000651) 情报搜索完成: 共 6 条结果
+2026-03-18 02:41:30 | INFO     | src/storage.py:922 | 保存新闻情报成功: 000651, 新增 3 条
+2026-03-18 02:41:30 | INFO     | src/storage.py:922 | 保存新闻情报成功: 000651, 新增 1 条
+2026-03-18 02:41:30 | INFO     | src/storage.py:922 | 保存新闻情报成功: 000651, 新增 2 条
+2026-03-18 02:41:45 | INFO     | src/analyzer.py:952 | ========== AI 分析 格力电器(000651) ==========
+2026-03-18 02:41:45 | INFO     | src/analyzer.py:953 | [LLM配置] 模型: gemini-pro
+2026-03-18 02:41:45 | INFO     | src/analyzer.py:954 | [LLM配置] Prompt 长度: 3703 字符
+2026-03-18 02:41:45 | INFO     | src/analyzer.py:955 | [LLM配置] 是否包含新闻: 是
+2026-03-18 02:41:45 | INFO     | src/analyzer.py:959 | [LLM Prompt 预览]
+# 决策仪表盘分析请求
+
+## 📊 股票基础信息
+| 项目 | 数据 |
+|------|------|
+| 股票代码 | **000651** |
+| 股票名称 | **格力电器** |
+| 分析日期 | 2026-03-18 |
+
+---
+
+## 📈 技术面数据
+
+### 今日行情
+| 指标 | 数值 |
+|------|------|
+| 收盘价 | 38.94 元 |
+| 开盘价 | 38.94 元 |
+| 最高价 | 39.05 元 |
+| 最低价 | 38.71 元 |
+| 涨跌幅 | 0.0% |
+| 成交量 | 14.73 万股 |
+| 成交额 | 5.72 亿元 |
+
+### 均线系统（关键判断指标）
+| 均线 | 数值 | 说明 |
+|------|------|------|
+| MA5 | 38.628 | 短期趋势线 |
+| MA10 | 38.045 | 中短期趋势线 |
+| MA20 | 37.9555 | 中期趋势线 |
+| 均线形态 | 多头排列 📈 | 多头/空头/缠绕 |
+
+### 实时行情增强数据
+| 指标 | 数值 | 解读 |
+|------...
+2026-03-18 02:41:45 | INFO     | src/analyzer.py:968 | [LLM调用] 开始调用 gemini-pro...
+2026-03-18 02:41:45 | WARNING  | src/analyzer.py:850 | [LiteLLM] gemini-pro failed: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=gemini-pro
+ Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers
+2026-03-18 02:41:45 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3932 | 
+LiteLLM completion() model= gemini-2.5-flash; provider = vertex_ai
+2026-03-18 02:41:45 | ERROR    | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py:609 | Failed to load vertex credentials. Check to see if credentials containing partial/invalid information. Error: Google Cloud SDK not found. Install it with: pip install 'litellm[google]' or pip install google-cloud-aiplatform
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 226, in _credentials_from_default_auth
+    import google.auth as google_auth
+ModuleNotFoundError: No module named 'google.auth'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 605, in get_access_token
+    _credentials, credential_project_id = self.load_auth(
+                                          ^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 163, in load_auth
+    creds, creds_project_id = self._credentials_from_default_auth(
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 228, in _credentials_from_default_auth
+    raise ImportError(GOOGLE_IMPORT_ERROR_MESSAGE)
+ImportError: Google Cloud SDK not found. Install it with: pip install 'litellm[google]' or pip install google-cloud-aiplatform
+2026-03-18 02:41:45 | WARNING  | src/analyzer.py:850 | [LiteLLM] gemini-2.5-flash failed: litellm.APIConnectionError: Google Cloud SDK not found. Install it with: pip install 'litellm[google]' or pip install google-cloud-aiplatform
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 226, in _credentials_from_default_auth
+    import google.auth as google_auth
+ModuleNotFoundError: No module named 'google.auth'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/main.py", line 3509, in completion
+    model_response = vertex_chat_completion.completion(  # type: ignore
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py", line 2792, in completion
+    _auth_header, vertex_project = self._ensure_access_token(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 343, in _ensure_access_token
+    return self.get_access_token(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 612, in get_access_token
+    raise e
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 605, in get_access_token
+    _credentials, credential_project_id = self.load_auth(
+                                          ^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 163, in load_auth
+    creds, creds_project_id = self._credentials_from_default_auth(
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 228, in _credentials_from_default_auth
+    raise ImportError(GOOGLE_IMPORT_ERROR_MESSAGE)
+ImportError: Google Cloud SDK not found. Install it with: pip install 'litellm[google]' or pip install google-cloud-aiplatform
+
+2026-03-18 02:41:45 | WARNING  | src/analyzer.py:850 | [LiteLLM] deepseek-chat failed: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=deepseek-chat
+ Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers
+2026-03-18 02:41:45 | ERROR    | src/analyzer.py:1030 | AI 分析 格力电器(000651) 失败: All LLM models failed (tried 3 model(s)). Last error: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=deepseek-chat
+ Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers
+2026-03-18 02:41:45 | INFO     | src/analyzer.py:243 | [price_position] Filled placeholder fields from computed data
+2026-03-18 02:41:45 | WARNING  | src/core/pipeline.py:1047 | [000651] 分析未成功: All LLM models failed (tried 3 model(s)). Last error: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=deepseek-chat
+ Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers
+2026-03-18 02:41:45 | INFO     | src/core/pipeline.py:1202 | ===== 分析完成 =====
+2026-03-18 02:41:45 | INFO     | src/core/pipeline.py:1203 | 成功: 2, 失败: 0, 耗时: 136.40 秒
+2026-03-18 02:41:45 | INFO     | src/notification.py:1655 | 日报已保存到: /home/runner/work/daily_stock_analysis/daily_stock_analysis/reports/report_20260318.md
+2026-03-18 02:41:45 | INFO     | src/core/pipeline.py:1233 | 决策仪表盘日报已保存: /home/runner/work/daily_stock_analysis/daily_stock_analysis/reports/report_20260318.md
+2026-03-18 02:41:45 | INFO     | src/core/pipeline.py:1253 | 生成决策仪表盘日报...
+2026-03-18 02:41:45 | INFO     | src/core/pipeline.py:1422 | 通知渠道未配置，跳过推送
+2026-03-18 02:41:45 | INFO     | src/core/market_review.py:49 | 开始执行大盘复盘分析...
+2026-03-18 02:41:45 | INFO     | data_provider/tushare_fetcher.py:141 | Tushare API 初始化成功
+2026-03-18 02:41:45 | INFO     | data_provider/tushare_fetcher.py:198 | ✅ 检测到 TUSHARE_TOKEN 且 API 初始化成功，Tushare 数据源优先级提升为最高 (Priority -1)
+2026-03-18 02:41:45 | INFO     | data_provider/base.py:706 | 已初始化 6 个数据源（按优先级）: TushareFetcher(P-1), EfinanceFetcher(P0), AkshareFetcher(P1), PytdxFetcher(P2), BaostockFetcher(P3), YfinanceFetcher(P4)
+2026-03-18 02:41:45 | INFO     | src/market_analyzer.py:680 | ========== 开始大盘复盘分析 ==========
+2026-03-18 02:41:45 | INFO     | src/market_analyzer.py:146 | [大盘] 获取主要指数实时行情...
+2026-03-18 02:41:48 | WARNING  | data_provider/tushare_fetcher.py:760 | [Tushare] 未获取到指数行情数据
+2026-03-18 02:41:49 | INFO     | data_provider/efinance_fetcher.py:821 | [API调用] ef.stock.get_realtime_quotes(['沪深系列指数']) 获取指数行情...
+2026-03-18 02:41:53 | INFO     | data_provider/efinance_fetcher.py:831 | [API返回] 指数行情成功: 1067 条, 耗时 3.85s
+2026-03-18 02:41:53 | INFO     | data_provider/efinance_fetcher.py:871 | [efinance] 获取到 5 个指数行情
+2026-03-18 02:41:53 | INFO     | data_provider/base.py:1355 | [EfinanceFetcher] 获取指数行情成功
+2026-03-18 02:41:53 | INFO     | src/market_analyzer.py:172 | [大盘] 获取到 5 个指数行情
+2026-03-18 02:41:53 | INFO     | src/market_analyzer.py:182 | [大盘] 获取市场涨跌统计...
+2026-03-18 02:41:53 | INFO     | data_provider/tushare_fetcher.py:777 | [Tushare] ts.pro_api() 获取市场统计...
+2026-03-18 02:41:54 | ERROR    | data_provider/tushare_fetcher.py:844 | [Tushare] 获取市场统计失败: 抱歉，您没有接口访问权限，权限的具体详情访问：https://tushare.pro/document/1?doc_id=108。
+2026-03-18 02:41:56 | INFO     | data_provider/efinance_fetcher.py:894 | [API调用] ef.stock.get_realtime_quotes() 获取市场统计...
+2026-03-18 02:41:57 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=1&pz=200&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:41:57 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=1&pz=200&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:41:58 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=1&pz=200&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:41:59 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=1&pz=200&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:00 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=1&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:00 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=13&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:01 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=14&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:01 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=18&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:02 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=22&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:02 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=23&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:02 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=18&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:02 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=24&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:02 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=24&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:02 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=18&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:02 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=28&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:02 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=29&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:02 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=17&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:03 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=30&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:03 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=31&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:03 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=18&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:03 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=24&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:03 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=28&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:03 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=29&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:03 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=32&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:03 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=31&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:03 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=30&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:03 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=18&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:03 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=24&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:03 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=28&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:03 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=29&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:03 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=32&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:03 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=31&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:03 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=30&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:04 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=24&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:04 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=32&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:04 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=17&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:04 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=31&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:04 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=33&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:04 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=32&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:04 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=28&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:04 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=17&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:04 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=29&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:04 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=31&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:04 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=33&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:05 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=30&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:05 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=32&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:05 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=28&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:05 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=29&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:05 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=33&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:05 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=30&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:05 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=33&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:05 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=35&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:06 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=34&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:06 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=37&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:06 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=36&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:06 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=17&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:06 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=35&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:06 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=33&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:06 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=34&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:06 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=38&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:06 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=37&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:06 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=36&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:06 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=17&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:06 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=34&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:06 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=39&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:07 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=37&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:07 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=36&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:07 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=40&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:07 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=34&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:07 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=37&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:07 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=36&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:07 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=41&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:07 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=34&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:07 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=37&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:08 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=38&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:08 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=36&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:08 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=41&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:08 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=39&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:08 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=35&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:08 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=41&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:08 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=39&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:08 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=35&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:09 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=41&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:09 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=35&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:09 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=38&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:09 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=41&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:09 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=40&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:10 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=38&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:10 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=39&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:10 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=39&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:10 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=40&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:11 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=38&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:12 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=40&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:13 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=40&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:42:14 | ERROR    | data_provider/efinance_fetcher.py:905 | [efinance] 获取市场统计失败: HTTPConnectionPool(host='push2.eastmoney.com', port=80): Max retries exceeded with url: /api/qt/clist/get?pn=17&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297 (Caused by ProtocolError('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))
+2026-03-18 02:42:16 | INFO     | data_provider/akshare_fetcher.py:1602 | [API调用] ak.stock_zh_a_spot_em() 获取市场统计...
+2026-03-18 02:42:53 | WARNING  | data_provider/akshare_fetcher.py:1607 | [Akshare] 东财接口获取市场统计失败: HTTPSConnectionPool(host='82.push2.eastmoney.com', port=443): Read timed out. (read timeout=15)，尝试新浪接口
+2026-03-18 02:42:55 | INFO     | data_provider/akshare_fetcher.py:1614 | [API调用] ak.stock_zh_a_spot() 获取市场统计(新浪)...
+2026-03-18 02:43:36 | INFO     | data_provider/base.py:1368 | [AkshareFetcher] 获取市场统计成功
+2026-03-18 02:43:36 | INFO     | src/market_analyzer.py:194 | [大盘] 涨:2575 跌:2754 平:149 涨停:39 跌停:12 成交额:9908亿
+2026-03-18 02:43:36 | INFO     | src/market_analyzer.py:204 | [大盘] 获取板块涨跌榜...
+2026-03-18 02:43:37 | WARNING  | data_provider/base.py:2181 | [TushareFetcher] 获取板块排行失败: 抱歉，您没有接口访问权限，权限的具体详情访问：https://tushare.pro/document/1?doc_id=108。
+2026-03-18 02:43:39 | INFO     | data_provider/efinance_fetcher.py:1007 | [API调用] ef.stock.get_realtime_quotes(['行业板块']) 获取板块行情...
+2026-03-18 02:43:41 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=5&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A90+t%3A2+f%3A%2150&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:43:41 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=5&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A90+t%3A2+f%3A%2150&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:43:42 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=5&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A90+t%3A2+f%3A%2150&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:43:42 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=5&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A90+t%3A2+f%3A%2150&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:43:43 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=5&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A90+t%3A2+f%3A%2150&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-18 02:43:43 | INFO     | data_provider/base.py:2157 | [EfinanceFetcher] 获取板块排行成功
+2026-03-18 02:43:43 | INFO     | src/market_analyzer.py:212 | [大盘] 领涨板块: ['通信应用增值服务', '通信服务', '印制电路板', '火力发电', '元件']
+2026-03-18 02:43:43 | INFO     | src/market_analyzer.py:213 | [大盘] 领跌板块: ['燃料电池', '粘胶', '油田服务', '氮肥', '油服工程']
+2026-03-18 02:43:43 | INFO     | src/market_analyzer.py:256 | [大盘] 开始搜索市场新闻...
+2026-03-18 02:43:43 | INFO     | src/search_service.py:1778 | 搜索股票新闻: 大盘(market), query='A股 大盘 复盘', 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=7), 目标条数=3, provider请求条数=6
+2026-03-18 02:43:44 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='A股 大盘 复盘'
+2026-03-18 02:43:44 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 5 条结果
+2026-03-18 02:43:44 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'A股 大盘 复盘' 成功，返回 5 条结果，耗时 1.02s
+2026-03-18 02:43:44 | INFO     | src/search_service.py:1720 | [新闻过滤] market:Bocha:stock_news: provider=Bocha, total=5, kept=1, drop_unknown=0, drop_old=4, drop_future=0, window=[2026-03-16,2026-03-19]
+2026-03-18 02:43:44 | INFO     | src/search_service.py:1816 | 使用 Bocha 搜索成功
+2026-03-18 02:43:44 | INFO     | src/market_analyzer.py:269 | [大盘] 搜索 'A股 大盘 复盘' 获取 1 条结果
+2026-03-18 02:43:44 | INFO     | src/search_service.py:1778 | 搜索股票新闻: 大盘(market), query='股市 行情 分析', 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=7), 目标条数=3, provider请求条数=6
+2026-03-18 02:43:45 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='股市 行情 分析'
+2026-03-18 02:43:45 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 2 条结果
+2026-03-18 02:43:45 | INFO     | src/search_service.py:237 | [Bocha] 搜索 '股市 行情 分析' 成功，返回 2 条结果，耗时 1.03s
+2026-03-18 02:43:45 | INFO     | src/search_service.py:1720 | [新闻过滤] market:Bocha:stock_news: provider=Bocha, total=2, kept=0, drop_unknown=0, drop_old=2, drop_future=0, window=[2026-03-16,2026-03-19]
+2026-03-18 02:43:45 | INFO     | src/search_service.py:1821 | Bocha 搜索成功但过滤后无有效新闻，继续尝试下一引擎
+2026-03-18 02:43:46 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='股市 行情 分析', 返回 6 条结果
+2026-03-18 02:43:46 | INFO     | src/search_service.py:237 | [Tavily] 搜索 '股市 行情 分析' 成功，返回 6 条结果，耗时 0.33s
+2026-03-18 02:43:46 | INFO     | src/search_service.py:1720 | [新闻过滤] market:Tavily:stock_news: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-16,2026-03-19]
+2026-03-18 02:43:46 | INFO     | src/search_service.py:1821 | Tavily 搜索成功但过滤后无有效新闻，继续尝试下一引擎
+2026-03-18 02:43:46 | INFO     | src/search_service.py:1778 | 搜索股票新闻: 大盘(market), query='A股 市场 热点 板块', 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=7), 目标条数=3, provider请求条数=6
+2026-03-18 02:43:47 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='A股 市场 热点 板块'
+2026-03-18 02:43:47 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-18 02:43:47 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'A股 市场 热点 板块' 成功，返回 6 条结果，耗时 1.03s
+2026-03-18 02:43:47 | INFO     | src/search_service.py:1720 | [新闻过滤] market:Bocha:stock_news: provider=Bocha, total=6, kept=0, drop_unknown=0, drop_old=6, drop_future=0, window=[2026-03-16,2026-03-19]
+2026-03-18 02:43:47 | INFO     | src/search_service.py:1821 | Bocha 搜索成功但过滤后无有效新闻，继续尝试下一引擎
+2026-03-18 02:43:47 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='A股 市场 热点 板块', 返回 6 条结果
+2026-03-18 02:43:47 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'A股 市场 热点 板块' 成功，返回 6 条结果，耗时 0.33s
+2026-03-18 02:43:47 | INFO     | src/search_service.py:1720 | [新闻过滤] market:Tavily:stock_news: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-16,2026-03-19]
+2026-03-18 02:43:47 | INFO     | src/search_service.py:1821 | Tavily 搜索成功但过滤后无有效新闻，继续尝试下一引擎
+2026-03-18 02:43:47 | INFO     | src/market_analyzer.py:271 | [大盘] 共获取 1 条市场新闻
+2026-03-18 02:43:47 | INFO     | src/market_analyzer.py:296 | [大盘] 调用大模型生成复盘报告...
+2026-03-18 02:43:47 | WARNING  | src/analyzer.py:850 | [LiteLLM] gemini-pro failed: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=gemini-pro
+ Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers
+2026-03-18 02:43:47 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3932 | 
+LiteLLM completion() model= gemini-2.5-flash; provider = vertex_ai
+2026-03-18 02:43:47 | ERROR    | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py:609 | Failed to load vertex credentials. Check to see if credentials containing partial/invalid information. Error: Google Cloud SDK not found. Install it with: pip install 'litellm[google]' or pip install google-cloud-aiplatform
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 226, in _credentials_from_default_auth
+    import google.auth as google_auth
+ModuleNotFoundError: No module named 'google.auth'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 605, in get_access_token
+    _credentials, credential_project_id = self.load_auth(
+                                          ^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 163, in load_auth
+    creds, creds_project_id = self._credentials_from_default_auth(
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 228, in _credentials_from_default_auth
+    raise ImportError(GOOGLE_IMPORT_ERROR_MESSAGE)
+ImportError: Google Cloud SDK not found. Install it with: pip install 'litellm[google]' or pip install google-cloud-aiplatform
+2026-03-18 02:43:47 | WARNING  | src/analyzer.py:850 | [LiteLLM] gemini-2.5-flash failed: litellm.APIConnectionError: Google Cloud SDK not found. Install it with: pip install 'litellm[google]' or pip install google-cloud-aiplatform
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 226, in _credentials_from_default_auth
+    import google.auth as google_auth
+ModuleNotFoundError: No module named 'google.auth'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/main.py", line 3509, in completion
+    model_response = vertex_chat_completion.completion(  # type: ignore
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py", line 2792, in completion
+    _auth_header, vertex_project = self._ensure_access_token(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 343, in _ensure_access_token
+    return self.get_access_token(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 612, in get_access_token
+    raise e
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 605, in get_access_token
+    _credentials, credential_project_id = self.load_auth(
+                                          ^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 163, in load_auth
+    creds, creds_project_id = self._credentials_from_default_auth(
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 228, in _credentials_from_default_auth
+    raise ImportError(GOOGLE_IMPORT_ERROR_MESSAGE)
+ImportError: Google Cloud SDK not found. Install it with: pip install 'litellm[google]' or pip install google-cloud-aiplatform
+
+2026-03-18 02:43:47 | WARNING  | src/analyzer.py:850 | [LiteLLM] deepseek-chat failed: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=deepseek-chat
+ Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers
+2026-03-18 02:43:47 | ERROR    | src/analyzer.py:887 | [generate_text] LLM call failed: All LLM models failed (tried 3 model(s)). Last error: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=deepseek-chat
+ Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers
+2026-03-18 02:43:47 | WARNING  | src/market_analyzer.py:305 | [大盘] 大模型返回为空，使用模板报告
+2026-03-18 02:43:47 | INFO     | src/market_analyzer.py:691 | ========== 大盘复盘分析完成 ==========
+2026-03-18 02:43:47 | INFO     | src/notification.py:1655 | 日报已保存到: /home/runner/work/daily_stock_analysis/daily_stock_analysis/reports/market_review_20260318.md
+2026-03-18 02:43:47 | INFO     | src/core/market_review.py:97 | 大盘复盘报告已保存: /home/runner/work/daily_stock_analysis/daily_stock_analysis/reports/market_review_20260318.md
+2026-03-18 02:43:47 | INFO     | main.py:372 | 
+===== 分析结果摘要 =====
+2026-03-18 02:43:47 | INFO     | main.py:375 | 🟡 Philip Morris International Inc(PM): 持有 | 评分 50 | 震荡
+2026-03-18 02:43:47 | INFO     | main.py:375 | 🟡 格力电器(000651): 持有 | 评分 50 | 震荡
+2026-03-18 02:43:47 | INFO     | main.py:380 | 
+任务执行完成
+2026-03-18 02:43:49 | INFO     | main.py:426 | 开始自动回测...
+2026-03-18 02:43:49 | INFO     | main.py:434 | 自动回测完成: processed=0 saved=0 completed=0 insufficient=0 errors=0
+2026-03-18 02:43:49 | INFO     | main.py:697 | 
+程序执行完成
