@@ -4862,3 +4862,194 @@ ImportError: Google Cloud SDK not found. Install it with: pip install 'litellm[g
 2026-03-18 02:43:49 | INFO     | main.py:434 | 自动回测完成: processed=0 saved=0 completed=0 insufficient=0 errors=0
 2026-03-18 02:43:49 | INFO     | main.py:697 | 
 程序执行完成
+2026-03-18 02:49:40 | INFO     | src/logging_config.py:153 | 日志系统初始化完成，日志目录: logs
+2026-03-18 02:49:40 | INFO     | src/logging_config.py:154 | 常规日志: logs/stock_analysis_20260318.log
+2026-03-18 02:49:40 | INFO     | src/logging_config.py:155 | 调试日志: logs/stock_analysis_debug_20260318.log
+2026-03-18 02:49:40 | INFO     | main.py:526 | ============================================================
+2026-03-18 02:49:40 | INFO     | main.py:527 | A股自选股智能分析系统 启动
+2026-03-18 02:49:40 | INFO     | main.py:528 | 运行时间: 2026-03-18 02:49:40
+2026-03-18 02:49:40 | INFO     | main.py:529 | ============================================================
+2026-03-18 02:49:40 | WARNING  | main.py:534 | 未配置通知渠道，将不发送推送通知
+2026-03-18 02:49:41 | INFO     | src/storage.py:675 | 数据库初始化完成: sqlite:////home/runner/work/daily_stock_analysis/daily_stock_analysis/data/stock_analysis.db
+2026-03-18 02:49:41 | INFO     | data_provider/tushare_fetcher.py:141 | Tushare API 初始化成功
+2026-03-18 02:49:41 | INFO     | data_provider/tushare_fetcher.py:198 | ✅ 检测到 TUSHARE_TOKEN 且 API 初始化成功，Tushare 数据源优先级提升为最高 (Priority -1)
+2026-03-18 02:49:41 | INFO     | data_provider/base.py:706 | 已初始化 6 个数据源（按优先级）: TushareFetcher(P-1), EfinanceFetcher(P0), AkshareFetcher(P1), PytdxFetcher(P2), BaostockFetcher(P3), YfinanceFetcher(P4)
+2026-03-18 02:49:41 | INFO     | src/analyzer.py:766 | Analyzer LLM: litellm initialized (model=gemini-pro, API key from environment)
+2026-03-18 02:49:41 | WARNING  | src/notification.py:155 | 未配置有效的通知渠道，将不发送推送通知
+2026-03-18 02:49:41 | INFO     | src/search_service.py:1398 | 已配置 Bocha 搜索，共 1 个 API Key
+2026-03-18 02:49:41 | INFO     | src/search_service.py:1403 | 已配置 Tavily 搜索，共 1 个 API Key
+2026-03-18 02:49:41 | INFO     | src/search_service.py:1432 | 新闻时效策略已启用: profile=short, profile_days=3, NEWS_MAX_AGE_DAYS=10, effective_window=3
+2026-03-18 02:49:41 | INFO     | src/core/pipeline.py:97 | 调度器初始化完成，最大并发数: 1
+2026-03-18 02:49:41 | INFO     | src/core/pipeline.py:98 | 已启用趋势分析器 (MA5>MA10>MA20 多头判断)
+2026-03-18 02:49:41 | INFO     | src/core/pipeline.py:101 | 实时行情已启用 (优先级: tushare,tencent,akshare_sina,efinance,akshare_em)
+2026-03-18 02:49:41 | INFO     | src/core/pipeline.py:105 | 筹码分布分析已启用
+2026-03-18 02:49:41 | INFO     | src/core/pipeline.py:109 | 搜索服务已启用 (Tavily/SerpAPI)
+2026-03-18 02:49:41 | INFO     | src/core/pipeline.py:1120 | ===== 开始分析 2 只股票 =====
+2026-03-18 02:49:41 | INFO     | src/core/pipeline.py:1121 | 股票列表: PM, 000651
+2026-03-18 02:49:41 | INFO     | src/core/pipeline.py:1122 | 并发数: 1, 模式: 完整分析
+2026-03-18 02:49:41 | WARNING  | data_provider/tushare_fetcher.py:354 | 无法确定股票 PM 的市场，默认使用深市
+2026-03-18 02:49:42 | WARNING  | data_provider/tushare_fetcher.py:528 | Tushare 获取股票名称失败 PM: 抱歉，您每小时最多访问该接口1次，权限的具体详情访问：https://tushare.pro/document/1?doc_id=108。
+2026-03-18 02:50:18 | WARNING  | data_provider/pytdx_fetcher.py:403 | Pytdx 获取股票名称失败 PM: Pytdx 无法连接任何服务器
+2026-03-18 02:50:18 | WARNING  | data_provider/baostock_fetcher.py:165 | 无法确定股票 PM 的市场，默认使用深市
+2026-03-18 02:50:19 | WARNING  | data_provider/base.py:1240 | [股票名称] 所有数据源都无法获取 PM 的名称
+2026-03-18 02:50:19 | WARNING  | data_provider/tushare_fetcher.py:528 | Tushare 获取股票名称失败 000651: 抱歉，您每分钟最多访问该接口1次，权限的具体详情访问：https://tushare.pro/document/1?doc_id=108。
+2026-03-18 02:50:55 | WARNING  | data_provider/pytdx_fetcher.py:403 | Pytdx 获取股票名称失败 000651: Pytdx 无法连接任何服务器
+2026-03-18 02:50:58 | INFO     | data_provider/base.py:1233 | [股票名称] 从 BaostockFetcher 获取: 000651 -> 格力电器
+2026-03-18 02:50:58 | INFO     | src/core/pipeline.py:1027 | ========== 开始处理 PM ==========
+2026-03-18 02:50:59 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 PM 实时行情成功: 价格=172.8300018310547
+2026-03-18 02:50:59 | INFO     | data_provider/base.py:968 | [实时行情] 美股 PM 成功获取 (来源: yfinance)
+2026-03-18 02:50:59 | INFO     | data_provider/base.py:1219 | [股票名称] 从实时行情获取: PM -> Philip Morris International Inc
+2026-03-18 02:50:59 | INFO     | src/core/pipeline.py:158 | Philip Morris International Inc(PM) 开始从数据源获取数据...
+2026-03-18 02:50:59 | INFO     | data_provider/base.py:756 | [数据源尝试 6/6] [YfinanceFetcher] 美股/美股指数 PM 直接路由...
+2026-03-18 02:50:59 | INFO     | data_provider/base.py:357 | [YfinanceFetcher] 开始获取 PM 日线数据: 范围=2026-01-17 ~ 2026-03-18
+2026-03-18 02:50:59 | INFO     | data_provider/base.py:376 | [YfinanceFetcher] PM 获取成功: 范围=2026-01-17 ~ 2026-03-18, rows=40, elapsed=0.09s
+2026-03-18 02:50:59 | INFO     | data_provider/base.py:768 | [数据源完成] PM 使用 [YfinanceFetcher] 获取成功: rows=40, elapsed=0.09s
+2026-03-18 02:50:59 | INFO     | src/storage.py:1387 | 保存 PM 数据成功，新增 40 条
+2026-03-18 02:50:59 | INFO     | src/core/pipeline.py:166 | Philip Morris International Inc(PM) 数据保存成功（来源: YfinanceFetcher，新增 40 条）
+2026-03-18 02:50:59 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 PM 实时行情成功: 价格=172.8300018310547
+2026-03-18 02:50:59 | INFO     | data_provider/base.py:968 | [实时行情] 美股 PM 成功获取 (来源: yfinance)
+2026-03-18 02:50:59 | INFO     | src/core/pipeline.py:210 | Philip Morris International Inc(PM) 实时行情: 价格=172.8300018310547, 量比=None, 换手率=None% (来源: fallback)
+2026-03-18 02:50:59 | WARNING  | data_provider/tushare_fetcher.py:1055 | [Tushare] TushareFetcher 不支持美股 PM 的筹码分布
+2026-03-18 02:50:59 | WARNING  | data_provider/base.py:1180 | [筹码分布] PM 所有数据源均失败
+2026-03-18 02:50:59 | INFO     | src/core/pipeline.py:284 | Philip Morris International Inc(PM) 趋势分析: 弱势多头, 买入信号=买入, 评分=63
+2026-03-18 02:50:59 | INFO     | src/core/pipeline.py:305 | Philip Morris International Inc(PM) 开始多维度情报搜索...
+2026-03-18 02:50:59 | INFO     | src/search_service.py:1966 | 开始多维度情报搜索: Philip Morris International Inc(PM), 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=10), 目标条数=3, provider请求条数=6
+2026-03-18 02:50:59 | INFO     | src/search_service.py:1995 | [情报搜索] 最新消息: 使用 Bocha
+2026-03-18 02:51:01 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Philip Morris International Inc PM latest news events'
+2026-03-18 02:51:01 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-18 02:51:01 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Philip Morris International Inc PM latest news events' 成功，返回 6 条结果，耗时 2.03s
+2026-03-18 02:51:01 | INFO     | src/search_service.py:1720 | [新闻过滤] PM:Bocha:latest_news: provider=Bocha, total=6, kept=0, drop_unknown=0, drop_old=6, drop_future=0, window=[2026-03-16,2026-03-19]
+2026-03-18 02:51:01 | INFO     | src/search_service.py:2012 | [情报搜索] 最新消息: 原始=6条, 过滤后=0条
+2026-03-18 02:51:02 | INFO     | src/search_service.py:1995 | [情报搜索] 机构分析: 使用 Tavily
+2026-03-18 02:51:03 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='Philip Morris International Inc analyst rating target price report', 返回 6 条结果
+2026-03-18 02:51:03 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'Philip Morris International Inc analyst rating target price report' 成功，返回 6 条结果，耗时 1.31s
+2026-03-18 02:51:03 | INFO     | src/search_service.py:1720 | [新闻过滤] PM:Tavily:market_analysis: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-16,2026-03-19]
+2026-03-18 02:51:03 | INFO     | src/search_service.py:2012 | [情报搜索] 机构分析: 原始=6条, 过滤后=0条
+2026-03-18 02:51:04 | INFO     | src/search_service.py:1995 | [情报搜索] 风险排查: 使用 Bocha
+2026-03-18 02:51:05 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Philip Morris International Inc risk insider selling lawsuit litigation'
+2026-03-18 02:51:05 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-18 02:51:05 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Philip Morris International Inc risk insider selling lawsuit litigation' 成功，返回 6 条结果，耗时 1.42s
+2026-03-18 02:51:05 | INFO     | src/search_service.py:1720 | [新闻过滤] PM:Bocha:risk_check: provider=Bocha, total=6, kept=1, drop_unknown=0, drop_old=5, drop_future=0, window=[2026-03-16,2026-03-19]
+2026-03-18 02:51:05 | INFO     | src/search_service.py:2012 | [情报搜索] 风险排查: 原始=6条, 过滤后=1条
+2026-03-18 02:51:06 | INFO     | src/search_service.py:1995 | [情报搜索] 业绩预期: 使用 Tavily
+2026-03-18 02:51:07 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='Philip Morris International Inc earnings revenue profit growth forecast', 返回 6 条结果
+2026-03-18 02:51:07 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'Philip Morris International Inc earnings revenue profit growth forecast' 成功，返回 6 条结果，耗时 1.33s
+2026-03-18 02:51:07 | INFO     | src/search_service.py:1720 | [新闻过滤] PM:Tavily:earnings: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-16,2026-03-19]
+2026-03-18 02:51:07 | INFO     | src/search_service.py:2012 | [情报搜索] 业绩预期: 原始=6条, 过滤后=0条
+2026-03-18 02:51:07 | INFO     | src/search_service.py:1995 | [情报搜索] 行业分析: 使用 Bocha
+2026-03-18 02:51:09 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Philip Morris International Inc industry competitors market share outlook'
+2026-03-18 02:51:09 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-18 02:51:09 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Philip Morris International Inc industry competitors market share outlook' 成功，返回 6 条结果，耗时 1.35s
+2026-03-18 02:51:09 | INFO     | src/search_service.py:1720 | [新闻过滤] PM:Bocha:industry: provider=Bocha, total=6, kept=1, drop_unknown=0, drop_old=5, drop_future=0, window=[2026-03-16,2026-03-19]
+2026-03-18 02:51:09 | INFO     | src/search_service.py:2012 | [情报搜索] 行业分析: 原始=6条, 过滤后=1条
+2026-03-18 02:51:09 | INFO     | src/core/pipeline.py:320 | Philip Morris International Inc(PM) 情报搜索完成: 共 2 条结果
+2026-03-18 02:51:09 | INFO     | src/storage.py:922 | 保存新闻情报成功: PM, 新增 1 条
+2026-03-18 02:51:09 | INFO     | src/storage.py:922 | 保存新闻情报成功: PM, 新增 1 条
+2026-03-18 02:51:24 | INFO     | src/analyzer.py:952 | ========== AI 分析 Philip Morris International Inc(PM) ==========
+2026-03-18 02:51:24 | INFO     | src/analyzer.py:953 | [LLM配置] 模型: gemini-pro
+2026-03-18 02:51:24 | INFO     | src/analyzer.py:954 | [LLM配置] Prompt 长度: 3117 字符
+2026-03-18 02:51:24 | INFO     | src/analyzer.py:955 | [LLM配置] 是否包含新闻: 是
+2026-03-18 02:51:24 | INFO     | src/analyzer.py:959 | [LLM Prompt 预览]
+# 决策仪表盘分析请求
+
+## 📊 股票基础信息
+| 项目 | 数据 |
+|------|------|
+| 股票代码 | **PM** |
+| 股票名称 | **Philip Morris International Inc** |
+| 分析日期 | 2026-03-18 |
+
+---
+
+## 📈 技术面数据
+
+### 今日行情
+| 指标 | 数值 |
+|------|------|
+| 收盘价 | 172.8300018310547 元 |
+| 开盘价 | 176.14999389648438 元 |
+| 最高价 | 176.7989959716797 元 |
+| 最低价 | 172.52000427246094 元 |
+| 涨跌幅 | -1.35% |
+| 成交量 | 342.80 万股 |
+| 成交额 | 5.92 亿元 |
+
+### 均线系统（关键判断指标）
+| 均线 | 数值 | 说明 |
+|------|------|------|
+| MA5 | 173.4200012207031 | 短期趋势线 |
+| MA10 | 171.9739990234375 | 中短期趋势...
+2026-03-18 02:51:24 | INFO     | src/analyzer.py:968 | [LLM调用] 开始调用 gemini-pro...
+2026-03-18 02:51:24 | WARNING  | src/analyzer.py:850 | [LiteLLM] gemini-pro failed: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=gemini-pro
+ Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers
+2026-03-18 02:51:24 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3932 | 
+LiteLLM completion() model= gemini-2.5-flash; provider = vertex_ai
+2026-03-18 02:51:24 | ERROR    | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py:609 | Failed to load vertex credentials. Check to see if credentials containing partial/invalid information. Error: Google Cloud SDK not found. Install it with: pip install 'litellm[google]' or pip install google-cloud-aiplatform
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 226, in _credentials_from_default_auth
+    import google.auth as google_auth
+ModuleNotFoundError: No module named 'google.auth'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 605, in get_access_token
+    _credentials, credential_project_id = self.load_auth(
+                                          ^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 163, in load_auth
+    creds, creds_project_id = self._credentials_from_default_auth(
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 228, in _credentials_from_default_auth
+    raise ImportError(GOOGLE_IMPORT_ERROR_MESSAGE)
+ImportError: Google Cloud SDK not found. Install it with: pip install 'litellm[google]' or pip install google-cloud-aiplatform
+2026-03-18 02:51:24 | WARNING  | src/analyzer.py:850 | [LiteLLM] gemini-2.5-flash failed: litellm.APIConnectionError: Google Cloud SDK not found. Install it with: pip install 'litellm[google]' or pip install google-cloud-aiplatform
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 226, in _credentials_from_default_auth
+    import google.auth as google_auth
+ModuleNotFoundError: No module named 'google.auth'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/main.py", line 3509, in completion
+    model_response = vertex_chat_completion.completion(  # type: ignore
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py", line 2792, in completion
+    _auth_header, vertex_project = self._ensure_access_token(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 343, in _ensure_access_token
+    return self.get_access_token(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 612, in get_access_token
+    raise e
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 605, in get_access_token
+    _credentials, credential_project_id = self.load_auth(
+                                          ^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 163, in load_auth
+    creds, creds_project_id = self._credentials_from_default_auth(
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/vertex_llm_base.py", line 228, in _credentials_from_default_auth
+    raise ImportError(GOOGLE_IMPORT_ERROR_MESSAGE)
+ImportError: Google Cloud SDK not found. Install it with: pip install 'litellm[google]' or pip install google-cloud-aiplatform
+
+2026-03-18 02:51:25 | WARNING  | src/analyzer.py:850 | [LiteLLM] deepseek-chat failed: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=deepseek-chat
+ Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers
+2026-03-18 02:51:25 | ERROR    | src/analyzer.py:1030 | AI 分析 Philip Morris International Inc(PM) 失败: All LLM models failed (tried 3 model(s)). Last error: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=deepseek-chat
+ Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers
+2026-03-18 02:51:25 | INFO     | src/analyzer.py:243 | [price_position] Filled placeholder fields from computed data
+2026-03-18 02:51:25 | WARNING  | src/core/pipeline.py:1047 | [PM] 分析未成功: All LLM models failed (tried 3 model(s)). Last error: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=deepseek-chat
+ Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers
+2026-03-18 02:51:25 | INFO     | src/core/pipeline.py:1027 | ========== 开始处理 000651 ==========
+2026-03-18 02:51:25 | INFO     | src/core/pipeline.py:158 | 格力电器(000651) 开始从数据源获取数据...
+2026-03-18 02:51:25 | INFO     | data_provider/base.py:790 | [数据源尝试 1/6] [TushareFetcher] 获取 000651...
+2026-03-18 02:51:25 | INFO     | data_provider/base.py:357 | [TushareFetcher] 开始获取 000651 日线数据: 范围=2026-01-17 ~ 2026-03-18
+2026-03-18 02:51:25 | INFO     | data_provider/base.py:376 | [TushareFetcher] 000651 获取成功: 范围=2026-01-17 ~ 2026-03-18, rows=36, elapsed=0.73s
+2026-03-18 02:51:25 | INFO     | data_provider/base.py:800 | [数据源完成] 000651 使用 [TushareFetcher] 获取成功: rows=36, elapsed=0.73s
+2026-03-18 02:51:25 | INFO     | src/storage.py:1387 | 保存 000651 数据成功，新增 36 条
+2026-03-18 02:51:25 | INFO     | src/core/pipeline.py:166 | 格力电器(000651) 数据保存成功（来源: TushareFetcher，新增 36 条）
+2026-03-18 02:51:27 | INFO     | data_provider/base.py:1054 | [实时行情] 000651 成功获取 (来源: tushare)
+2026-03-18 02:51:27 | INFO     | data_provider/akshare_fetcher.py:1099 | [API调用] 腾讯财经接口获取 000651 实时行情: endpoint=qt.gtimg.cn/q, symbol=sz000651
+2026-03-18 02:51:30 | INFO     | data_provider/akshare_fetcher.py:1204 | [实时行情-腾讯] 000651 格力电器: endpoint=qt.gtimg.cn/q, 价格=38.98, 涨跌=0.1%, 量比=1.22, 换手率=0.3%, elapsed=3.12s
+2026-03-18 02:51:30 | INFO     | data_provider/base.py:1069 | [实时行情] 000651 从 tencent 补充了缺失字段: ['volume_ratio', 'turnover_rate', 'pe_ratio', 'pb_ratio', 'total_mv', 'circ_mv', 'amplitude']
+2026-03-18 02:51:30 | INFO     | src/core/pipeline.py:210 | 格力电器(000651) 实时行情: 价格=38.98, 量比=1.22, 换手率=0.3% (来源: tushare)
+2026-03-18 02:51:30 | WARNING  | data_provider/tushare_fetcher.py:1107 | [Tushare] 获取筹码分布失败 000651: 抱歉，您没有接口访问权限，权限的具体详情访问：https://tushare.pro/document/1?doc_id=108。
