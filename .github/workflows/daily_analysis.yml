@@ -32,7 +32,7 @@ jobs:
           TAVILY_API_KEYS: ${{ secrets.TAVILY_API_KEYS }}
           STOCK_LIST: ${{ vars.STOCK_LIST || secrets.STOCK_LIST }}
           LOG_LEVEL: INFO
-          MAX_WORKERS: '1'
+          MAX_WORKERS: '5'
           NEWS_MAX_AGE_DAYS: '30'
           LITELLM_CONFIG: "./litellm_config.yaml"
         run: |
