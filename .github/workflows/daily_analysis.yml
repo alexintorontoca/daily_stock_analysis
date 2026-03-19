@@ -25,13 +25,14 @@ jobs:
       
       - name: 执行股票分析
         env:
-          # 1. 密钥注入 (供配置文件引用)
+          # 1. 密钥注入
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           BOCHA_API_KEYS: ${{ secrets.BOCHA_API_KEYS }}
           TAVILY_API_KEYS: ${{ secrets.TAVILY_API_KEYS }}
           
           # 2. 运行参数
+          # 确保环境变量中的 STOCK_LIST 是纯代码列表：PM,ENB,688249,000651...
           STOCK_LIST: ${{ vars.STOCK_LIST || secrets.STOCK_LIST }}
           LOG_LEVEL: INFO
           MAX_WORKERS: '1'
@@ -44,21 +45,18 @@ jobs:
           ${{ secrets.LITELLM_CONFIG_YAML }}
           EOF
 
-          # --- B. 动态干预数据源 (物理隔离方案) ---
-          # 既然代码里 base.py 强制初始化 6 个，我们用脚本强制把 Yfinance 和 Baostock 提到最前面
-          # 同时禁用掉会卡住的 Pytdx 和需要 Token 的 Tushare
-          export ENABLED_FETCHERS="yfinance,baostock"
-          export DATA_SOURCE_PRIORITY="yfinance,baostock"
-          
-          # 如果你的代码通过环境变量无法彻底禁用，这里执行一个“无损手术”：
-          # 临时将 pytdx_fetcher.py 里的初始化逻辑屏蔽 (仅在本次 Action 运行中有效)
-          sed -i 's/self.connect()/pass # 屏蔽连接/g' data_provider/pytdx_fetcher.py || true
+          # --- B. 屏蔽 Pytdx 延迟 (物理隔离) ---
+          # 哪怕以后 mapping 漏了，也要防止 Pytdx 尝试连接服务器导致超长的等待
+          sed -i 's/def connect(self):/def connect(self):\n        return False/g' data_provider/pytdx_fetcher.py || true
 
-          echo "🚀 启动分析，当前优先级: $DATA_SOURCE_PRIORITY"
-          
-          # --- C. 启动主程序 ---
-          # 确保 Tushare 不干扰
+          # --- C. 优先级与环境清理 ---
+          # 只要 STOCK_NAME_MAP 补全了，yfinance 会自动处理美股，baostock 处理 A 股
+          export DATA_SOURCE_PRIORITY="yfinance,baostock,efinance"
           unset TUSHARE_TOKEN
+
+          echo "🚀 启动分析，当前代码库已加载手动 Stock Mapping"
+          
+          # --- D. 启动主程序 ---
           python main.py
 
       - name: 提交并推送报告
