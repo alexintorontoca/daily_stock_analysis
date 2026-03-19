@@ -1152,3 +1152,51 @@ LiteLLM completion() model= gemini-3-flash-preview; provider = gemini
 2026-03-19 01:12:25 | INFO     | data_provider/akshare_fetcher.py:1602 | [API调用] ak.stock_zh_a_spot_em() 获取市场统计...
 2026-03-19 01:12:33 | WARNING  | data_provider/akshare_fetcher.py:1607 | [Akshare] 东财接口获取市场统计失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))，尝试新浪接口
 2026-03-19 01:12:35 | INFO     | data_provider/akshare_fetcher.py:1614 | [API调用] ak.stock_zh_a_spot() 获取市场统计(新浪)...
+2026-03-19 01:24:21 | INFO     | src/logging_config.py:153 | 日志系统初始化完成，日志目录: logs
+2026-03-19 01:24:21 | INFO     | src/logging_config.py:154 | 常规日志: logs/stock_analysis_20260319.log
+2026-03-19 01:24:21 | INFO     | src/logging_config.py:155 | 调试日志: logs/stock_analysis_debug_20260319.log
+2026-03-19 01:24:21 | INFO     | main.py:526 | ============================================================
+2026-03-19 01:24:21 | INFO     | main.py:527 | A股自选股智能分析系统 启动
+2026-03-19 01:24:21 | INFO     | main.py:528 | 运行时间: 2026-03-19 01:24:21
+2026-03-19 01:24:21 | INFO     | main.py:529 | ============================================================
+2026-03-19 01:24:21 | WARNING  | main.py:534 | 未配置 Tushare Token，将使用其他数据源
+2026-03-19 01:24:21 | WARNING  | main.py:534 | 未配置通知渠道，将不发送推送通知
+2026-03-19 01:24:21 | INFO     | src/storage.py:675 | 数据库初始化完成: sqlite:////home/runner/work/daily_stock_analysis/daily_stock_analysis/data/stock_analysis.db
+2026-03-19 01:24:21 | WARNING  | data_provider/tushare_fetcher.py:124 | Tushare Token 未配置，此数据源不可用
+2026-03-19 01:24:21 | INFO     | data_provider/base.py:706 | 已初始化 6 个数据源（按优先级）: EfinanceFetcher(P0), AkshareFetcher(P1), TushareFetcher(P2), PytdxFetcher(P2), BaostockFetcher(P3), YfinanceFetcher(P4)
+2026-03-19 01:24:21 | INFO     | src/analyzer.py:764 | Analyzer LLM: litellm initialized (model=gemini/gemini-3-flash-preview)
+2026-03-19 01:24:21 | WARNING  | src/notification.py:155 | 未配置有效的通知渠道，将不发送推送通知
+2026-03-19 01:24:21 | INFO     | src/search_service.py:1398 | 已配置 Bocha 搜索，共 1 个 API Key
+2026-03-19 01:24:21 | INFO     | src/search_service.py:1403 | 已配置 Tavily 搜索，共 1 个 API Key
+2026-03-19 01:24:21 | INFO     | src/search_service.py:1432 | 新闻时效策略已启用: profile=short, profile_days=3, NEWS_MAX_AGE_DAYS=30, effective_window=3
+2026-03-19 01:24:21 | INFO     | src/core/pipeline.py:97 | 调度器初始化完成，最大并发数: 1
+2026-03-19 01:24:21 | INFO     | src/core/pipeline.py:98 | 已启用趋势分析器 (MA5>MA10>MA20 多头判断)
+2026-03-19 01:24:21 | INFO     | src/core/pipeline.py:101 | 实时行情已启用 (优先级: tencent,akshare_sina,efinance,akshare_em)
+2026-03-19 01:24:21 | INFO     | src/core/pipeline.py:105 | 筹码分布分析已启用
+2026-03-19 01:24:21 | INFO     | src/core/pipeline.py:109 | 搜索服务已启用 (Tavily/SerpAPI)
+2026-03-19 01:24:21 | INFO     | src/core/pipeline.py:1120 | ===== 开始分析 22 只股票 =====
+2026-03-19 01:24:21 | INFO     | src/core/pipeline.py:1121 | 股票列表: PM, ENB, ADUS, MMM, MSFT, COST, ABBV, GLD, PFE, O, BIOA, VZ, 688249, 002756, 600183, 603271, 300684, 002126, 603197, 002773, 001335, 000651
+2026-03-19 01:24:21 | INFO     | src/core/pipeline.py:1122 | 并发数: 1, 模式: 完整分析
+2026-03-19 01:24:21 | INFO     | data_provider/base.py:884 | [预取] 当前优先级使用轻量级数据源(sina/tencent)，无需预取
+2026-03-19 01:24:21 | WARNING  | data_provider/tushare_fetcher.py:487 | Tushare API 未初始化，无法获取股票名称
+2026-03-19 01:24:57 | WARNING  | data_provider/pytdx_fetcher.py:403 | Pytdx 获取股票名称失败 688249: Pytdx 无法连接任何服务器
+2026-03-19 01:24:59 | INFO     | data_provider/base.py:1233 | [股票名称] 从 BaostockFetcher 获取: 688249 -> 晶合集成
+2026-03-19 01:24:59 | WARNING  | data_provider/tushare_fetcher.py:487 | Tushare API 未初始化，无法获取股票名称
+2026-03-19 01:25:34 | WARNING  | data_provider/pytdx_fetcher.py:403 | Pytdx 获取股票名称失败 002756: Pytdx 无法连接任何服务器
+2026-03-19 01:25:37 | INFO     | data_provider/base.py:1233 | [股票名称] 从 BaostockFetcher 获取: 002756 -> 永兴材料
+2026-03-19 01:25:37 | WARNING  | data_provider/tushare_fetcher.py:487 | Tushare API 未初始化，无法获取股票名称
+2026-03-19 01:26:12 | WARNING  | data_provider/pytdx_fetcher.py:403 | Pytdx 获取股票名称失败 600183: Pytdx 无法连接任何服务器
+2026-03-19 01:26:14 | INFO     | data_provider/base.py:1233 | [股票名称] 从 BaostockFetcher 获取: 600183 -> 生益科技
+2026-03-19 01:26:14 | WARNING  | data_provider/tushare_fetcher.py:487 | Tushare API 未初始化，无法获取股票名称
+2026-03-19 01:26:49 | WARNING  | data_provider/pytdx_fetcher.py:403 | Pytdx 获取股票名称失败 603271: Pytdx 无法连接任何服务器
+2026-03-19 01:26:50 | INFO     | data_provider/base.py:1233 | [股票名称] 从 BaostockFetcher 获取: 603271 -> 永杰新材
+2026-03-19 01:26:50 | WARNING  | data_provider/tushare_fetcher.py:487 | Tushare API 未初始化，无法获取股票名称
+2026-03-19 01:27:26 | WARNING  | data_provider/pytdx_fetcher.py:403 | Pytdx 获取股票名称失败 300684: Pytdx 无法连接任何服务器
+2026-03-19 01:27:27 | INFO     | data_provider/base.py:1233 | [股票名称] 从 BaostockFetcher 获取: 300684 -> 中石科技
+2026-03-19 01:27:27 | WARNING  | data_provider/tushare_fetcher.py:487 | Tushare API 未初始化，无法获取股票名称
+2026-03-19 01:28:03 | WARNING  | data_provider/pytdx_fetcher.py:403 | Pytdx 获取股票名称失败 002126: Pytdx 无法连接任何服务器
+2026-03-19 01:28:04 | INFO     | data_provider/base.py:1233 | [股票名称] 从 BaostockFetcher 获取: 002126 -> 银轮股份
+2026-03-19 01:28:04 | WARNING  | data_provider/tushare_fetcher.py:487 | Tushare API 未初始化，无法获取股票名称
+2026-03-19 01:28:39 | WARNING  | data_provider/pytdx_fetcher.py:403 | Pytdx 获取股票名称失败 603197: Pytdx 无法连接任何服务器
+2026-03-19 01:28:42 | INFO     | data_provider/base.py:1233 | [股票名称] 从 BaostockFetcher 获取: 603197 -> 保隆科技
+2026-03-19 01:28:42 | WARNING  | data_provider/tushare_fetcher.py:487 | Tushare API 未初始化，无法获取股票名称
