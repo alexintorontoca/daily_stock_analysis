@@ -1,0 +1,359 @@
+2026-03-19 00:25:43 | INFO     | src/logging_config.py:153 | 日志系统初始化完成，日志目录: logs
+2026-03-19 00:25:43 | INFO     | src/logging_config.py:154 | 常规日志: logs/stock_analysis_20260319.log
+2026-03-19 00:25:43 | INFO     | src/logging_config.py:155 | 调试日志: logs/stock_analysis_debug_20260319.log
+2026-03-19 00:25:43 | INFO     | main.py:526 | ============================================================
+2026-03-19 00:25:43 | INFO     | main.py:527 | A股自选股智能分析系统 启动
+2026-03-19 00:25:43 | INFO     | main.py:528 | 运行时间: 2026-03-19 00:25:43
+2026-03-19 00:25:43 | INFO     | main.py:529 | ============================================================
+2026-03-19 00:25:43 | WARNING  | main.py:534 | 未配置 Tushare Token，将使用其他数据源
+2026-03-19 00:25:43 | WARNING  | main.py:534 | 未配置通知渠道，将不发送推送通知
+2026-03-19 00:25:44 | INFO     | src/storage.py:675 | 数据库初始化完成: sqlite:////home/runner/work/daily_stock_analysis/daily_stock_analysis/data/stock_analysis.db
+2026-03-19 00:25:44 | WARNING  | data_provider/tushare_fetcher.py:124 | Tushare Token 未配置，此数据源不可用
+2026-03-19 00:25:44 | INFO     | data_provider/base.py:706 | 已初始化 6 个数据源（按优先级）: EfinanceFetcher(P0), AkshareFetcher(P1), TushareFetcher(P2), PytdxFetcher(P2), BaostockFetcher(P3), YfinanceFetcher(P4)
+2026-03-19 00:25:44 | INFO     | src/analyzer.py:764 | Analyzer LLM: litellm initialized (model=gemini/gemini-3-flash-preview)
+2026-03-19 00:25:44 | WARNING  | src/notification.py:155 | 未配置有效的通知渠道，将不发送推送通知
+2026-03-19 00:25:44 | INFO     | src/search_service.py:1398 | 已配置 Bocha 搜索，共 1 个 API Key
+2026-03-19 00:25:44 | INFO     | src/search_service.py:1403 | 已配置 Tavily 搜索，共 1 个 API Key
+2026-03-19 00:25:44 | INFO     | src/search_service.py:1432 | 新闻时效策略已启用: profile=short, profile_days=3, NEWS_MAX_AGE_DAYS=30, effective_window=3
+2026-03-19 00:25:44 | INFO     | src/core/pipeline.py:97 | 调度器初始化完成，最大并发数: 1
+2026-03-19 00:25:44 | INFO     | src/core/pipeline.py:98 | 已启用趋势分析器 (MA5>MA10>MA20 多头判断)
+2026-03-19 00:25:44 | INFO     | src/core/pipeline.py:101 | 实时行情已启用 (优先级: tencent,akshare_sina,efinance,akshare_em)
+2026-03-19 00:25:44 | INFO     | src/core/pipeline.py:105 | 筹码分布分析已启用
+2026-03-19 00:25:44 | INFO     | src/core/pipeline.py:109 | 搜索服务已启用 (Tavily/SerpAPI)
+2026-03-19 00:25:44 | INFO     | src/core/pipeline.py:1120 | ===== 开始分析 2 只股票 =====
+2026-03-19 00:25:44 | INFO     | src/core/pipeline.py:1121 | 股票列表: PM, 000651
+2026-03-19 00:25:44 | INFO     | src/core/pipeline.py:1122 | 并发数: 1, 模式: 完整分析
+2026-03-19 00:25:44 | WARNING  | data_provider/tushare_fetcher.py:487 | Tushare API 未初始化，无法获取股票名称
+2026-03-19 00:26:20 | WARNING  | data_provider/pytdx_fetcher.py:403 | Pytdx 获取股票名称失败 PM: Pytdx 无法连接任何服务器
+2026-03-19 00:26:20 | WARNING  | data_provider/baostock_fetcher.py:165 | 无法确定股票 PM 的市场，默认使用深市
+2026-03-19 00:26:21 | WARNING  | data_provider/base.py:1240 | [股票名称] 所有数据源都无法获取 PM 的名称
+2026-03-19 00:26:21 | WARNING  | data_provider/tushare_fetcher.py:487 | Tushare API 未初始化，无法获取股票名称
+2026-03-19 00:26:56 | WARNING  | data_provider/pytdx_fetcher.py:403 | Pytdx 获取股票名称失败 000651: Pytdx 无法连接任何服务器
+2026-03-19 00:26:57 | INFO     | data_provider/base.py:1233 | [股票名称] 从 BaostockFetcher 获取: 000651 -> 格力电器
+2026-03-19 00:26:57 | INFO     | src/core/pipeline.py:1027 | ========== 开始处理 PM ==========
+2026-03-19 00:26:59 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 PM 实时行情成功: 价格=166.13999938964844
+2026-03-19 00:26:59 | INFO     | data_provider/base.py:968 | [实时行情] 美股 PM 成功获取 (来源: yfinance)
+2026-03-19 00:26:59 | INFO     | data_provider/base.py:1219 | [股票名称] 从实时行情获取: PM -> Philip Morris International Inc
+2026-03-19 00:26:59 | INFO     | src/core/pipeline.py:158 | Philip Morris International Inc(PM) 开始从数据源获取数据...
+2026-03-19 00:26:59 | INFO     | data_provider/base.py:756 | [数据源尝试 6/6] [YfinanceFetcher] 美股/美股指数 PM 直接路由...
+2026-03-19 00:26:59 | INFO     | data_provider/base.py:357 | [YfinanceFetcher] 开始获取 PM 日线数据: 范围=2026-01-18 ~ 2026-03-19
+2026-03-19 00:26:59 | INFO     | data_provider/base.py:376 | [YfinanceFetcher] PM 获取成功: 范围=2026-01-18 ~ 2026-03-19, rows=41, elapsed=0.19s
+2026-03-19 00:26:59 | INFO     | data_provider/base.py:768 | [数据源完成] PM 使用 [YfinanceFetcher] 获取成功: rows=41, elapsed=0.19s
+2026-03-19 00:26:59 | INFO     | src/storage.py:1387 | 保存 PM 数据成功，新增 41 条
+2026-03-19 00:26:59 | INFO     | src/core/pipeline.py:166 | Philip Morris International Inc(PM) 数据保存成功（来源: YfinanceFetcher，新增 41 条）
+2026-03-19 00:26:59 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 PM 实时行情成功: 价格=166.13999938964844
+2026-03-19 00:26:59 | INFO     | data_provider/base.py:968 | [实时行情] 美股 PM 成功获取 (来源: yfinance)
+2026-03-19 00:26:59 | INFO     | src/core/pipeline.py:210 | Philip Morris International Inc(PM) 实时行情: 价格=166.13999938964844, 量比=None, 换手率=None% (来源: fallback)
+2026-03-19 00:26:59 | WARNING  | data_provider/tushare_fetcher.py:1055 | [Tushare] TushareFetcher 不支持美股 PM 的筹码分布
+2026-03-19 00:26:59 | WARNING  | data_provider/base.py:1180 | [筹码分布] PM 所有数据源均失败
+2026-03-19 00:27:00 | INFO     | src/core/pipeline.py:284 | Philip Morris International Inc(PM) 趋势分析: 空头排列, 买入信号=观望, 评分=39
+2026-03-19 00:27:00 | INFO     | src/core/pipeline.py:305 | Philip Morris International Inc(PM) 开始多维度情报搜索...
+2026-03-19 00:27:00 | INFO     | src/search_service.py:1966 | 开始多维度情报搜索: Philip Morris International Inc(PM), 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=30), 目标条数=3, provider请求条数=6
+2026-03-19 00:27:00 | INFO     | src/search_service.py:1995 | [情报搜索] 最新消息: 使用 Bocha
+2026-03-19 00:27:01 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Philip Morris International Inc PM latest news events'
+2026-03-19 00:27:01 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-19 00:27:01 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Philip Morris International Inc PM latest news events' 成功，返回 6 条结果，耗时 1.61s
+2026-03-19 00:27:01 | INFO     | src/search_service.py:1720 | [新闻过滤] PM:Bocha:latest_news: provider=Bocha, total=6, kept=0, drop_unknown=0, drop_old=6, drop_future=0, window=[2026-03-17,2026-03-20]
+2026-03-19 00:27:01 | INFO     | src/search_service.py:2012 | [情报搜索] 最新消息: 原始=6条, 过滤后=0条
+2026-03-19 00:27:02 | INFO     | src/search_service.py:1995 | [情报搜索] 机构分析: 使用 Tavily
+2026-03-19 00:27:06 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='Philip Morris International Inc analyst rating target price report', 返回 6 条结果
+2026-03-19 00:27:06 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'Philip Morris International Inc analyst rating target price report' 成功，返回 6 条结果，耗时 3.91s
+2026-03-19 00:27:06 | INFO     | src/search_service.py:1720 | [新闻过滤] PM:Tavily:market_analysis: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-17,2026-03-20]
+2026-03-19 00:27:06 | INFO     | src/search_service.py:2012 | [情报搜索] 机构分析: 原始=6条, 过滤后=0条
+2026-03-19 00:27:06 | INFO     | src/search_service.py:1995 | [情报搜索] 风险排查: 使用 Bocha
+2026-03-19 00:27:07 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Philip Morris International Inc risk insider selling lawsuit litigation'
+2026-03-19 00:27:07 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-19 00:27:07 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Philip Morris International Inc risk insider selling lawsuit litigation' 成功，返回 6 条结果，耗时 1.08s
+2026-03-19 00:27:07 | INFO     | src/search_service.py:1720 | [新闻过滤] PM:Bocha:risk_check: provider=Bocha, total=6, kept=0, drop_unknown=0, drop_old=6, drop_future=0, window=[2026-03-17,2026-03-20]
+2026-03-19 00:27:07 | INFO     | src/search_service.py:2012 | [情报搜索] 风险排查: 原始=6条, 过滤后=0条
+2026-03-19 00:27:08 | INFO     | src/search_service.py:1995 | [情报搜索] 业绩预期: 使用 Tavily
+2026-03-19 00:27:10 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='Philip Morris International Inc earnings revenue profit growth forecast', 返回 6 条结果
+2026-03-19 00:27:10 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'Philip Morris International Inc earnings revenue profit growth forecast' 成功，返回 6 条结果，耗时 1.97s
+2026-03-19 00:27:10 | INFO     | src/search_service.py:1720 | [新闻过滤] PM:Tavily:earnings: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-17,2026-03-20]
+2026-03-19 00:27:10 | INFO     | src/search_service.py:2012 | [情报搜索] 业绩预期: 原始=6条, 过滤后=0条
+2026-03-19 00:27:10 | INFO     | src/search_service.py:1995 | [情报搜索] 行业分析: 使用 Bocha
+2026-03-19 00:27:11 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Philip Morris International Inc industry competitors market share outlook'
+2026-03-19 00:27:11 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-19 00:27:11 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Philip Morris International Inc industry competitors market share outlook' 成功，返回 6 条结果，耗时 1.15s
+2026-03-19 00:27:11 | INFO     | src/search_service.py:1720 | [新闻过滤] PM:Bocha:industry: provider=Bocha, total=6, kept=1, drop_unknown=0, drop_old=5, drop_future=0, window=[2026-03-17,2026-03-20]
+2026-03-19 00:27:11 | INFO     | src/search_service.py:2012 | [情报搜索] 行业分析: 原始=6条, 过滤后=1条
+2026-03-19 00:27:12 | INFO     | src/core/pipeline.py:320 | Philip Morris International Inc(PM) 情报搜索完成: 共 1 条结果
+2026-03-19 00:27:12 | INFO     | src/storage.py:922 | 保存新闻情报成功: PM, 新增 1 条
+2026-03-19 00:27:14 | INFO     | src/analyzer.py:952 | ========== AI 分析 Philip Morris International Inc(PM) ==========
+2026-03-19 00:27:14 | INFO     | src/analyzer.py:953 | [LLM配置] 模型: gemini/gemini-3-flash-preview
+2026-03-19 00:27:14 | INFO     | src/analyzer.py:954 | [LLM配置] Prompt 长度: 2858 字符
+2026-03-19 00:27:14 | INFO     | src/analyzer.py:955 | [LLM配置] 是否包含新闻: 是
+2026-03-19 00:27:14 | INFO     | src/analyzer.py:959 | [LLM Prompt 预览]
+# 决策仪表盘分析请求
+
+## 📊 股票基础信息
+| 项目 | 数据 |
+|------|------|
+| 股票代码 | **PM** |
+| 股票名称 | **Philip Morris International Inc** |
+| 分析日期 | 2026-03-19 |
+
+---
+
+## 📈 技术面数据
+
+### 今日行情
+| 指标 | 数值 |
+|------|------|
+| 收盘价 | 166.13999938964844 元 |
+| 开盘价 | 171.0 元 |
+| 最高价 | 170.74000549316406 元 |
+| 最低价 | 164.91000366210938 元 |
+| 涨跌幅 | -3.91% |
+| 成交量 | 466.89 万股 |
+| 成交额 | 7.76 亿元 |
+
+### 均线系统（关键判断指标）
+| 均线 | 数值 | 说明 |
+|------|------|------|
+| MA5 | 170.91000061035157 | 短期趋势线 |
+| MA10 | 170.9489990234375 | 中短期趋势线 |
+| MA20...
+2026-03-19 00:27:14 | INFO     | src/analyzer.py:968 | [LLM调用] 开始调用 gemini/gemini-3-flash-preview...
+2026-03-19 00:27:14 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3932 | 
+LiteLLM completion() model= gemini-3-flash-preview; provider = gemini
+2026-03-19 00:27:14 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py:1007 | Warning: Setting temperature < 1.0 for Gemini 3 models (gemini-3-flash-preview) can cause infinite loops, degraded reasoning performance, and failure on complex tasks. Strongly recommended to use temperature = 1.0 (default).
+2026-03-19 00:27:30 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:1656 | Wrapper: Completed Call, calling success_handler
+2026-03-19 00:27:30 | INFO     | src/analyzer.py:981 | [LLM返回] gemini/gemini-3-flash-preview 响应成功, 耗时 15.98s, 响应长度 3939 字符
+2026-03-19 00:27:30 | INFO     | src/analyzer.py:985 | [LLM返回 预览]
+```json
+{
+    "stock_name": "菲利普莫里斯国际（PM）",
+    "sentiment_score": 25,
+    "trend_prediction": "强烈看空",
+    "operation_advice": "观望/卖出",
+    "decision_type": "sell",
+    "confidence_level": "高",
+
+    "dashboard": {
+        "core_conclusion": {
+            "one_sentence": "均线标准空头排列且放量破位下跌，趋势极度恶化，坚决观望禁...
+2026-03-19 00:27:30 | INFO     | src/analyzer.py:1025 | [LLM解析] Philip Morris International Inc(PM) 分析完成: 强烈看空, 评分 25
+2026-03-19 00:27:30 | INFO     | src/core/pipeline.py:1051 | [PM] 分析完成: 观望/卖出, 评分 25
+2026-03-19 00:27:30 | INFO     | src/core/pipeline.py:1027 | ========== 开始处理 000651 ==========
+2026-03-19 00:27:30 | INFO     | src/core/pipeline.py:158 | 格力电器(000651) 开始从数据源获取数据...
+2026-03-19 00:27:30 | INFO     | data_provider/base.py:790 | [数据源尝试 1/6] [EfinanceFetcher] 获取 000651...
+2026-03-19 00:27:30 | INFO     | data_provider/base.py:357 | [EfinanceFetcher] 开始获取 000651 日线数据: 范围=2026-01-18 ~ 2026-03-19
+2026-03-19 00:27:32 | INFO     | data_provider/efinance_fetcher.py:389 | [API调用] ef.stock.get_quote_history(stock_codes=000651, beg=20260118, end=20260319, klt=101, fqt=1)
+2026-03-19 00:27:33 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6%2Cf7%2Cf8%2Cf9%2Cf10%2Cf11%2Cf12%2Cf13&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61&beg=20260118&end=20260319&rtntype=6&secid=0.000651&klt=101&fqt=1
+2026-03-19 00:27:34 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6%2Cf7%2Cf8%2Cf9%2Cf10%2Cf11%2Cf12%2Cf13&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61&beg=20260118&end=20260319&rtntype=6&secid=0.000651&klt=101&fqt=1
+2026-03-19 00:27:34 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6%2Cf7%2Cf8%2Cf9%2Cf10%2Cf11%2Cf12%2Cf13&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61&beg=20260118&end=20260319&rtntype=6&secid=0.000651&klt=101&fqt=1
+2026-03-19 00:27:35 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6%2Cf7%2Cf8%2Cf9%2Cf10%2Cf11%2Cf12%2Cf13&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61&beg=20260118&end=20260319&rtntype=6&secid=0.000651&klt=101&fqt=1
+2026-03-19 00:27:35 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6%2Cf7%2Cf8%2Cf9%2Cf10%2Cf11%2Cf12%2Cf13&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61&beg=20260118&end=20260319&rtntype=6&secid=0.000651&klt=101&fqt=1
+2026-03-19 00:27:36 | ERROR    | data_provider/efinance_fetcher.py:443 | Eastmoney 历史K线接口失败: endpoint=push2his.eastmoney.com/api/qt/stock/kline/get, stock_code=000651, market_type=stock, range=20260118~20260319, category=remote_disconnect, error_type=ConnectionError, elapsed=4.09s, detail=HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6%2Cf7%2Cf8%2Cf9%2Cf10%2Cf11%2Cf12%2Cf13&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61&beg=20260118&end=20260319&rtntype=6&secid=0.000651&klt=101&fqt=1 (Caused by ProtocolError('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))
+2026-03-19 00:27:36 | ERROR    | data_provider/base.py:385 | [EfinanceFetcher] 000651 获取失败: 范围=2026-01-18 ~ 2026-03-19, error_type=ProtocolError, elapsed=6.20s, reason=efinance 获取数据失败: Eastmoney 历史K线接口失败: endpoint=push2his.eastmoney.com/api/qt/stock/kline/get, stock_code=000651, market_type=stock, range=20260118~20260319, category=remote_disconnect, error_type=ConnectionError, elapsed=4.09s, detail=HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6%2Cf7%2Cf8%2Cf9%2Cf10%2Cf11%2Cf12%2Cf13&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61&beg=20260118&end=20260319&rtntype=6&secid=0.000651&klt=101&fqt=1 (Caused by ProtocolError('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))
+2026-03-19 00:27:36 | WARNING  | data_provider/base.py:809 | [数据源失败 1/6] [EfinanceFetcher] 000651: error_type=ProtocolError, reason=[EfinanceFetcher] 000651: efinance 获取数据失败: Eastmoney 历史K线接口失败: endpoint=push2his.eastmoney.com/api/qt/stock/kline/get, stock_code=000651, market_type=stock, range=20260118~20260319, category=remote_disconnect, error_type=ConnectionError, elapsed=4.09s, detail=HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6%2Cf7%2Cf8%2Cf9%2Cf10%2Cf11%2Cf12%2Cf13&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61&beg=20260118&end=20260319&rtntype=6&secid=0.000651&klt=101&fqt=1 (Caused by ProtocolError('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))
+2026-03-19 00:27:36 | INFO     | data_provider/base.py:816 | [数据源切换] 000651: [EfinanceFetcher] -> [AkshareFetcher]
+2026-03-19 00:27:36 | INFO     | data_provider/base.py:790 | [数据源尝试 2/6] [AkshareFetcher] 获取 000651...
+2026-03-19 00:27:36 | INFO     | data_provider/base.py:357 | [AkshareFetcher] 开始获取 000651 日线数据: 范围=2026-01-18 ~ 2026-03-19
+2026-03-19 00:27:36 | INFO     | data_provider/akshare_fetcher.py:379 | [数据源] 尝试使用 东方财富 获取 000651...
+2026-03-19 00:27:38 | INFO     | data_provider/akshare_fetcher.py:406 | [API调用] ak.stock_zh_a_hist(symbol=000651, ...)
+2026-03-19 00:27:39 | WARNING  | data_provider/akshare_fetcher.py:387 | [数据源] 东方财富 获取失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-03-19 00:27:39 | INFO     | data_provider/akshare_fetcher.py:379 | [数据源] 尝试使用 新浪财经 获取 000651...
+2026-03-19 00:27:48 | INFO     | data_provider/akshare_fetcher.py:383 | [数据源] 新浪财经 获取成功
+2026-03-19 00:27:48 | INFO     | data_provider/base.py:376 | [AkshareFetcher] 000651 获取成功: 范围=2026-01-18 ~ 2026-03-19, rows=37, elapsed=11.61s
+2026-03-19 00:27:48 | INFO     | data_provider/base.py:800 | [数据源完成] 000651 使用 [AkshareFetcher] 获取成功: rows=37, elapsed=17.81s
+2026-03-19 00:27:48 | INFO     | src/storage.py:1387 | 保存 000651 数据成功，新增 37 条
+2026-03-19 00:27:48 | INFO     | src/core/pipeline.py:166 | 格力电器(000651) 数据保存成功（来源: AkshareFetcher，新增 37 条）
+2026-03-19 00:27:48 | INFO     | data_provider/akshare_fetcher.py:1099 | [API调用] 腾讯财经接口获取 000651 实时行情: endpoint=qt.gtimg.cn/q, symbol=sz000651
+2026-03-19 00:27:50 | INFO     | data_provider/akshare_fetcher.py:1204 | [实时行情-腾讯] 000651 格力电器: endpoint=qt.gtimg.cn/q, 价格=39.02, 涨跌=0.21%, 量比=0.9, 换手率=0.64%, elapsed=2.80s
+2026-03-19 00:27:50 | INFO     | data_provider/base.py:1054 | [实时行情] 000651 成功获取 (来源: tencent)
+2026-03-19 00:27:50 | INFO     | src/core/pipeline.py:210 | 格力电器(000651) 实时行情: 价格=39.02, 量比=0.9, 换手率=0.64% (来源: tencent)
+2026-03-19 00:27:56 | INFO     | data_provider/akshare_fetcher.py:1447 | [API调用] ak.stock_cyq_em(symbol=000651) 获取筹码分布...
+2026-03-19 00:27:57 | ERROR    | data_provider/akshare_fetcher.py:1485 | [API错误] 获取 000651 筹码分布失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-03-19 00:27:57 | WARNING  | data_provider/base.py:1180 | [筹码分布] 000651 所有数据源均失败
+2026-03-19 00:27:57 | INFO     | data_provider/akshare_fetcher.py:1099 | [API调用] 腾讯财经接口获取 000651 实时行情: endpoint=qt.gtimg.cn/q, symbol=sz000651
+2026-03-19 00:27:58 | INFO     | src/core/pipeline.py:284 | 格力电器(000651) 趋势分析: 多头排列, 买入信号=买入, 评分=69
+2026-03-19 00:27:58 | INFO     | src/core/pipeline.py:305 | 格力电器(000651) 开始多维度情报搜索...
+2026-03-19 00:27:58 | INFO     | src/search_service.py:1966 | 开始多维度情报搜索: 格力电器(000651), 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=30), 目标条数=3, provider请求条数=6
+2026-03-19 00:27:58 | INFO     | src/search_service.py:1995 | [情报搜索] 最新消息: 使用 Bocha
+2026-03-19 00:27:59 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='格力电器 000651 最新 新闻 重大 事件'
+2026-03-19 00:27:59 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-19 00:27:59 | INFO     | src/search_service.py:237 | [Bocha] 搜索 '格力电器 000651 最新 新闻 重大 事件' 成功，返回 6 条结果，耗时 1.08s
+2026-03-19 00:27:59 | INFO     | src/search_service.py:1720 | [新闻过滤] 000651:Bocha:latest_news: provider=Bocha, total=6, kept=3, drop_unknown=0, drop_old=2, drop_future=0, window=[2026-03-17,2026-03-20]
+2026-03-19 00:27:59 | INFO     | src/search_service.py:2012 | [情报搜索] 最新消息: 原始=6条, 过滤后=3条
+2026-03-19 00:28:00 | INFO     | src/search_service.py:1995 | [情报搜索] 机构分析: 使用 Tavily
+2026-03-19 00:28:01 | INFO     | data_provider/akshare_fetcher.py:1204 | [实时行情-腾讯] 000651 格力电器: endpoint=qt.gtimg.cn/q, 价格=39.02, 涨跌=0.21%, 量比=0.9, 换手率=0.64%, elapsed=4.10s
+2026-03-19 00:28:01 | INFO     | data_provider/base.py:1054 | [实时行情] 000651 成功获取 (来源: tencent)
+2026-03-19 00:28:02 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='格力电器 研报 目标价 评级 深度分析', 返回 6 条结果
+2026-03-19 00:28:02 | INFO     | src/search_service.py:237 | [Tavily] 搜索 '格力电器 研报 目标价 评级 深度分析' 成功，返回 6 条结果，耗时 1.85s
+2026-03-19 00:28:02 | INFO     | src/search_service.py:1720 | [新闻过滤] 000651:Tavily:market_analysis: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-17,2026-03-20]
+2026-03-19 00:28:02 | INFO     | src/search_service.py:2012 | [情报搜索] 机构分析: 原始=6条, 过滤后=0条
+2026-03-19 00:28:02 | INFO     | src/search_service.py:1995 | [情报搜索] 风险排查: 使用 Bocha
+2026-03-19 00:28:04 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='格力电器 减持 处罚 违规 诉讼 利空 风险'
+2026-03-19 00:28:04 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-19 00:28:04 | INFO     | src/search_service.py:237 | [Bocha] 搜索 '格力电器 减持 处罚 违规 诉讼 利空 风险' 成功，返回 6 条结果，耗时 1.77s
+2026-03-19 00:28:04 | INFO     | src/search_service.py:1720 | [新闻过滤] 000651:Bocha:risk_check: provider=Bocha, total=6, kept=1, drop_unknown=0, drop_old=5, drop_future=0, window=[2026-03-17,2026-03-20]
+2026-03-19 00:28:04 | INFO     | src/search_service.py:2012 | [情报搜索] 风险排查: 原始=6条, 过滤后=1条
+2026-03-19 00:28:04 | INFO     | src/search_service.py:1995 | [情报搜索] 业绩预期: 使用 Tavily
+2026-03-19 00:28:06 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='格力电器 业绩预告 财报 营收 净利润 同比增长', 返回 6 条结果
+2026-03-19 00:28:06 | INFO     | src/search_service.py:237 | [Tavily] 搜索 '格力电器 业绩预告 财报 营收 净利润 同比增长' 成功，返回 6 条结果，耗时 1.81s
+2026-03-19 00:28:06 | INFO     | src/search_service.py:1720 | [新闻过滤] 000651:Tavily:earnings: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-17,2026-03-20]
+2026-03-19 00:28:06 | INFO     | src/search_service.py:2012 | [情报搜索] 业绩预期: 原始=6条, 过滤后=0条
+2026-03-19 00:28:07 | INFO     | src/search_service.py:1995 | [情报搜索] 行业分析: 使用 Bocha
+2026-03-19 00:28:08 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='格力电器 所在行业 竞争对手 市场份额 行业前景'
+2026-03-19 00:28:08 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-19 00:28:08 | INFO     | src/search_service.py:237 | [Bocha] 搜索 '格力电器 所在行业 竞争对手 市场份额 行业前景' 成功，返回 6 条结果，耗时 1.13s
+2026-03-19 00:28:08 | INFO     | src/search_service.py:1720 | [新闻过滤] 000651:Bocha:industry: provider=Bocha, total=6, kept=2, drop_unknown=0, drop_old=4, drop_future=0, window=[2026-03-17,2026-03-20]
+2026-03-19 00:28:08 | INFO     | src/search_service.py:2012 | [情报搜索] 行业分析: 原始=6条, 过滤后=2条
+2026-03-19 00:28:08 | INFO     | src/core/pipeline.py:320 | 格力电器(000651) 情报搜索完成: 共 6 条结果
+2026-03-19 00:28:08 | INFO     | src/storage.py:922 | 保存新闻情报成功: 000651, 新增 3 条
+2026-03-19 00:28:08 | INFO     | src/storage.py:922 | 保存新闻情报成功: 000651, 新增 1 条
+2026-03-19 00:28:08 | INFO     | src/storage.py:922 | 保存新闻情报成功: 000651, 新增 2 条
+2026-03-19 00:28:10 | INFO     | src/analyzer.py:952 | ========== AI 分析 格力电器(000651) ==========
+2026-03-19 00:28:10 | INFO     | src/analyzer.py:953 | [LLM配置] 模型: gemini/gemini-3-flash-preview
+2026-03-19 00:28:10 | INFO     | src/analyzer.py:954 | [LLM配置] Prompt 长度: 3791 字符
+2026-03-19 00:28:10 | INFO     | src/analyzer.py:955 | [LLM配置] 是否包含新闻: 是
+2026-03-19 00:28:10 | INFO     | src/analyzer.py:959 | [LLM Prompt 预览]
+# 决策仪表盘分析请求
+
+## 📊 股票基础信息
+| 项目 | 数据 |
+|------|------|
+| 股票代码 | **000651** |
+| 股票名称 | **格力电器** |
+| 分析日期 | 2026-03-19 |
+
+---
+
+## 📈 技术面数据
+
+### 今日行情
+| 指标 | 数值 |
+|------|------|
+| 收盘价 | 39.02 元 |
+| 开盘价 | 38.94 元 |
+| 最高价 | 39.05 元 |
+| 最低价 | 38.71 元 |
+| 涨跌幅 | 0.21% |
+| 成交量 | 3535.50 万股 |
+| 成交额 | 13.75 亿元 |
+
+### 均线系统（关键判断指标）
+| 均线 | 数值 | 说明 |
+|------|------|------|
+| MA5 | 38.872 | 短期趋势线 |
+| MA10 | 38.251000000000005 | 中短期趋势线 |
+| MA20 | 37.9745 | 中期趋势线 |
+| 均线形态 | 多头排列 📈 | 多头/空头/缠绕 |
+
+### 实时行情增强数据
+| 指标 | 数...
+2026-03-19 00:28:10 | INFO     | src/analyzer.py:968 | [LLM调用] 开始调用 gemini/gemini-3-flash-preview...
+2026-03-19 00:28:10 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3932 | 
+LiteLLM completion() model= gemini-3-flash-preview; provider = gemini
+2026-03-19 00:28:10 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py:1007 | Warning: Setting temperature < 1.0 for Gemini 3 models (gemini-3-flash-preview) can cause infinite loops, degraded reasoning performance, and failure on complex tasks. Strongly recommended to use temperature = 1.0 (default).
+2026-03-19 00:28:27 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:1656 | Wrapper: Completed Call, calling success_handler
+2026-03-19 00:28:27 | INFO     | src/analyzer.py:981 | [LLM返回] gemini/gemini-3-flash-preview 响应成功, 耗时 16.25s, 响应长度 4236 字符
+2026-03-19 00:28:27 | INFO     | src/analyzer.py:985 | [LLM返回 预览]
+```json
+{
+    "stock_name": "格力电器（000651）",
+    "sentiment_score": 82,
+    "trend_prediction": "看多",
+    "operation_advice": "买入",
+    "decision_type": "buy",
+    "confidence_level": "高",
+
+    "dashboard": {
+        "core_conclusion": {
+            "one_sentence": "均线多头排列且极度贴合MA5，缩量回踩提供低吸良机，估值极具性价比。...
+2026-03-19 00:28:27 | INFO     | src/analyzer.py:1025 | [LLM解析] 格力电器(000651) 分析完成: 看多, 评分 82
+2026-03-19 00:28:27 | INFO     | src/core/pipeline.py:1051 | [000651] 分析完成: 买入, 评分 82
+2026-03-19 00:28:27 | INFO     | src/core/pipeline.py:1202 | ===== 分析完成 =====
+2026-03-19 00:28:27 | INFO     | src/core/pipeline.py:1203 | 成功: 2, 失败: 0, 耗时: 162.54 秒
+2026-03-19 00:28:27 | INFO     | src/notification.py:1655 | 日报已保存到: /home/runner/work/daily_stock_analysis/daily_stock_analysis/reports/report_20260319.md
+2026-03-19 00:28:27 | INFO     | src/core/pipeline.py:1233 | 决策仪表盘日报已保存: /home/runner/work/daily_stock_analysis/daily_stock_analysis/reports/report_20260319.md
+2026-03-19 00:28:27 | INFO     | src/core/pipeline.py:1253 | 生成决策仪表盘日报...
+2026-03-19 00:28:27 | INFO     | src/core/pipeline.py:1422 | 通知渠道未配置，跳过推送
+2026-03-19 00:28:27 | INFO     | src/core/market_review.py:49 | 开始执行大盘复盘分析...
+2026-03-19 00:28:27 | WARNING  | data_provider/tushare_fetcher.py:124 | Tushare Token 未配置，此数据源不可用
+2026-03-19 00:28:27 | INFO     | data_provider/base.py:706 | 已初始化 6 个数据源（按优先级）: EfinanceFetcher(P0), AkshareFetcher(P1), TushareFetcher(P2), PytdxFetcher(P2), BaostockFetcher(P3), YfinanceFetcher(P4)
+2026-03-19 00:28:27 | INFO     | src/market_analyzer.py:680 | ========== 开始大盘复盘分析 ==========
+2026-03-19 00:28:27 | INFO     | src/market_analyzer.py:146 | [大盘] 获取主要指数实时行情...
+2026-03-19 00:28:29 | INFO     | data_provider/efinance_fetcher.py:821 | [API调用] ef.stock.get_realtime_quotes(['沪深系列指数']) 获取指数行情...
+2026-03-19 00:28:30 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=1&pz=200&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A1+s%3A2%2Cm%3A0+t%3A5&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-19 00:28:31 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=1&pz=200&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A1+s%3A2%2Cm%3A0+t%3A5&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-19 00:28:31 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=1&pz=200&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A1+s%3A2%2Cm%3A0+t%3A5&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-19 00:28:32 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=1&pz=200&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A1+s%3A2%2Cm%3A0+t%3A5&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-19 00:28:32 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=1&pz=200&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A1+s%3A2%2Cm%3A0+t%3A5&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-19 00:28:33 | ERROR    | data_provider/efinance_fetcher.py:874 | [efinance] 获取指数行情失败: HTTPConnectionPool(host='push2.eastmoney.com', port=80): Max retries exceeded with url: /api/qt/clist/get?pn=1&pz=200&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A1+s%3A2%2Cm%3A0+t%3A5&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297 (Caused by ProtocolError('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))
+2026-03-19 00:28:43 | INFO     | data_provider/base.py:1355 | [AkshareFetcher] 获取指数行情成功
+2026-03-19 00:28:43 | INFO     | src/market_analyzer.py:172 | [大盘] 获取到 6 个指数行情
+2026-03-19 00:28:43 | INFO     | src/market_analyzer.py:182 | [大盘] 获取市场涨跌统计...
+2026-03-19 00:28:45 | INFO     | data_provider/efinance_fetcher.py:894 | [API调用] ef.stock.get_realtime_quotes() 获取市场统计...
+2026-03-19 00:28:46 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=1&pz=200&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-19 00:28:46 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=1&pz=200&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-19 00:28:47 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=1&pz=200&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-19 00:28:47 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=1&pz=200&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-19 00:28:48 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=1&pz=200&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-19 00:28:48 | ERROR    | data_provider/efinance_fetcher.py:905 | [efinance] 获取市场统计失败: HTTPConnectionPool(host='push2.eastmoney.com', port=80): Max retries exceeded with url: /api/qt/clist/get?pn=1&pz=200&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A0+t%3A6%2Cm%3A0+t%3A80%2Cm%3A1+t%3A2%2Cm%3A1+t%3A23%2Cm%3A0+t%3A81+s%3A2048&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297 (Caused by ProtocolError('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))
+2026-03-19 00:28:52 | INFO     | data_provider/akshare_fetcher.py:1602 | [API调用] ak.stock_zh_a_spot_em() 获取市场统计...
+2026-03-19 00:29:00 | WARNING  | data_provider/akshare_fetcher.py:1607 | [Akshare] 东财接口获取市场统计失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))，尝试新浪接口
+2026-03-19 00:29:05 | INFO     | data_provider/akshare_fetcher.py:1614 | [API调用] ak.stock_zh_a_spot() 获取市场统计(新浪)...
+2026-03-19 00:29:53 | INFO     | data_provider/base.py:1368 | [AkshareFetcher] 获取市场统计成功
+2026-03-19 00:29:53 | INFO     | src/market_analyzer.py:194 | [大盘] 涨:3554 跌:1830 平:94 涨停:70 跌停:13 成交额:20607亿
+2026-03-19 00:29:53 | INFO     | src/market_analyzer.py:204 | [大盘] 获取板块涨跌榜...
+2026-03-19 00:29:55 | INFO     | data_provider/efinance_fetcher.py:1007 | [API调用] ef.stock.get_realtime_quotes(['行业板块']) 获取板块行情...
+2026-03-19 00:29:56 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=1&pz=200&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A90+t%3A2+f%3A%2150&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-19 00:29:56 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=1&pz=200&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A90+t%3A2+f%3A%2150&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-19 00:29:57 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=1&pz=200&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A90+t%3A2+f%3A%2150&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-19 00:29:57 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=1&pz=200&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A90+t%3A2+f%3A%2150&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-19 00:29:58 | WARNING  | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py:868 | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/qt/clist/get?pn=1&pz=200&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A90+t%3A2+f%3A%2150&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297
+2026-03-19 00:29:58 | ERROR    | data_provider/efinance_fetcher.py:1033 | [efinance] 获取板块排行失败: HTTPConnectionPool(host='push2.eastmoney.com', port=80): Max retries exceeded with url: /api/qt/clist/get?pn=1&pz=200&po=1&np=1&fltt=2&invt=2&fid=f12&fs=m%3A90+t%3A2+f%3A%2150&fields=f12%2Cf14%2Cf3%2Cf2%2Cf15%2Cf16%2Cf17%2Cf4%2Cf8%2Cf10%2Cf9%2Cf5%2Cf6%2Cf18%2Cf20%2Cf21%2Cf13%2Cf124%2Cf297 (Caused by ProtocolError('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))
+2026-03-19 00:30:01 | INFO     | data_provider/akshare_fetcher.py:1745 | [API调用] ak.stock_board_industry_name_em() 获取板块排行...
+2026-03-19 00:30:09 | WARNING  | data_provider/akshare_fetcher.py:1753 | [Akshare] 东财接口获取行业板块排行失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))，尝试新浪接口
+2026-03-19 00:30:11 | INFO     | data_provider/akshare_fetcher.py:1760 | [API调用] ak.stock_sector_spot() 获取行业板块排行(新浪)...
+2026-03-19 00:30:12 | INFO     | data_provider/base.py:2157 | [AkshareFetcher] 获取板块排行成功
+2026-03-19 00:30:12 | INFO     | src/market_analyzer.py:212 | [大盘] 领涨板块: ['计算机、通信和其他电子设备制造业', '批发业', '互联网和相关服务', '专业技术服务业', '非金属矿采选业']
+2026-03-19 00:30:12 | INFO     | src/market_analyzer.py:213 | [大盘] 领跌板块: ['开采辅助活动', '黑色金属矿采选业', '农、林、牧、渔服务业', '农业', '文化艺术业']
+2026-03-19 00:30:12 | INFO     | src/market_analyzer.py:256 | [大盘] 开始搜索市场新闻...
+2026-03-19 00:30:12 | INFO     | src/search_service.py:1778 | 搜索股票新闻: 大盘(market), query='A股 大盘 复盘', 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=30), 目标条数=3, provider请求条数=6
+2026-03-19 00:30:13 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='A股 大盘 复盘'
+2026-03-19 00:30:13 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 5 条结果
+2026-03-19 00:30:13 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'A股 大盘 复盘' 成功，返回 5 条结果，耗时 1.07s
+2026-03-19 00:30:13 | INFO     | src/search_service.py:1720 | [新闻过滤] market:Bocha:stock_news: provider=Bocha, total=5, kept=2, drop_unknown=0, drop_old=3, drop_future=0, window=[2026-03-17,2026-03-20]
+2026-03-19 00:30:13 | INFO     | src/search_service.py:1816 | 使用 Bocha 搜索成功
+2026-03-19 00:30:13 | INFO     | src/market_analyzer.py:269 | [大盘] 搜索 'A股 大盘 复盘' 获取 2 条结果
+2026-03-19 00:30:13 | INFO     | src/search_service.py:1778 | 搜索股票新闻: 大盘(market), query='股市 行情 分析', 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=30), 目标条数=3, provider请求条数=6
+2026-03-19 00:30:14 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='股市 行情 分析'
+2026-03-19 00:30:14 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 2 条结果
+2026-03-19 00:30:14 | INFO     | src/search_service.py:237 | [Bocha] 搜索 '股市 行情 分析' 成功，返回 2 条结果，耗时 1.01s
+2026-03-19 00:30:14 | INFO     | src/search_service.py:1720 | [新闻过滤] market:Bocha:stock_news: provider=Bocha, total=2, kept=0, drop_unknown=0, drop_old=2, drop_future=0, window=[2026-03-17,2026-03-20]
+2026-03-19 00:30:14 | INFO     | src/search_service.py:1821 | Bocha 搜索成功但过滤后无有效新闻，继续尝试下一引擎
+2026-03-19 00:30:14 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='股市 行情 分析', 返回 6 条结果
+2026-03-19 00:30:14 | INFO     | src/search_service.py:237 | [Tavily] 搜索 '股市 行情 分析' 成功，返回 6 条结果，耗时 0.40s
+2026-03-19 00:30:14 | INFO     | src/search_service.py:1720 | [新闻过滤] market:Tavily:stock_news: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-17,2026-03-20]
+2026-03-19 00:30:14 | INFO     | src/search_service.py:1821 | Tavily 搜索成功但过滤后无有效新闻，继续尝试下一引擎
+2026-03-19 00:30:14 | INFO     | src/search_service.py:1778 | 搜索股票新闻: 大盘(market), query='A股 市场 热点 板块', 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=30), 目标条数=3, provider请求条数=6
+2026-03-19 00:30:15 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='A股 市场 热点 板块'
+2026-03-19 00:30:15 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-19 00:30:15 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'A股 市场 热点 板块' 成功，返回 6 条结果，耗时 1.04s
+2026-03-19 00:30:15 | INFO     | src/search_service.py:1720 | [新闻过滤] market:Bocha:stock_news: provider=Bocha, total=6, kept=1, drop_unknown=0, drop_old=5, drop_future=0, window=[2026-03-17,2026-03-20]
+2026-03-19 00:30:15 | INFO     | src/search_service.py:1816 | 使用 Bocha 搜索成功
+2026-03-19 00:30:15 | INFO     | src/market_analyzer.py:269 | [大盘] 搜索 'A股 市场 热点 板块' 获取 1 条结果
+2026-03-19 00:30:15 | INFO     | src/market_analyzer.py:271 | [大盘] 共获取 3 条市场新闻
+2026-03-19 00:30:15 | INFO     | src/market_analyzer.py:296 | [大盘] 调用大模型生成复盘报告...
+2026-03-19 00:30:15 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3932 | 
+LiteLLM completion() model= gemini-3-flash-preview; provider = gemini
+2026-03-19 00:30:15 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py:1007 | Warning: Setting temperature < 1.0 for Gemini 3 models (gemini-3-flash-preview) can cause infinite loops, degraded reasoning performance, and failure on complex tasks. Strongly recommended to use temperature = 1.0 (default).
+2026-03-19 00:30:27 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:1656 | Wrapper: Completed Call, calling success_handler
+2026-03-19 00:30:27 | INFO     | src/market_analyzer.py:301 | [大盘] 复盘报告生成成功，长度: 868 字符
+2026-03-19 00:30:27 | INFO     | src/market_analyzer.py:691 | ========== 大盘复盘分析完成 ==========
+2026-03-19 00:30:27 | INFO     | src/notification.py:1655 | 日报已保存到: /home/runner/work/daily_stock_analysis/daily_stock_analysis/reports/market_review_20260319.md
+2026-03-19 00:30:27 | INFO     | src/core/market_review.py:97 | 大盘复盘报告已保存: /home/runner/work/daily_stock_analysis/daily_stock_analysis/reports/market_review_20260319.md
+2026-03-19 00:30:27 | INFO     | main.py:372 | 
+===== 分析结果摘要 =====
+2026-03-19 00:30:27 | INFO     | main.py:375 | 🟢 格力电器(000651): 买入 | 评分 82 | 看多
+2026-03-19 00:30:27 | INFO     | main.py:375 | ⚪ Philip Morris International Inc(PM): 观望/卖出 | 评分 25 | 强烈看空
+2026-03-19 00:30:27 | INFO     | main.py:380 | 
+任务执行完成
+2026-03-19 00:30:29 | INFO     | main.py:426 | 开始自动回测...
+2026-03-19 00:30:29 | INFO     | main.py:434 | 自动回测完成: processed=0 saved=0 completed=0 insufficient=0 errors=0
+2026-03-19 00:30:29 | INFO     | main.py:697 | 
+程序执行完成
