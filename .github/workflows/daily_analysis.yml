@@ -25,39 +25,40 @@ jobs:
       
       - name: 执行股票分析
         env:
-          # 【数据源加速】彻底移除 pytdx, tushare, efinance，只留 yfinance 处理美股
-          ENABLED_FETCHERS: "yfinance,baostock"
-          DATA_SOURCE_PRIORITY: "yfinance,baostock"
-          
-          # 【新闻时效】拉长窗口，解决 drop_old 导致的新闻缺失
-          NEWS_MAX_AGE_DAYS: '30'
-          
-          # 【密钥注入】供 litellm_config.yaml 中的 os.environ 引用
+          # 1. 密钥注入 (供配置文件引用)
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           BOCHA_API_KEYS: ${{ secrets.BOCHA_API_KEYS }}
           TAVILY_API_KEYS: ${{ secrets.TAVILY_API_KEYS }}
           
-          # 【运行参数】
+          # 2. 运行参数
           STOCK_LIST: ${{ vars.STOCK_LIST || secrets.STOCK_LIST }}
           LOG_LEVEL: INFO
           MAX_WORKERS: '1'
-          # 设置配置文件路径环境变量
+          NEWS_MAX_AGE_DAYS: '30'
           LITELLM_CONFIG: "./litellm_config.yaml"
 
         run: |
-          # 1. 处理 LITELLM_CONFIG_YAML：将 Secret 内容还原为物理文件
-          # 使用 printf 确保换行符和格式正确
-          printf "%s" "${{ secrets.LITELLM_CONFIG_YAML }}" > litellm_config.yaml
-          
-          echo "==== 已从 Secret 生成配置文件 ===="
-          cat litellm_config.yaml
-          echo "================================"
+          # --- A. 还原配置文件 ---
+          cat <<EOF > litellm_config.yaml
+          ${{ secrets.LITELLM_CONFIG_YAML }}
+          EOF
 
-          # 2. 强制清理干扰，确保底层逻辑不尝试 Pytdx 连接
-          unset TUSHARE_TOKEN
+          # --- B. 动态干预数据源 (物理隔离方案) ---
+          # 既然代码里 base.py 强制初始化 6 个，我们用脚本强制把 Yfinance 和 Baostock 提到最前面
+          # 同时禁用掉会卡住的 Pytdx 和需要 Token 的 Tushare
+          export ENABLED_FETCHERS="yfinance,baostock"
+          export DATA_SOURCE_PRIORITY="yfinance,baostock"
           
-          # 3. 运行主程序（程序会自动读取 LITELLM_CONFIG 环境变量指向的文件）
+          # 如果你的代码通过环境变量无法彻底禁用，这里执行一个“无损手术”：
+          # 临时将 pytdx_fetcher.py 里的初始化逻辑屏蔽 (仅在本次 Action 运行中有效)
+          sed -i 's/self.connect()/pass # 屏蔽连接/g' data_provider/pytdx_fetcher.py || true
+
+          echo "🚀 启动分析，当前优先级: $DATA_SOURCE_PRIORITY"
+          
+          # --- C. 启动主程序 ---
+          # 确保 Tushare 不干扰
+          unset TUSHARE_TOKEN
           python main.py
 
       - name: 提交并推送报告
@@ -67,7 +68,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add -f reports/* logs/* || true
           if git diff --staged --quiet; then
-            echo "No changes"
+            echo "没有新报告"
           else
             git commit -m "📊 自动报告: $(date '+%Y-%m-%d %H:%M:%S')"
             git push origin ${{ github.ref_name }}
