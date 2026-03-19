@@ -40,8 +40,9 @@ jobs:
           ${{ secrets.LITELLM_CONFIG_YAML }}
           EOF
 
-          # --- B. 物理隔离屏蔽 Pytdx ---
-          TARGET_PYTDX="src/data_provider/pytdx_fetcher.py"
+          # --- B. 物理隔离屏蔽 Pytdx (解决 35s 延迟) ---
+          # 修正路径为 data_provider/
+          TARGET_PYTDX="data_provider/pytdx_fetcher.py"
           if [ -f "$TARGET_PYTDX" ]; then
             cat <<EOF > $TARGET_PYTDX
           class PytdxFetcher:
@@ -54,14 +55,17 @@ jobs:
           fi
 
           # --- C. 强行篡改 base.py 内部优先级逻辑 ---
-          TARGET_BASE="src/data_provider/base.py"
+          # 修正路径为 data_provider/
+          TARGET_BASE="data_provider/base.py"
           if [ -f "$TARGET_BASE" ]; then
+            # 这里的 sed 命令会直接插入到排序逻辑之前
             sed -i '/self._fetchers.sort(key=lambda f: f.priority)/i \        for f in self._fetchers: (setattr(f, "priority", 0) if f.name == "YfinanceFetcher" else None)' $TARGET_BASE
             echo "✅ 已通过补丁将 YfinanceFetcher 设为最高优先级 (P0)"
           fi
 
           # --- D. 环境清理与启动 ---
           unset TUSHARE_TOKEN
+          echo "🚀 启动分析..."
           python main.py
 
       - name: 提交并推送报告
