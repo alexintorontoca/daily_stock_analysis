@@ -4,18 +4,11 @@ on:
   schedule:
     - cron: '0 10 * * 1-5'
   workflow_dispatch:
-    inputs:
-      mode:
-        description: '运行模式'
-        required: true
-        default: 'full'
-        type: choice
-        options: [full, market-only, stocks-only]
 
 jobs:
   analyze:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 30
     
     steps:
       - name: 检出代码
@@ -28,45 +21,43 @@ jobs:
           cache: 'pip'
       
       - name: 安装依赖
-        run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
       
       - name: 执行股票分析
         env:
-          # 修正 1: 必须带上 gemini/ 前缀，否则 LiteLLM 找不到供应商
-          LITELLM_MODEL: "gemini/gemini-pro"
-          LITELLM_FALLBACK_MODELS: "gemini/gemini-1.5-flash,deepseek/deepseek-chat"
-          
-          # 修正 2: 物理隔绝。只准用这俩，Pytdx/Tushare/Efinance 统统不启动
+          # 【数据源加速】彻底移除 pytdx, tushare, efinance，只留 yfinance 处理美股
           ENABLED_FETCHERS: "yfinance,baostock"
           DATA_SOURCE_PRIORITY: "yfinance,baostock"
           
-          # 修正 3: 暴力拉长新闻窗口到 30 天，确保 AI 抓取到近期的研报和风险
+          # 【新闻时效】拉长窗口，解决 drop_old 导致的新闻缺失
           NEWS_MAX_AGE_DAYS: '30'
-          SEARCH_TOP_K: '10'
-
-          # API 密钥（从 Secrets 读取）
+          
+          # 【密钥注入】供 litellm_config.yaml 中的 os.environ 引用
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           BOCHA_API_KEYS: ${{ secrets.BOCHA_API_KEYS }}
           TAVILY_API_KEYS: ${{ secrets.TAVILY_API_KEYS }}
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           
-          # 运行参数
+          # 【运行参数】
           STOCK_LIST: ${{ vars.STOCK_LIST || secrets.STOCK_LIST }}
-          LITELLM_CONFIG_YAML: ${{ secrets.LITELLM_CONFIG_YAML }}
-          GEMINI_REQUEST_DELAY: '15.0'
-          MAX_WORKERS: '1'
           LOG_LEVEL: INFO
+          MAX_WORKERS: '1'
+          # 设置配置文件路径环境变量
+          LITELLM_CONFIG: "./litellm_config.yaml"
 
         run: |
-          # 这里的 litellm_config.yaml 会被 analyzer.py 读取
-          echo "${{ secrets.LITELLM_CONFIG_YAML }}" > litellm_config.yaml
+          # 1. 处理 LITELLM_CONFIG_YAML：将 Secret 内容还原为物理文件
+          # 使用 printf 确保换行符和格式正确
+          printf "%s" "${{ secrets.LITELLM_CONFIG_YAML }}" > litellm_config.yaml
+          
+          echo "==== 已从 Secret 生成配置文件 ===="
+          cat litellm_config.yaml
+          echo "================================"
 
-          # 彻底杀掉 Tushare 的 Token 环境，确保它不会在底层复活
+          # 2. 强制清理干扰，确保底层逻辑不尝试 Pytdx 连接
           unset TUSHARE_TOKEN
           
-          # 启动分析
+          # 3. 运行主程序（程序会自动读取 LITELLM_CONFIG 环境变量指向的文件）
           python main.py
 
       - name: 提交并推送报告
@@ -76,9 +67,8 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add -f reports/* logs/* || true
           if git diff --staged --quiet; then
-            echo "没有新报告生成"
+            echo "No changes"
           else
-            git commit -m "📊 自动报告更新: $(date '+%Y-%m-%d %H:%M:%S')"
-            git pull --rebase origin ${{ github.ref_name }}
+            git commit -m "📊 自动报告: $(date '+%Y-%m-%d %H:%M:%S')"
             git push origin ${{ github.ref_name }}
           fi
