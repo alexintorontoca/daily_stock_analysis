@@ -25,53 +25,43 @@ jobs:
       
       - name: 执行股票分析
         env:
-          # 1. 密钥注入
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           BOCHA_API_KEYS: ${{ secrets.BOCHA_API_KEYS }}
           TAVILY_API_KEYS: ${{ secrets.TAVILY_API_KEYS }}
-          
-          # 2. 运行参数
           STOCK_LIST: ${{ vars.STOCK_LIST || secrets.STOCK_LIST }}
           LOG_LEVEL: INFO
           MAX_WORKERS: '1'
           NEWS_MAX_AGE_DAYS: '30'
           LITELLM_CONFIG: "./litellm_config.yaml"
-
         run: |
           # --- A. 还原配置文件 ---
           cat <<EOF > litellm_config.yaml
           ${{ secrets.LITELLM_CONFIG_YAML }}
           EOF
 
-          # --- B. 物理隔离屏蔽 Pytdx (解决 35s 连接延迟) ---
-          # 哪怕其它地方调用，只要一初始化就让它失效，不给它连接服务器的机会
+          # --- B. 物理隔离屏蔽 Pytdx ---
           TARGET_PYTDX="src/data_provider/pytdx_fetcher.py"
           if [ -f "$TARGET_PYTDX" ]; then
             cat <<EOF > $TARGET_PYTDX
-class PytdxFetcher:
-    def __init__(self, *args, **kwargs): self.name = "PytdxFetcher"; self.priority = 99
-    def connect(self): return False
-    def get_stock_name(self, *args, **kwargs): return None
-    def get_daily_data(self, *args, **kwargs): return None
-EOF
+          class PytdxFetcher:
+              def __init__(self, *args, **kwargs): self.name = "PytdxFetcher"; self.priority = 99
+              def connect(self): return False
+              def get_stock_name(self, *args, **kwargs): return None
+              def get_daily_data(self, *args, **kwargs): return None
+          EOF
             echo "✅ 已物理屏蔽 Pytdx 模块"
           fi
 
           # --- C. 强行篡改 base.py 内部优先级逻辑 ---
-          # 绕过代码硬编码，强制将 Yfinance 优先级设为 0 并排在最前面
           TARGET_BASE="src/data_provider/base.py"
           if [ -f "$TARGET_BASE" ]; then
-            # 在 base.py 执行 sort 排序前，动态修改 Yfinance 的 priority 属性
             sed -i '/self._fetchers.sort(key=lambda f: f.priority)/i \        for f in self._fetchers: (setattr(f, "priority", 0) if f.name == "YfinanceFetcher" else None)' $TARGET_BASE
             echo "✅ 已通过补丁将 YfinanceFetcher 设为最高优先级 (P0)"
           fi
 
           # --- D. 环境清理与启动 ---
           unset TUSHARE_TOKEN
-          echo "🚀 启动分析，代码已注入优先级手术补丁"
-          
-          # 执行主程序
           python main.py
 
       - name: 提交并推送报告
