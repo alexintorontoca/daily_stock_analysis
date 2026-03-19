@@ -40,8 +40,7 @@ jobs:
           ${{ secrets.LITELLM_CONFIG_YAML }}
           EOF
 
-          # --- B. 物理隔离屏蔽 Pytdx (解决 35s 延迟) ---
-          # 修正路径为 data_provider/
+          # --- B. 物理隔离屏蔽 Pytdx ---
           TARGET_PYTDX="data_provider/pytdx_fetcher.py"
           if [ -f "$TARGET_PYTDX" ]; then
             cat <<EOF > $TARGET_PYTDX
@@ -51,21 +50,28 @@ jobs:
               def get_stock_name(self, *args, **kwargs): return None
               def get_daily_data(self, *args, **kwargs): return None
           EOF
-            echo "✅ 已物理屏蔽 Pytdx 模块"
+            echo "✅ Pytdx 已物理屏蔽"
           fi
 
-          # --- C. 强行篡改 base.py 内部优先级逻辑 ---
-          # 修正路径为 data_provider/
+          # --- C. 优先级深度手术 ---
           TARGET_BASE="data_provider/base.py"
           if [ -f "$TARGET_BASE" ]; then
-            # 这里的 sed 命令会直接插入到排序逻辑之前
-            sed -i '/self._fetchers.sort(key=lambda f: f.priority)/i \        for f in self._fetchers: (setattr(f, "priority", 0) if f.name == "YfinanceFetcher" else None)' $TARGET_BASE
-            echo "✅ 已通过补丁将 YfinanceFetcher 设为最高优先级 (P0)"
+            # 强制 Yfinance 变成唯一的 P-1，绝对排在 Efinance (P0) 之前
+            sed -i '/self._fetchers.sort(key=lambda f: f.priority)/i \        for f in self._fetchers: (setattr(f, "priority", -1) if f.name == "YfinanceFetcher" else None)' $TARGET_BASE
+            echo "✅ Yfinance 已提权至 P-1 (全场最高)"
           fi
 
-          # --- D. 环境清理与启动 ---
+          # --- D. 屏蔽 Efinance 的名称接口 ---
+          # 核心痛点：Efinance 有时会抢占美股代码但返回错误名称，这里直接阉割它的名称查询能力
+          TARGET_EFI="data_provider/efinance_fetcher.py"
+          if [ -f "$TARGET_EFI" ]; then
+             sed -i 's/def get_stock_name/def _disabled_get_stock_name/g' $TARGET_EFI
+             echo "✅ 已禁用 Efinance 名称查询功能"
+          fi
+
+          # --- E. 启动分析 ---
           unset TUSHARE_TOKEN
-          echo "🚀 启动分析..."
+          echo "🚀 启动主程序..."
           python main.py
 
       - name: 提交并推送报告
