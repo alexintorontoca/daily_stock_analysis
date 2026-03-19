@@ -32,7 +32,6 @@ jobs:
           TAVILY_API_KEYS: ${{ secrets.TAVILY_API_KEYS }}
           
           # 2. 运行参数
-          # 确保环境变量中的 STOCK_LIST 是纯代码列表：PM,ENB,688249,000651...
           STOCK_LIST: ${{ vars.STOCK_LIST || secrets.STOCK_LIST }}
           LOG_LEVEL: INFO
           MAX_WORKERS: '1'
@@ -45,18 +44,34 @@ jobs:
           ${{ secrets.LITELLM_CONFIG_YAML }}
           EOF
 
-          # --- B. 屏蔽 Pytdx 延迟 (物理隔离) ---
-          # 哪怕以后 mapping 漏了，也要防止 Pytdx 尝试连接服务器导致超长的等待
-          sed -i 's/def connect(self):/def connect(self):\n        return False/g' data_provider/pytdx_fetcher.py || true
+          # --- B. 物理隔离屏蔽 Pytdx (解决 35s 连接延迟) ---
+          # 哪怕其它地方调用，只要一初始化就让它失效，不给它连接服务器的机会
+          TARGET_PYTDX="src/data_provider/pytdx_fetcher.py"
+          if [ -f "$TARGET_PYTDX" ]; then
+            cat <<EOF > $TARGET_PYTDX
+class PytdxFetcher:
+    def __init__(self, *args, **kwargs): self.name = "PytdxFetcher"; self.priority = 99
+    def connect(self): return False
+    def get_stock_name(self, *args, **kwargs): return None
+    def get_daily_data(self, *args, **kwargs): return None
+EOF
+            echo "✅ 已物理屏蔽 Pytdx 模块"
+          fi
 
-          # --- C. 优先级与环境清理 ---
-          # 只要 STOCK_NAME_MAP 补全了，yfinance 会自动处理美股，baostock 处理 A 股
-          export DATA_SOURCE_PRIORITY="yfinance,baostock,efinance"
+          # --- C. 强行篡改 base.py 内部优先级逻辑 ---
+          # 绕过代码硬编码，强制将 Yfinance 优先级设为 0 并排在最前面
+          TARGET_BASE="src/data_provider/base.py"
+          if [ -f "$TARGET_BASE" ]; then
+            # 在 base.py 执行 sort 排序前，动态修改 Yfinance 的 priority 属性
+            sed -i '/self._fetchers.sort(key=lambda f: f.priority)/i \        for f in self._fetchers: (setattr(f, "priority", 0) if f.name == "YfinanceFetcher" else None)' $TARGET_BASE
+            echo "✅ 已通过补丁将 YfinanceFetcher 设为最高优先级 (P0)"
+          fi
+
+          # --- D. 环境清理与启动 ---
           unset TUSHARE_TOKEN
-
-          echo "🚀 启动分析，当前代码库已加载手动 Stock Mapping"
+          echo "🚀 启动分析，代码已注入优先级手术补丁"
           
-          # --- D. 启动主程序 ---
+          # 执行主程序
           python main.py
 
       - name: 提交并推送报告
