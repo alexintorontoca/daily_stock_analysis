@@ -9,7 +9,8 @@ on:
 jobs:
   analyze:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # 延长任务最大运行时间，支持深度分析
+    timeout-minutes: 120 
     
     steps:
       - name: 检出代码
@@ -26,15 +27,30 @@ jobs:
       
       - name: 执行股票分析
         env:
+          # --- API 密钥 ---
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           BOCHA_API_KEYS: ${{ secrets.BOCHA_API_KEYS }}
           TAVILY_API_KEYS: ${{ secrets.TAVILY_API_KEYS }}
+          TUSHARE_TOKEN: ${{ secrets.TUSHARE_TOKEN }}
+          
+          # --- 核心任务配置 ---
           STOCK_LIST: ${{ vars.STOCK_LIST || secrets.STOCK_LIST }}
           LOG_LEVEL: INFO
-          MAX_WORKERS: '5'
-          NEWS_MAX_AGE_DAYS: '30'
           LITELLM_CONFIG: "./litellm_config.yaml"
+          
+          # --- 慢速深度模式配置 ---
+          MAX_WORKERS: '1'                          # 强制单线程，规避并发屏蔽
+          NEWS_MAX_AGE_DAYS: '60'                   # 获取更长周期的全面新闻
+          ENABLE_CHIP_DISTRIBUTION: 'true'          # 启用筹码分布
+          ENABLE_EASTMONEY_PATCH: 'true'            # 启用东财限流补丁
+          
+          # --- 基本面深度抓取配置 ---
+          ENABLE_FUNDAMENTAL_PIPELINE: 'true'
+          FUNDAMENTAL_STAGE_TIMEOUT_SECONDS: '10'   # 延长基本面阶段预算，获取更多数据
+          FUNDAMENTAL_FETCH_TIMEOUT_SECONDS: '5'    # 延长单次接口超时
+          FUNDAMENTAL_RETRY_MAX: '3'                # 增加重试次数
+          
         run: |
           # --- A. 还原配置文件 ---
           cat <<EOF > litellm_config.yaml
@@ -59,20 +75,26 @@ jobs:
           if [ -f "$TARGET_BASE" ]; then
             # 强制 Yfinance 变成唯一的 P-1，绝对排在 Efinance (P0) 之前
             sed -i '/self._fetchers.sort(key=lambda f: f.priority)/i \        for f in self._fetchers: (setattr(f, "priority", -1) if f.name == "YfinanceFetcher" else None)' $TARGET_BASE
-            echo "✅ Yfinance 已提权至 P-1 (全场最高)"
+            echo "✅ Yfinance 已提权至 P-1"
           fi
 
           # --- D. 屏蔽 Efinance 的名称接口 ---
-          # 核心痛点：Efinance 有时会抢占美股代码但返回错误名称，这里直接阉割它的名称查询能力
           TARGET_EFI="data_provider/efinance_fetcher.py"
           if [ -f "$TARGET_EFI" ]; then
              sed -i 's/def get_stock_name/def _disabled_get_stock_name/g' $TARGET_EFI
              echo "✅ 已禁用 Efinance 名称查询功能"
           fi
 
-          # --- E. 启动分析 ---
-          unset TUSHARE_TOKEN
-          echo "🚀 启动主程序..."
+          # --- E. 注入随机延迟手术 (防屏蔽核心) ---
+          # 在 pipeline.py 处理每只股票的循环处注入 20-50秒随机睡眠
+          TARGET_PIPELINE="src/core/pipeline.py"
+          if [ -f "$TARGET_PIPELINE" ]; then
+            sed -i '/for .* in .*股票列表/a \        import time, random; sleep_time = random.uniform(20, 50); print(f"☕ 深度模式：等待 {sleep_time:.2f} 秒以规避风控..."); time.sleep(sleep_time)' $TARGET_PIPELINE
+            echo "✅ 已注入随机延迟逻辑"
+          fi
+
+          # --- F. 启动分析 ---
+          echo "🚀 启动主程序 (全面信息模式)..."
           python main.py
 
       - name: 提交并推送报告
