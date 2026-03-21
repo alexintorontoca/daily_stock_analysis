@@ -1,16 +1,27 @@
-name: 每日股票分析
+name: 每日分市场股票分析
 
 on:
   schedule:
-    # 北京时间早上 06:00 = UTC 22:00 (前一天)
-    - cron: '0 22 * * 1-5'
+    # 1. A股分析：北京时间 17:00 (UTC 09:00)
+    - cron: '0 9 * * 1-5'
+    # 2. 美股分析：美东时间 17:00 (约为 UTC 21:00)
+    - cron: '0 21 * * 1-5'
   workflow_dispatch:
+    inputs:
+      market:
+        description: '手动指定运行市场'
+        required: true
+        default: 'cn'
+        type: choice
+        options:
+          - cn
+          - us
+          - both
 
 jobs:
   analyze:
     runs-on: ubuntu-latest
-    # 延长任务最大运行时间，支持深度分析
-    timeout-minutes: 120 
+    timeout-minutes: 120
     
     steps:
       - name: 检出代码
@@ -25,39 +36,54 @@ jobs:
       - name: 安装依赖
         run: pip install -r requirements.txt
       
+      - name: 确定当前运行市场
+        id: set-market
+        run: |
+          # 如果是手动触发，使用输入参数
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "RUN_REGION=${{ github.event.inputs.market }}" >> $GITHUB_ENV
+          # 如果是 UTC 09:00 触发，跑 A股
+          elif [ "${{ github.event.schedule }}" == "0 9 * * 1-5" ]; then
+            echo "RUN_REGION=cn" >> $GITHUB_ENV
+          # 如果是 UTC 21:00 触发，跑 美股
+          else
+            echo "RUN_REGION=us" >> $GITHUB_ENV
+          fi
+
       - name: 执行股票分析
         env:
-          # --- API 密钥 ---
+          # --- API 密钥 (保持你的 Secret 不变) ---
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           BOCHA_API_KEYS: ${{ secrets.BOCHA_API_KEYS }}
           TAVILY_API_KEYS: ${{ secrets.TAVILY_API_KEYS }}
           TUSHARE_TOKEN: ${{ secrets.TUSHARE_TOKEN }}
           
-          # --- 核心任务配置 ---
+          # --- 自动确定的市场区域 ---
+          MARKET_REVIEW_REGION: ${{ env.RUN_REGION }}
           STOCK_LIST: ${{ vars.STOCK_LIST || secrets.STOCK_LIST }}
-          LOG_LEVEL: INFO
+          
+          # --- 核心深度配置 ---
+          TZ: 'Asia/Shanghai'                       # 强制北京时区，防止日期错乱
+          TRADING_DAY_CHECK_ENABLED: 'false'        # 既然是定时触发，关闭检查强制运行
+          MAX_WORKERS: '1'                          # 深度模式：单线程
+          NEWS_MAX_AGE_DAYS: '60'
           LITELLM_CONFIG: "./litellm_config.yaml"
           
-          # --- 慢速深度模式配置 ---
-          MAX_WORKERS: '1'                          # 强制单线程，规避并发屏蔽
-          NEWS_MAX_AGE_DAYS: '60'                   # 获取更长周期的全面新闻
-          ENABLE_CHIP_DISTRIBUTION: 'true'          # 启用筹码分布
-          ENABLE_EASTMONEY_PATCH: 'true'            # 启用东财限流补丁
-          
-          # --- 基本面深度抓取配置 ---
+          # --- 基本面强化 ---
           ENABLE_FUNDAMENTAL_PIPELINE: 'true'
-          FUNDAMENTAL_STAGE_TIMEOUT_SECONDS: '10'   # 延长基本面阶段预算，获取更多数据
-          FUNDAMENTAL_FETCH_TIMEOUT_SECONDS: '5'    # 延长单次接口超时
-          FUNDAMENTAL_RETRY_MAX: '3'                # 增加重试次数
+          FUNDAMENTAL_STAGE_TIMEOUT_SECONDS: '15'   # 你要求的 15s
+          FUNDAMENTAL_FETCH_TIMEOUT_SECONDS: '5'
+          FUNDAMENTAL_RETRY_MAX: '3'
           
         run: |
-          # --- A. 还原配置文件 ---
+          # --- A. 还原配置 ---
           cat <<EOF > litellm_config.yaml
           ${{ secrets.LITELLM_CONFIG_YAML }}
           EOF
 
-          # --- B. 物理隔离屏蔽 Pytdx ---
+          # --- B. 源码手术 (保持你之前的逻辑) ---
+          # 屏蔽 Pytdx
           TARGET_PYTDX="data_provider/pytdx_fetcher.py"
           if [ -f "$TARGET_PYTDX" ]; then
             cat <<EOF > $TARGET_PYTDX
@@ -67,34 +93,28 @@ jobs:
               def get_stock_name(self, *args, **kwargs): return None
               def get_daily_data(self, *args, **kwargs): return None
           EOF
-            echo "✅ Pytdx 已物理屏蔽"
           fi
 
-          # --- C. 优先级深度手术 ---
+          # Yfinance 提权
           TARGET_BASE="data_provider/base.py"
           if [ -f "$TARGET_BASE" ]; then
-            # 强制 Yfinance 变成唯一的 P-1，绝对排在 Efinance (P0) 之前
             sed -i '/self._fetchers.sort(key=lambda f: f.priority)/i \        for f in self._fetchers: (setattr(f, "priority", -1) if f.name == "YfinanceFetcher" else None)' $TARGET_BASE
-            echo "✅ Yfinance 已提权至 P-1"
           fi
 
-          # --- D. 屏蔽 Efinance 的名称接口 ---
+          # 禁用 Efinance 名称查询
           TARGET_EFI="data_provider/efinance_fetcher.py"
           if [ -f "$TARGET_EFI" ]; then
              sed -i 's/def get_stock_name/def _disabled_get_stock_name/g' $TARGET_EFI
-             echo "✅ 已禁用 Efinance 名称查询功能"
           fi
 
-          # --- E. 注入随机延迟手术 (防屏蔽核心) ---
-          # 在 pipeline.py 处理每只股票的循环处注入 20-50秒随机睡眠
+          # 注入随机延迟 (20-50秒)
           TARGET_PIPELINE="src/core/pipeline.py"
           if [ -f "$TARGET_PIPELINE" ]; then
-            sed -i '/for .* in .*股票列表/a \        import time, random; sleep_time = random.uniform(20, 50); print(f"☕ 深度模式：等待 {sleep_time:.2f} 秒以规避风控..."); time.sleep(sleep_time)' $TARGET_PIPELINE
-            echo "✅ 已注入随机延迟逻辑"
+            sed -i '/for .* in .*股票列表/a \        import time, random; sleep_time = random.uniform(20, 50); print(f"☕ 深度模式：等待 {sleep_time:.2f} 秒..."); time.sleep(sleep_time)' $TARGET_PIPELINE
           fi
 
-          # --- F. 启动分析 ---
-          echo "🚀 启动主程序 (全面信息模式)..."
+          # --- C. 启动 ---
+          echo "🚀 正在为区域 [${{ env.RUN_REGION }}] 启动主程序..."
           python main.py
 
       - name: 提交并推送报告
@@ -106,6 +126,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "没有新报告"
           else
-            git commit -m "📊 自动报告: $(date '+%Y-%m-%d %H:%M:%S')"
+            git commit -m "📊 自动报告(${{ env.RUN_REGION }}): $(date '+%Y-%m-%d %H:%M:%S')"
             git push origin ${{ github.ref_name }}
           fi
