@@ -52,7 +52,7 @@ jobs:
 
       - name: 执行股票分析
         env:
-          # --- API 密钥 (保持你的 Secret 不变) ---
+          # --- API 密钥 ---
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           BOCHA_API_KEYS: ${{ secrets.BOCHA_API_KEYS }}
@@ -61,7 +61,7 @@ jobs:
           
           # --- 自动确定的市场区域 ---
           MARKET_REVIEW_REGION: ${{ env.RUN_REGION }}
-          STOCK_LIST: ${{ vars.STOCK_LIST || secrets.STOCK_LIST }}
+          RAW_STOCK_LIST: ${{ vars.STOCK_LIST || secrets.STOCK_LIST }}
           
           # --- 核心深度配置 ---
           TZ: 'Asia/Shanghai'                       # 强制北京时区，防止日期错乱
@@ -72,18 +72,36 @@ jobs:
           
           # --- 基本面强化 ---
           ENABLE_FUNDAMENTAL_PIPELINE: 'true'
-          FUNDAMENTAL_STAGE_TIMEOUT_SECONDS: '15'   # 你要求的 15s
+          FUNDAMENTAL_STAGE_TIMEOUT_SECONDS: '15'
           FUNDAMENTAL_FETCH_TIMEOUT_SECONDS: '5'
           FUNDAMENTAL_RETRY_MAX: '3'
           
         run: |
-          # --- A. 还原配置 ---
+          # --- A. 智能物理隔离股票池 (防止跨时区配额浪费) ---
+          echo "📡 原始股票池: $RAW_STOCK_LIST"
+          
+          if [ "$MARKET_REVIEW_REGION" == "us" ]; then
+            # 美股时段：过滤掉纯数字（A股），只保留字母（美股）
+            FILTERED_LIST=$(echo "$RAW_STOCK_LIST" | tr ',' '\n' | grep -i '^[a-z]' | tr '\n' ',' | sed 's/,$//')
+            export STOCK_LIST=$FILTERED_LIST
+            echo "🇺🇸 美股时段切换完毕！已剔除纯数字 A 股。当前分析列表: $STOCK_LIST"
+          elif [ "$MARKET_REVIEW_REGION" == "cn" ]; then
+            # A股时段：过滤掉纯字母（美股），只保留带数字的代码
+            FILTERED_LIST=$(echo "$RAW_STOCK_LIST" | tr ',' '\n' | grep '^[0-9]' | tr '\n' ',' | sed 's/,$//')
+            export STOCK_LIST=$FILTERED_LIST
+            echo "🇨🇳 A股时段切换完毕！已剔除美股纯字母。当前分析列表: $STOCK_LIST"
+          else
+            # both 模式
+            export STOCK_LIST=$RAW_STOCK_LIST
+            echo "🌐 全球混跑模式。当前分析列表: $STOCK_LIST"
+          fi
+
+          # --- B. 还原配置 ---
           cat <<EOF > litellm_config.yaml
           ${{ secrets.LITELLM_CONFIG_YAML }}
           EOF
 
-          # --- B. 源码手术 (保持你之前的逻辑) ---
-          # 屏蔽 Pytdx
+          # --- C. 源码手术 (隔离 Pytdx) ---
           TARGET_PYTDX="data_provider/pytdx_fetcher.py"
           if [ -f "$TARGET_PYTDX" ]; then
             cat <<EOF > $TARGET_PYTDX
@@ -113,8 +131,8 @@ jobs:
             sed -i '/for .* in .*股票列表/a \        import time, random; sleep_time = random.uniform(20, 50); print(f"☕ 深度模式：等待 {sleep_time:.2f} 秒..."); time.sleep(sleep_time)' $TARGET_PIPELINE
           fi
 
-          # --- C. 启动 ---
-          echo "🚀 正在为区域 [${{ env.RUN_REGION }}] 启动主程序..."
+          # --- D. 启动 ---
+          echo "🚀 正在为区域 [$MARKET_REVIEW_REGION] 启动主程序..."
           python main.py
 
       - name: 提交并推送报告
