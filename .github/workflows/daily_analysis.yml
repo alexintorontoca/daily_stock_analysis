@@ -39,38 +39,31 @@ jobs:
       - name: 确定当前运行市场
         id: set-market
         run: |
-          # 如果是手动触发，使用输入参数
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
             echo "RUN_REGION=${{ github.event.inputs.market }}" >> $GITHUB_ENV
-          # 如果是 UTC 09:00 触发，跑 A股
           elif [ "${{ github.event.schedule }}" == "0 9 * * 1-5" ]; then
             echo "RUN_REGION=cn" >> $GITHUB_ENV
-          # 如果是 UTC 21:00 触发，跑 美股
           else
             echo "RUN_REGION=us" >> $GITHUB_ENV
           fi
 
       - name: 执行股票分析
         env:
-          # --- API 密钥 ---
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           BOCHA_API_KEYS: ${{ secrets.BOCHA_API_KEYS }}
           TAVILY_API_KEYS: ${{ secrets.TAVILY_API_KEYS }}
           TUSHARE_TOKEN: ${{ secrets.TUSHARE_TOKEN }}
           
-          # --- 自动确定的市场区域 ---
           MARKET_REVIEW_REGION: ${{ env.RUN_REGION }}
           RAW_STOCK_LIST: ${{ vars.STOCK_LIST || secrets.STOCK_LIST }}
           
-          # --- 核心深度配置 ---
-          TZ: 'Asia/Shanghai'                       # 强制北京时区，防止日期错乱
-          TRADING_DAY_CHECK_ENABLED: 'false'        # 既然是定时触发，关闭检查强制运行
-          MAX_WORKERS: '1'                          # 深度模式：单线程
+          TZ: 'Asia/Shanghai'
+          TRADING_DAY_CHECK_ENABLED: 'false'
+          MAX_WORKERS: '1'
           NEWS_MAX_AGE_DAYS: '60'
           LITELLM_CONFIG: "./litellm_config.yaml"
           
-          # --- 基本面强化 ---
           ENABLE_FUNDAMENTAL_PIPELINE: 'true'
           FUNDAMENTAL_STAGE_TIMEOUT_SECONDS: '15'
           FUNDAMENTAL_FETCH_TIMEOUT_SECONDS: '5'
@@ -78,22 +71,16 @@ jobs:
           
         run: |
           # --- A. 智能物理隔离股票池 (防止跨时区配额浪费) ---
-          echo "📡 原始股票池: $RAW_STOCK_LIST"
-          
           if [ "$MARKET_REVIEW_REGION" == "us" ]; then
-            # 美股时段：过滤掉纯数字（A股），只保留字母（美股）
             FILTERED_LIST=$(echo "$RAW_STOCK_LIST" | tr ',' '\n' | grep -i '^[a-z]' | tr '\n' ',' | sed 's/,$//')
             export STOCK_LIST=$FILTERED_LIST
-            echo "🇺🇸 美股时段切换完毕！已剔除纯数字 A 股。当前分析列表: $STOCK_LIST"
+            echo "🇺🇸 美股时段：已剔除纯数字 A 股。当前列表: $STOCK_LIST"
           elif [ "$MARKET_REVIEW_REGION" == "cn" ]; then
-            # A股时段：过滤掉纯字母（美股），只保留带数字的代码
             FILTERED_LIST=$(echo "$RAW_STOCK_LIST" | tr ',' '\n' | grep '^[0-9]' | tr '\n' ',' | sed 's/,$//')
             export STOCK_LIST=$FILTERED_LIST
-            echo "🇨🇳 A股时段切换完毕！已剔除美股纯字母。当前分析列表: $STOCK_LIST"
+            echo "🇨🇳 A股时段：已剔除美股纯字母。当前列表: $STOCK_LIST"
           else
-            # both 模式
             export STOCK_LIST=$RAW_STOCK_LIST
-            echo "🌐 全球混跑模式。当前分析列表: $STOCK_LIST"
           fi
 
           # --- B. 还原配置 ---
@@ -132,7 +119,6 @@ jobs:
           fi
 
           # --- D. 启动 ---
-          echo "🚀 正在为区域 [$MARKET_REVIEW_REGION] 启动主程序..."
           python main.py
 
       - name: 提交并推送报告
@@ -140,6 +126,23 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+
+          # --- E. 物理重命名防覆盖手术 ---
+          # 扫描 reports 文件夹，给所有刚生成的文件重命名打上市场标签
+          if [ -d "reports" ]; then
+            for file in reports/*.md; do
+              if [ -f "$file" ] && [[ "$file" != *"_CN.md" ]] && [[ "$file" != *"_US.md" ]]; then
+                if [ "${{ env.RUN_REGION }}" == "cn" ]; then
+                  mv "$file" "${file%.md}_CN.md"
+                  echo "🏷️ 重命名 A 股报告: $file -> ${file%.md}_CN.md"
+                elif [ "${{ env.RUN_REGION }}" == "us" ]; then
+                  mv "$file" "${file%.md}_US.md"
+                  echo "🏷️ 重命名 美股报告: $file -> ${file%.md}_US.md"
+                fi
+              fi
+            done
+          fi
+
           git add -f reports/* logs/* || true
           if git diff --staged --quiet; then
             echo "没有新报告"
