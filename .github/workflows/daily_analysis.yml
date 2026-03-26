@@ -127,18 +127,36 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
 
-          # --- E. 物理重命名防覆盖手术 ---
-          # 扫描 reports 文件夹，给所有刚生成的文件重命名打上市场标签
+          # --- E. 物理重命名防覆盖 + 美东时间校准手术 ---
           if [ -d "reports" ]; then
             for file in reports/*.md; do
               if [ -f "$file" ] && [[ "$file" != *"_CN.md" ]] && [[ "$file" != *"_US.md" ]]; then
+                
                 if [ "${{ env.RUN_REGION }}" == "cn" ]; then
+                  # A股直接打标签
                   mv "$file" "${file%.md}_CN.md"
                   echo "🏷️ 重命名 A 股报告: $file -> ${file%.md}_CN.md"
+                
                 elif [ "${{ env.RUN_REGION }}" == "us" ]; then
-                  mv "$file" "${file%.md}_US.md"
-                  echo "🏷️ 重命名 美股报告: $file -> ${file%.md}_US.md"
+                  # 美股硬核日期校准：从文件名中提取 YYYYMMDD
+                  BASENAME=$(basename "$file")
+                  # 假设文件名格式包含 8位数字，如 report_20260326.md
+                  CURRENT_DATE=$(echo "$BASENAME" | grep -oE '[0-9]{8}')
+                  
+                  if [ -n "$CURRENT_DATE" ]; then
+                    # 借助 Linux date 命令，将抓到的日期减去 1 天
+                    CORRECT_DATE=$(date -d "$CURRENT_DATE -1 day" +"%Y%m%d")
+                    # 替换旧日期，并加上 _US 后缀
+                    NEW_BASENAME=$(echo "$BASENAME" | sed "s/$CURRENT_DATE/$CORRECT_DATE/" | sed 's/\.md/_US.md/')
+                    mv "$file" "reports/$NEW_BASENAME"
+                    echo "📅 美股日期校准：$BASENAME -> $NEW_BASENAME (已回退至美东收盘日)"
+                  else
+                    # 如果匹配不到日期格式，走兜底改名
+                    mv "$file" "${file%.md}_US.md"
+                    echo "🏷️ 美股兜底改名: $file -> ${file%.md}_US.md"
+                  fi
                 fi
+
               fi
             done
           fi
