@@ -1,0 +1,1378 @@
+2026-03-27 05:29:46 | INFO     | src/logging_config.py:153 | 日志系统初始化完成，日志目录: logs
+2026-03-27 05:29:46 | INFO     | src/logging_config.py:154 | 常规日志: logs/stock_analysis_20260327.log
+2026-03-27 05:29:46 | INFO     | src/logging_config.py:155 | 调试日志: logs/stock_analysis_debug_20260327.log
+2026-03-27 05:29:46 | INFO     | main.py:526 | ============================================================
+2026-03-27 05:29:46 | INFO     | main.py:527 | A股自选股智能分析系统 启动
+2026-03-27 05:29:46 | INFO     | main.py:528 | 运行时间: 2026-03-27 05:29:46
+2026-03-27 05:29:46 | INFO     | main.py:529 | ============================================================
+2026-03-27 05:29:46 | WARNING  | main.py:534 | 未配置通知渠道，将不发送推送通知
+2026-03-27 05:29:46 | INFO     | src/storage.py:675 | 数据库初始化完成: sqlite:////home/runner/work/daily_stock_analysis/daily_stock_analysis/data/stock_analysis.db
+2026-03-27 05:29:46 | INFO     | data_provider/tushare_fetcher.py:141 | Tushare API 初始化成功
+2026-03-27 05:29:46 | INFO     | data_provider/tushare_fetcher.py:198 | ✅ 检测到 TUSHARE_TOKEN 且 API 初始化成功，Tushare 数据源优先级提升为最高 (Priority -1)
+2026-03-27 05:29:46 | INFO     | data_provider/base.py:707 | 已初始化 6 个数据源（按优先级）: TushareFetcher(P-1), YfinanceFetcher(P-1), EfinanceFetcher(P0), AkshareFetcher(P1), BaostockFetcher(P3), PytdxFetcher(P99)
+2026-03-27 05:29:46 | INFO     | src/analyzer.py:764 | Analyzer LLM: litellm initialized (model=gemini/gemini-3-flash-preview)
+2026-03-27 05:29:46 | WARNING  | src/notification.py:155 | 未配置有效的通知渠道，将不发送推送通知
+2026-03-27 05:29:46 | INFO     | src/search_service.py:1398 | 已配置 Bocha 搜索，共 1 个 API Key
+2026-03-27 05:29:46 | INFO     | src/search_service.py:1403 | 已配置 Tavily 搜索，共 1 个 API Key
+2026-03-27 05:29:46 | INFO     | src/search_service.py:1432 | 新闻时效策略已启用: profile=short, profile_days=3, NEWS_MAX_AGE_DAYS=60, effective_window=3
+2026-03-27 05:29:46 | INFO     | src/core/pipeline.py:97 | 调度器初始化完成，最大并发数: 1
+2026-03-27 05:29:46 | INFO     | src/core/pipeline.py:98 | 已启用趋势分析器 (MA5>MA10>MA20 多头判断)
+2026-03-27 05:29:46 | INFO     | src/core/pipeline.py:101 | 实时行情已启用 (优先级: tushare,tencent,akshare_sina,efinance,akshare_em)
+2026-03-27 05:29:46 | INFO     | src/core/pipeline.py:105 | 筹码分布分析已启用
+2026-03-27 05:29:46 | INFO     | src/core/pipeline.py:109 | 搜索服务已启用 (Tavily/SerpAPI)
+2026-03-27 05:29:46 | INFO     | src/core/pipeline.py:1120 | ===== 开始分析 12 只股票 =====
+2026-03-27 05:29:46 | INFO     | src/core/pipeline.py:1121 | 股票列表: PM, ENB, ADUS, MMM, MSFT, COST, ABBV, GLD, PFE, O, BIOA, VZ
+2026-03-27 05:29:46 | INFO     | src/core/pipeline.py:1122 | 并发数: 1, 模式: 完整分析
+2026-03-27 05:29:46 | INFO     | data_provider/base.py:894 | [预取] 开始批量预取实时行情，共 12 只股票...
+2026-03-27 05:29:47 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 PM 实时行情成功: 价格=162.49000549316406
+2026-03-27 05:29:47 | INFO     | data_provider/base.py:970 | [实时行情] 美股 PM 成功获取 (来源: yfinance)
+2026-03-27 05:29:47 | INFO     | data_provider/base.py:904 | [预取] 批量预取完成，缓存已填充
+2026-03-27 05:29:47 | INFO     | src/core/pipeline.py:1129 | 已启用批量预取架构：一次拉取全市场数据，12 只股票共享缓存
+2026-03-27 05:29:47 | INFO     | src/core/pipeline.py:1027 | ========== 开始处理 PM ==========
+2026-03-27 05:29:47 | INFO     | src/core/pipeline.py:158 | 菲利普莫里斯(PM) 开始从数据源获取数据...
+2026-03-27 05:29:47 | INFO     | data_provider/base.py:758 | [数据源尝试 2/6] [YfinanceFetcher] 美股/美股指数 PM 直接路由...
+2026-03-27 05:29:47 | INFO     | data_provider/base.py:357 | [YfinanceFetcher] 开始获取 PM 日线数据: 范围=2026-01-26 ~ 2026-03-27
+2026-03-27 05:29:47 | INFO     | data_provider/base.py:376 | [YfinanceFetcher] PM 获取成功: 范围=2026-01-26 ~ 2026-03-27, rows=43, elapsed=0.16s
+2026-03-27 05:29:47 | INFO     | data_provider/base.py:770 | [数据源完成] PM 使用 [YfinanceFetcher] 获取成功: rows=43, elapsed=0.16s
+2026-03-27 05:29:47 | INFO     | src/storage.py:1387 | 保存 PM 数据成功，新增 43 条
+2026-03-27 05:29:47 | INFO     | src/core/pipeline.py:166 | 菲利普莫里斯(PM) 数据保存成功（来源: YfinanceFetcher，新增 43 条）
+2026-03-27 05:29:47 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 PM 实时行情成功: 价格=162.49000549316406
+2026-03-27 05:29:47 | INFO     | data_provider/base.py:970 | [实时行情] 美股 PM 成功获取 (来源: yfinance)
+2026-03-27 05:29:47 | INFO     | src/core/pipeline.py:210 | Philip Morris International Inc(PM) 实时行情: 价格=162.49000549316406, 量比=None, 换手率=None% (来源: fallback)
+2026-03-27 05:29:47 | WARNING  | data_provider/tushare_fetcher.py:1055 | [Tushare] TushareFetcher 不支持美股 PM 的筹码分布
+2026-03-27 05:29:48 | WARNING  | data_provider/base.py:1182 | [筹码分布] PM 所有数据源均失败
+2026-03-27 05:29:48 | INFO     | src/core/pipeline.py:284 | Philip Morris International Inc(PM) 趋势分析: 空头排列, 买入信号=持有, 评分=46
+2026-03-27 05:29:48 | INFO     | src/core/pipeline.py:305 | Philip Morris International Inc(PM) 开始多维度情报搜索...
+2026-03-27 05:29:48 | INFO     | src/search_service.py:1966 | 开始多维度情报搜索: Philip Morris International Inc(PM), 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=60), 目标条数=3, provider请求条数=6
+2026-03-27 05:29:48 | INFO     | src/search_service.py:1995 | [情报搜索] 最新消息: 使用 Bocha
+2026-03-27 05:29:50 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Philip Morris International Inc PM latest news events'
+2026-03-27 05:29:50 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:29:50 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Philip Morris International Inc PM latest news events' 成功，返回 6 条结果，耗时 1.98s
+2026-03-27 05:29:50 | INFO     | src/search_service.py:1720 | [新闻过滤] PM:Bocha:latest_news: provider=Bocha, total=6, kept=1, drop_unknown=0, drop_old=5, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:29:50 | INFO     | src/search_service.py:2012 | [情报搜索] 最新消息: 原始=6条, 过滤后=1条
+2026-03-27 05:29:50 | INFO     | src/search_service.py:1995 | [情报搜索] 机构分析: 使用 Tavily
+2026-03-27 05:29:53 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='Philip Morris International Inc analyst rating target price report', 返回 6 条结果
+2026-03-27 05:29:53 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'Philip Morris International Inc analyst rating target price report' 成功，返回 6 条结果，耗时 2.10s
+2026-03-27 05:29:53 | INFO     | src/search_service.py:1720 | [新闻过滤] PM:Tavily:market_analysis: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:29:53 | INFO     | src/search_service.py:2012 | [情报搜索] 机构分析: 原始=6条, 过滤后=0条
+2026-03-27 05:29:53 | INFO     | src/search_service.py:1995 | [情报搜索] 风险排查: 使用 Bocha
+2026-03-27 05:29:54 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Philip Morris International Inc risk insider selling lawsuit litigation'
+2026-03-27 05:29:54 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:29:54 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Philip Morris International Inc risk insider selling lawsuit litigation' 成功，返回 6 条结果，耗时 1.38s
+2026-03-27 05:29:54 | INFO     | src/search_service.py:1720 | [新闻过滤] PM:Bocha:risk_check: provider=Bocha, total=6, kept=3, drop_unknown=0, drop_old=2, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:29:54 | INFO     | src/search_service.py:2012 | [情报搜索] 风险排查: 原始=6条, 过滤后=3条
+2026-03-27 05:29:55 | INFO     | src/search_service.py:1995 | [情报搜索] 业绩预期: 使用 Tavily
+2026-03-27 05:29:57 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='Philip Morris International Inc earnings revenue profit growth forecast', 返回 6 条结果
+2026-03-27 05:29:57 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'Philip Morris International Inc earnings revenue profit growth forecast' 成功，返回 6 条结果，耗时 1.65s
+2026-03-27 05:29:57 | INFO     | src/search_service.py:1720 | [新闻过滤] PM:Tavily:earnings: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:29:57 | INFO     | src/search_service.py:2012 | [情报搜索] 业绩预期: 原始=6条, 过滤后=0条
+2026-03-27 05:29:57 | INFO     | src/search_service.py:1995 | [情报搜索] 行业分析: 使用 Bocha
+2026-03-27 05:29:58 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Philip Morris International Inc industry competitors market share outlook'
+2026-03-27 05:29:58 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:29:58 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Philip Morris International Inc industry competitors market share outlook' 成功，返回 6 条结果，耗时 1.25s
+2026-03-27 05:29:58 | INFO     | src/search_service.py:1720 | [新闻过滤] PM:Bocha:industry: provider=Bocha, total=6, kept=2, drop_unknown=0, drop_old=4, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:29:58 | INFO     | src/search_service.py:2012 | [情报搜索] 行业分析: 原始=6条, 过滤后=2条
+2026-03-27 05:29:59 | INFO     | src/core/pipeline.py:320 | Philip Morris International Inc(PM) 情报搜索完成: 共 6 条结果
+2026-03-27 05:29:59 | INFO     | src/storage.py:922 | 保存新闻情报成功: PM, 新增 1 条
+2026-03-27 05:29:59 | INFO     | src/storage.py:922 | 保存新闻情报成功: PM, 新增 3 条
+2026-03-27 05:29:59 | INFO     | src/storage.py:922 | 保存新闻情报成功: PM, 新增 2 条
+2026-03-27 05:30:01 | INFO     | src/analyzer.py:952 | ========== AI 分析 Philip Morris International Inc(PM) ==========
+2026-03-27 05:30:01 | INFO     | src/analyzer.py:953 | [LLM配置] 模型: gemini/gemini-3-flash-preview
+2026-03-27 05:30:01 | INFO     | src/analyzer.py:954 | [LLM配置] Prompt 长度: 3875 字符
+2026-03-27 05:30:01 | INFO     | src/analyzer.py:955 | [LLM配置] 是否包含新闻: 是
+2026-03-27 05:30:01 | INFO     | src/analyzer.py:959 | [LLM Prompt 预览]
+# 决策仪表盘分析请求
+
+## 📊 股票基础信息
+| 项目 | 数据 |
+|------|------|
+| 股票代码 | **PM** |
+| 股票名称 | **Philip Morris International Inc** |
+| 分析日期 | 2026-03-27 |
+
+---
+
+## 📈 技术面数据
+
+### 今日行情
+| 指标 | 数值 |
+|------|------|
+| 收盘价 | 162.49000549316406 元 |
+| 开盘价 | 165.5 元 |
+| 最高价 | 166.0 元 |
+| 最低价 | 161.9499969482422 元 |
+| 涨跌幅 | -1.52% |
+| 成交量 | 207.05 万股 |
+| 成交额 | 3.36 亿元 |
+
+### 均线系统（关键判断指标）
+| 均线 | 数值 | 说明 |
+|------|------|------|
+| MA5 | 163.51800231933595 | 短期趋势线 |
+| MA10 | 165.3274368286133 | 中短期趋势线 |
+| MA20 | 168.8984062...
+2026-03-27 05:30:01 | INFO     | src/analyzer.py:968 | [LLM调用] 开始调用 gemini/gemini-3-flash-preview...
+2026-03-27 05:30:01 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3995 | 
+LiteLLM completion() model= gemini-3-flash-preview; provider = gemini
+2026-03-27 05:30:01 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py:1009 | Warning: Setting temperature < 1.0 for Gemini 3 models (gemini-3-flash-preview) can cause infinite loops, degraded reasoning performance, and failure on complex tasks. Strongly recommended to use temperature = 1.0 (default).
+2026-03-27 05:30:21 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:1656 | Wrapper: Completed Call, calling success_handler
+2026-03-27 05:30:21 | INFO     | src/analyzer.py:981 | [LLM返回] gemini/gemini-3-flash-preview 响应成功, 耗时 19.75s, 响应长度 3868 字符
+2026-03-27 05:30:21 | INFO     | src/analyzer.py:985 | [LLM返回 预览]
+```json
+{
+    "stock_name": "菲利普莫里斯国际 (PM)",
+    "sentiment_score": 35,
+    "trend_prediction": "看空",
+    "operation_advice": "观望",
+    "decision_type": "sell",
+    "confidence_level": "高",
+
+    "dashboard": {
+        "core_conclusion": {
+            "one_sentence": "均线呈现标准空头排列，股价处于下降通道，建议空仓观望，不接飞刀。...
+2026-03-27 05:30:21 | INFO     | src/analyzer.py:1025 | [LLM解析] Philip Morris International Inc(PM) 分析完成: 看空, 评分 35
+2026-03-27 05:30:21 | INFO     | src/core/pipeline.py:1051 | [PM] 分析完成: 观望, 评分 35
+2026-03-27 05:30:21 | INFO     | src/core/pipeline.py:1027 | ========== 开始处理 ENB ==========
+2026-03-27 05:30:21 | INFO     | src/core/pipeline.py:158 | 恩桥(ENB) 开始从数据源获取数据...
+2026-03-27 05:30:21 | INFO     | data_provider/base.py:758 | [数据源尝试 2/6] [YfinanceFetcher] 美股/美股指数 ENB 直接路由...
+2026-03-27 05:30:21 | INFO     | data_provider/base.py:357 | [YfinanceFetcher] 开始获取 ENB 日线数据: 范围=2026-01-26 ~ 2026-03-27
+2026-03-27 05:30:21 | INFO     | data_provider/base.py:376 | [YfinanceFetcher] ENB 获取成功: 范围=2026-01-26 ~ 2026-03-27, rows=43, elapsed=0.23s
+2026-03-27 05:30:21 | INFO     | data_provider/base.py:770 | [数据源完成] ENB 使用 [YfinanceFetcher] 获取成功: rows=43, elapsed=0.23s
+2026-03-27 05:30:21 | INFO     | src/storage.py:1387 | 保存 ENB 数据成功，新增 43 条
+2026-03-27 05:30:21 | INFO     | src/core/pipeline.py:166 | 恩桥(ENB) 数据保存成功（来源: YfinanceFetcher，新增 43 条）
+2026-03-27 05:30:22 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 ENB 实时行情成功: 价格=54.5
+2026-03-27 05:30:22 | INFO     | data_provider/base.py:970 | [实时行情] 美股 ENB 成功获取 (来源: yfinance)
+2026-03-27 05:30:22 | INFO     | src/core/pipeline.py:210 | Enbridge Inc(ENB) 实时行情: 价格=54.5, 量比=None, 换手率=None% (来源: fallback)
+2026-03-27 05:30:22 | WARNING  | data_provider/tushare_fetcher.py:1055 | [Tushare] TushareFetcher 不支持美股 ENB 的筹码分布
+2026-03-27 05:30:22 | WARNING  | data_provider/base.py:1182 | [筹码分布] ENB 所有数据源均失败
+2026-03-27 05:30:22 | INFO     | src/core/pipeline.py:284 | Enbridge Inc(ENB) 趋势分析: 多头排列, 买入信号=强烈买入, 评分=77
+2026-03-27 05:30:22 | INFO     | src/core/pipeline.py:305 | Enbridge Inc(ENB) 开始多维度情报搜索...
+2026-03-27 05:30:22 | INFO     | src/search_service.py:1966 | 开始多维度情报搜索: Enbridge Inc(ENB), 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=60), 目标条数=3, provider请求条数=6
+2026-03-27 05:30:22 | INFO     | src/search_service.py:1995 | [情报搜索] 最新消息: 使用 Bocha
+2026-03-27 05:30:23 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Enbridge Inc ENB latest news events'
+2026-03-27 05:30:23 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:30:23 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Enbridge Inc ENB latest news events' 成功，返回 6 条结果，耗时 1.13s
+2026-03-27 05:30:23 | INFO     | src/search_service.py:1720 | [新闻过滤] ENB:Bocha:latest_news: provider=Bocha, total=6, kept=0, drop_unknown=0, drop_old=6, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:30:23 | INFO     | src/search_service.py:2012 | [情报搜索] 最新消息: 原始=6条, 过滤后=0条
+2026-03-27 05:30:23 | INFO     | src/search_service.py:1995 | [情报搜索] 机构分析: 使用 Tavily
+2026-03-27 05:30:27 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='Enbridge Inc analyst rating target price report', 返回 6 条结果
+2026-03-27 05:30:27 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'Enbridge Inc analyst rating target price report' 成功，返回 6 条结果，耗时 3.58s
+2026-03-27 05:30:27 | INFO     | src/search_service.py:1720 | [新闻过滤] ENB:Tavily:market_analysis: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:30:27 | INFO     | src/search_service.py:2012 | [情报搜索] 机构分析: 原始=6条, 过滤后=0条
+2026-03-27 05:30:27 | INFO     | src/search_service.py:1995 | [情报搜索] 风险排查: 使用 Bocha
+2026-03-27 05:30:28 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Enbridge Inc risk insider selling lawsuit litigation'
+2026-03-27 05:30:28 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:30:28 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Enbridge Inc risk insider selling lawsuit litigation' 成功，返回 6 条结果，耗时 1.17s
+2026-03-27 05:30:28 | INFO     | src/search_service.py:1720 | [新闻过滤] ENB:Bocha:risk_check: provider=Bocha, total=6, kept=1, drop_unknown=0, drop_old=5, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:30:28 | INFO     | src/search_service.py:2012 | [情报搜索] 风险排查: 原始=6条, 过滤后=1条
+2026-03-27 05:30:29 | INFO     | src/search_service.py:1995 | [情报搜索] 业绩预期: 使用 Tavily
+2026-03-27 05:30:31 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='Enbridge Inc earnings revenue profit growth forecast', 返回 6 条结果
+2026-03-27 05:30:31 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'Enbridge Inc earnings revenue profit growth forecast' 成功，返回 6 条结果，耗时 1.82s
+2026-03-27 05:30:31 | INFO     | src/search_service.py:1720 | [新闻过滤] ENB:Tavily:earnings: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:30:31 | INFO     | src/search_service.py:2012 | [情报搜索] 业绩预期: 原始=6条, 过滤后=0条
+2026-03-27 05:30:31 | INFO     | src/search_service.py:1995 | [情报搜索] 行业分析: 使用 Bocha
+2026-03-27 05:30:32 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Enbridge Inc industry competitors market share outlook'
+2026-03-27 05:30:32 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:30:32 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Enbridge Inc industry competitors market share outlook' 成功，返回 6 条结果，耗时 1.14s
+2026-03-27 05:30:32 | INFO     | src/search_service.py:1720 | [新闻过滤] ENB:Bocha:industry: provider=Bocha, total=6, kept=1, drop_unknown=0, drop_old=5, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:30:32 | INFO     | src/search_service.py:2012 | [情报搜索] 行业分析: 原始=6条, 过滤后=1条
+2026-03-27 05:30:33 | INFO     | src/core/pipeline.py:320 | Enbridge Inc(ENB) 情报搜索完成: 共 2 条结果
+2026-03-27 05:30:33 | INFO     | src/storage.py:922 | 保存新闻情报成功: ENB, 新增 1 条
+2026-03-27 05:30:33 | INFO     | src/storage.py:922 | 保存新闻情报成功: ENB, 新增 1 条
+2026-03-27 05:30:35 | INFO     | src/analyzer.py:952 | ========== AI 分析 Enbridge Inc(ENB) ==========
+2026-03-27 05:30:35 | INFO     | src/analyzer.py:953 | [LLM配置] 模型: gemini/gemini-3-flash-preview
+2026-03-27 05:30:35 | INFO     | src/analyzer.py:954 | [LLM配置] Prompt 长度: 3059 字符
+2026-03-27 05:30:35 | INFO     | src/analyzer.py:955 | [LLM配置] 是否包含新闻: 是
+2026-03-27 05:30:35 | INFO     | src/analyzer.py:959 | [LLM Prompt 预览]
+# 决策仪表盘分析请求
+
+## 📊 股票基础信息
+| 项目 | 数据 |
+|------|------|
+| 股票代码 | **ENB** |
+| 股票名称 | **Enbridge Inc** |
+| 分析日期 | 2026-03-27 |
+
+---
+
+## 📈 技术面数据
+
+### 今日行情
+| 指标 | 数值 |
+|------|------|
+| 收盘价 | 54.5 元 |
+| 开盘价 | 54.630001068115234 元 |
+| 最高价 | 54.869998931884766 元 |
+| 最低价 | 54.290000915527344 元 |
+| 涨跌幅 | -0.07% |
+| 成交量 | 394.63 万股 |
+| 成交额 | 2.15 亿元 |
+
+### 均线系统（关键判断指标）
+| 均线 | 数值 | 说明 |
+|------|------|------|
+| MA5 | 54.41599960327149 | 短期趋势线 |
+| MA10 | 54.143999862670896 | 中短期趋势线 |
+| MA20 | 54.0415000915527...
+2026-03-27 05:30:35 | INFO     | src/analyzer.py:968 | [LLM调用] 开始调用 gemini/gemini-3-flash-preview...
+2026-03-27 05:30:35 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3995 | 
+LiteLLM completion() model= gemini-3-flash-preview; provider = gemini
+2026-03-27 05:30:35 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py:1009 | Warning: Setting temperature < 1.0 for Gemini 3 models (gemini-3-flash-preview) can cause infinite loops, degraded reasoning performance, and failure on complex tasks. Strongly recommended to use temperature = 1.0 (default).
+2026-03-27 05:30:56 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:1656 | Wrapper: Completed Call, calling success_handler
+2026-03-27 05:30:56 | INFO     | src/analyzer.py:981 | [LLM返回] gemini/gemini-3-flash-preview 响应成功, 耗时 20.95s, 响应长度 4054 字符
+2026-03-27 05:30:56 | INFO     | src/analyzer.py:985 | [LLM返回 预览]
+```json
+{
+    "stock_name": "恩桥（Enbridge Inc）",
+    "sentiment_score": 78,
+    "trend_prediction": "看多",
+    "operation_advice": "买入",
+    "decision_type": "buy",
+    "confidence_level": "高",
+
+    "dashboard": {
+        "core_conclusion": {
+            "one_sentence": "标准多头排列且乖离率极低，回踩MA5支撑有效，现价即是理想买...
+2026-03-27 05:30:56 | INFO     | src/analyzer.py:1025 | [LLM解析] Enbridge Inc(ENB) 分析完成: 看多, 评分 78
+2026-03-27 05:30:56 | INFO     | src/core/pipeline.py:1051 | [ENB] 分析完成: 买入, 评分 78
+2026-03-27 05:30:56 | INFO     | src/core/pipeline.py:1027 | ========== 开始处理 ADUS ==========
+2026-03-27 05:30:56 | INFO     | src/core/pipeline.py:158 | 阿迪斯(ADUS) 开始从数据源获取数据...
+2026-03-27 05:30:56 | INFO     | data_provider/base.py:758 | [数据源尝试 2/6] [YfinanceFetcher] 美股/美股指数 ADUS 直接路由...
+2026-03-27 05:30:56 | INFO     | data_provider/base.py:357 | [YfinanceFetcher] 开始获取 ADUS 日线数据: 范围=2026-01-26 ~ 2026-03-27
+2026-03-27 05:30:56 | INFO     | data_provider/base.py:376 | [YfinanceFetcher] ADUS 获取成功: 范围=2026-01-26 ~ 2026-03-27, rows=43, elapsed=0.20s
+2026-03-27 05:30:56 | INFO     | data_provider/base.py:770 | [数据源完成] ADUS 使用 [YfinanceFetcher] 获取成功: rows=43, elapsed=0.20s
+2026-03-27 05:30:56 | INFO     | src/storage.py:1387 | 保存 ADUS 数据成功，新增 43 条
+2026-03-27 05:30:56 | INFO     | src/core/pipeline.py:166 | 阿迪斯(ADUS) 数据保存成功（来源: YfinanceFetcher，新增 43 条）
+2026-03-27 05:30:57 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 ADUS 实时行情成功: 价格=97.66999816894531
+2026-03-27 05:30:57 | INFO     | data_provider/base.py:970 | [实时行情] 美股 ADUS 成功获取 (来源: yfinance)
+2026-03-27 05:30:57 | INFO     | src/core/pipeline.py:210 | Addus HomeCare Corporation(ADUS) 实时行情: 价格=97.66999816894531, 量比=None, 换手率=None% (来源: fallback)
+2026-03-27 05:30:57 | WARNING  | data_provider/tushare_fetcher.py:1055 | [Tushare] TushareFetcher 不支持美股 ADUS 的筹码分布
+2026-03-27 05:30:57 | WARNING  | data_provider/base.py:1182 | [筹码分布] ADUS 所有数据源均失败
+2026-03-27 05:30:57 | INFO     | src/core/pipeline.py:284 | Addus HomeCare Corporation(ADUS) 趋势分析: 空头排列, 买入信号=持有, 评分=46
+2026-03-27 05:30:57 | INFO     | src/core/pipeline.py:305 | Addus HomeCare Corporation(ADUS) 开始多维度情报搜索...
+2026-03-27 05:30:57 | INFO     | src/search_service.py:1966 | 开始多维度情报搜索: Addus HomeCare Corporation(ADUS), 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=60), 目标条数=3, provider请求条数=6
+2026-03-27 05:30:57 | INFO     | src/search_service.py:1995 | [情报搜索] 最新消息: 使用 Bocha
+2026-03-27 05:30:59 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Addus HomeCare Corporation ADUS latest news events'
+2026-03-27 05:30:59 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:30:59 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Addus HomeCare Corporation ADUS latest news events' 成功，返回 6 条结果，耗时 2.01s
+2026-03-27 05:30:59 | INFO     | src/search_service.py:1720 | [新闻过滤] ADUS:Bocha:latest_news: provider=Bocha, total=6, kept=3, drop_unknown=0, drop_old=1, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:30:59 | INFO     | src/search_service.py:2012 | [情报搜索] 最新消息: 原始=6条, 过滤后=3条
+2026-03-27 05:30:59 | INFO     | src/search_service.py:1995 | [情报搜索] 机构分析: 使用 Tavily
+2026-03-27 05:31:03 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='Addus HomeCare Corporation analyst rating target price report', 返回 6 条结果
+2026-03-27 05:31:03 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'Addus HomeCare Corporation analyst rating target price report' 成功，返回 6 条结果，耗时 3.58s
+2026-03-27 05:31:03 | INFO     | src/search_service.py:1720 | [新闻过滤] ADUS:Tavily:market_analysis: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:31:03 | INFO     | src/search_service.py:2012 | [情报搜索] 机构分析: 原始=6条, 过滤后=0条
+2026-03-27 05:31:03 | INFO     | src/search_service.py:1995 | [情报搜索] 风险排查: 使用 Bocha
+2026-03-27 05:31:04 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Addus HomeCare Corporation risk insider selling lawsuit litigation'
+2026-03-27 05:31:04 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:31:04 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Addus HomeCare Corporation risk insider selling lawsuit litigation' 成功，返回 6 条结果，耗时 1.16s
+2026-03-27 05:31:04 | INFO     | src/search_service.py:1720 | [新闻过滤] ADUS:Bocha:risk_check: provider=Bocha, total=6, kept=0, drop_unknown=0, drop_old=6, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:31:04 | INFO     | src/search_service.py:2012 | [情报搜索] 风险排查: 原始=6条, 过滤后=0条
+2026-03-27 05:31:05 | INFO     | src/search_service.py:1995 | [情报搜索] 业绩预期: 使用 Tavily
+2026-03-27 05:31:06 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='Addus HomeCare Corporation earnings revenue profit growth forecast', 返回 6 条结果
+2026-03-27 05:31:06 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'Addus HomeCare Corporation earnings revenue profit growth forecast' 成功，返回 6 条结果，耗时 1.50s
+2026-03-27 05:31:06 | INFO     | src/search_service.py:1720 | [新闻过滤] ADUS:Tavily:earnings: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:31:06 | INFO     | src/search_service.py:2012 | [情报搜索] 业绩预期: 原始=6条, 过滤后=0条
+2026-03-27 05:31:07 | INFO     | src/search_service.py:1995 | [情报搜索] 行业分析: 使用 Bocha
+2026-03-27 05:31:08 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Addus HomeCare Corporation industry competitors market share outlook'
+2026-03-27 05:31:08 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:31:08 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Addus HomeCare Corporation industry competitors market share outlook' 成功，返回 6 条结果，耗时 1.12s
+2026-03-27 05:31:08 | INFO     | src/search_service.py:1720 | [新闻过滤] ADUS:Bocha:industry: provider=Bocha, total=6, kept=1, drop_unknown=0, drop_old=5, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:31:08 | INFO     | src/search_service.py:2012 | [情报搜索] 行业分析: 原始=6条, 过滤后=1条
+2026-03-27 05:31:09 | INFO     | src/core/pipeline.py:320 | Addus HomeCare Corporation(ADUS) 情报搜索完成: 共 4 条结果
+2026-03-27 05:31:09 | INFO     | src/storage.py:922 | 保存新闻情报成功: ADUS, 新增 3 条
+2026-03-27 05:31:09 | INFO     | src/storage.py:922 | 保存新闻情报成功: ADUS, 新增 1 条
+2026-03-27 05:31:11 | INFO     | src/analyzer.py:952 | ========== AI 分析 Addus HomeCare Corporation(ADUS) ==========
+2026-03-27 05:31:11 | INFO     | src/analyzer.py:953 | [LLM配置] 模型: gemini/gemini-3-flash-preview
+2026-03-27 05:31:11 | INFO     | src/analyzer.py:954 | [LLM配置] Prompt 长度: 3352 字符
+2026-03-27 05:31:11 | INFO     | src/analyzer.py:955 | [LLM配置] 是否包含新闻: 是
+2026-03-27 05:31:11 | INFO     | src/analyzer.py:959 | [LLM Prompt 预览]
+# 决策仪表盘分析请求
+
+## 📊 股票基础信息
+| 项目 | 数据 |
+|------|------|
+| 股票代码 | **ADUS** |
+| 股票名称 | **Addus HomeCare Corporation** |
+| 分析日期 | 2026-03-27 |
+
+---
+
+## 📈 技术面数据
+
+### 今日行情
+| 指标 | 数值 |
+|------|------|
+| 收盘价 | 97.66999816894531 元 |
+| 开盘价 | 98.9000015258789 元 |
+| 最高价 | 100.77999877929688 元 |
+| 最低价 | 97.0999984741211 元 |
+| 涨跌幅 | -1.66% |
+| 成交量 | 20.03 万股 |
+| 成交额 | 1956.56 万元 |
+
+### 均线系统（关键判断指标）
+| 均线 | 数值 | 说明 |
+|------|------|------|
+| MA5 | 98.7499984741211 | 短期趋势线 |
+| MA10 | 99.70599899291992 | 中短期趋势线 |
+|...
+2026-03-27 05:31:11 | INFO     | src/analyzer.py:968 | [LLM调用] 开始调用 gemini/gemini-3-flash-preview...
+2026-03-27 05:31:11 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3995 | 
+LiteLLM completion() model= gemini-3-flash-preview; provider = gemini
+2026-03-27 05:31:11 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py:1009 | Warning: Setting temperature < 1.0 for Gemini 3 models (gemini-3-flash-preview) can cause infinite loops, degraded reasoning performance, and failure on complex tasks. Strongly recommended to use temperature = 1.0 (default).
+2026-03-27 05:31:32 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:1656 | Wrapper: Completed Call, calling success_handler
+2026-03-27 05:31:32 | INFO     | src/analyzer.py:981 | [LLM返回] gemini/gemini-3-flash-preview 响应成功, 耗时 21.54s, 响应长度 3953 字符
+2026-03-27 05:31:32 | INFO     | src/analyzer.py:985 | [LLM返回 预览]
+```json
+{
+    "stock_name": "Addus HomeCare Corporation (ADUS)",
+    "sentiment_score": 35,
+    "trend_prediction": "看空",
+    "operation_advice": "观望",
+    "decision_type": "sell",
+    "confidence_level": "高",
+
+    "dashboard": {
+        "core_conclusion": {
+            "one_sentence": "趋势完全走坏，均线呈空头...
+2026-03-27 05:31:32 | INFO     | src/analyzer.py:1025 | [LLM解析] Addus HomeCare Corporation(ADUS) 分析完成: 看空, 评分 35
+2026-03-27 05:31:32 | INFO     | src/core/pipeline.py:1051 | [ADUS] 分析完成: 观望, 评分 35
+2026-03-27 05:31:32 | INFO     | src/core/pipeline.py:1027 | ========== 开始处理 MMM ==========
+2026-03-27 05:31:32 | INFO     | src/core/pipeline.py:158 | 3M(MMM) 开始从数据源获取数据...
+2026-03-27 05:31:32 | INFO     | data_provider/base.py:758 | [数据源尝试 2/6] [YfinanceFetcher] 美股/美股指数 MMM 直接路由...
+2026-03-27 05:31:32 | INFO     | data_provider/base.py:357 | [YfinanceFetcher] 开始获取 MMM 日线数据: 范围=2026-01-26 ~ 2026-03-27
+2026-03-27 05:31:33 | INFO     | data_provider/base.py:376 | [YfinanceFetcher] MMM 获取成功: 范围=2026-01-26 ~ 2026-03-27, rows=43, elapsed=0.40s
+2026-03-27 05:31:33 | INFO     | data_provider/base.py:770 | [数据源完成] MMM 使用 [YfinanceFetcher] 获取成功: rows=43, elapsed=0.40s
+2026-03-27 05:31:33 | INFO     | src/storage.py:1387 | 保存 MMM 数据成功，新增 43 条
+2026-03-27 05:31:33 | INFO     | src/core/pipeline.py:166 | 3M(MMM) 数据保存成功（来源: YfinanceFetcher，新增 43 条）
+2026-03-27 05:31:33 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 MMM 实时行情成功: 价格=143.99000549316406
+2026-03-27 05:31:33 | INFO     | data_provider/base.py:970 | [实时行情] 美股 MMM 成功获取 (来源: yfinance)
+2026-03-27 05:31:33 | INFO     | src/core/pipeline.py:210 | 3M Company(MMM) 实时行情: 价格=143.99000549316406, 量比=None, 换手率=None% (来源: fallback)
+2026-03-27 05:31:33 | WARNING  | data_provider/tushare_fetcher.py:1055 | [Tushare] TushareFetcher 不支持美股 MMM 的筹码分布
+2026-03-27 05:31:33 | WARNING  | data_provider/base.py:1182 | [筹码分布] MMM 所有数据源均失败
+2026-03-27 05:31:33 | INFO     | src/core/pipeline.py:284 | 3M Company(MMM) 趋势分析: 弱势多头, 买入信号=持有, 评分=53
+2026-03-27 05:31:33 | INFO     | src/core/pipeline.py:305 | 3M Company(MMM) 开始多维度情报搜索...
+2026-03-27 05:31:33 | INFO     | src/search_service.py:1966 | 开始多维度情报搜索: 3M Company(MMM), 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=60), 目标条数=3, provider请求条数=6
+2026-03-27 05:31:33 | INFO     | src/search_service.py:1995 | [情报搜索] 最新消息: 使用 Bocha
+2026-03-27 05:31:34 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='3M Company MMM latest news events'
+2026-03-27 05:31:34 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:31:34 | INFO     | src/search_service.py:237 | [Bocha] 搜索 '3M Company MMM latest news events' 成功，返回 6 条结果，耗时 1.11s
+2026-03-27 05:31:34 | INFO     | src/search_service.py:1720 | [新闻过滤] MMM:Bocha:latest_news: provider=Bocha, total=6, kept=2, drop_unknown=0, drop_old=4, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:31:34 | INFO     | src/search_service.py:2012 | [情报搜索] 最新消息: 原始=6条, 过滤后=2条
+2026-03-27 05:31:35 | INFO     | src/search_service.py:1995 | [情报搜索] 机构分析: 使用 Tavily
+2026-03-27 05:31:37 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='3M Company analyst rating target price report', 返回 6 条结果
+2026-03-27 05:31:37 | INFO     | src/search_service.py:237 | [Tavily] 搜索 '3M Company analyst rating target price report' 成功，返回 6 条结果，耗时 1.66s
+2026-03-27 05:31:37 | INFO     | src/search_service.py:1720 | [新闻过滤] MMM:Tavily:market_analysis: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:31:37 | INFO     | src/search_service.py:2012 | [情报搜索] 机构分析: 原始=6条, 过滤后=0条
+2026-03-27 05:31:37 | INFO     | src/search_service.py:1995 | [情报搜索] 风险排查: 使用 Bocha
+2026-03-27 05:31:38 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='3M Company risk insider selling lawsuit litigation'
+2026-03-27 05:31:38 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:31:38 | INFO     | src/search_service.py:237 | [Bocha] 搜索 '3M Company risk insider selling lawsuit litigation' 成功，返回 6 条结果，耗时 1.18s
+2026-03-27 05:31:38 | INFO     | src/search_service.py:1720 | [新闻过滤] MMM:Bocha:risk_check: provider=Bocha, total=6, kept=2, drop_unknown=0, drop_old=4, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:31:38 | INFO     | src/search_service.py:2012 | [情报搜索] 风险排查: 原始=6条, 过滤后=2条
+2026-03-27 05:31:39 | INFO     | src/search_service.py:1995 | [情报搜索] 业绩预期: 使用 Tavily
+2026-03-27 05:31:42 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='3M Company earnings revenue profit growth forecast', 返回 6 条结果
+2026-03-27 05:31:42 | INFO     | src/search_service.py:237 | [Tavily] 搜索 '3M Company earnings revenue profit growth forecast' 成功，返回 6 条结果，耗时 3.49s
+2026-03-27 05:31:42 | INFO     | src/search_service.py:1720 | [新闻过滤] MMM:Tavily:earnings: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:31:42 | INFO     | src/search_service.py:2012 | [情报搜索] 业绩预期: 原始=6条, 过滤后=0条
+2026-03-27 05:31:43 | INFO     | src/search_service.py:1995 | [情报搜索] 行业分析: 使用 Bocha
+2026-03-27 05:31:44 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='3M Company industry competitors market share outlook'
+2026-03-27 05:31:44 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:31:44 | INFO     | src/search_service.py:237 | [Bocha] 搜索 '3M Company industry competitors market share outlook' 成功，返回 6 条结果，耗时 1.19s
+2026-03-27 05:31:44 | INFO     | src/search_service.py:1720 | [新闻过滤] MMM:Bocha:industry: provider=Bocha, total=6, kept=2, drop_unknown=0, drop_old=4, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:31:44 | INFO     | src/search_service.py:2012 | [情报搜索] 行业分析: 原始=6条, 过滤后=2条
+2026-03-27 05:31:45 | INFO     | src/core/pipeline.py:320 | 3M Company(MMM) 情报搜索完成: 共 6 条结果
+2026-03-27 05:31:45 | INFO     | src/storage.py:922 | 保存新闻情报成功: MMM, 新增 2 条
+2026-03-27 05:31:45 | INFO     | src/storage.py:922 | 保存新闻情报成功: MMM, 新增 1 条
+2026-03-27 05:31:45 | INFO     | src/storage.py:922 | 保存新闻情报成功: MMM, 新增 2 条
+2026-03-27 05:31:47 | INFO     | src/analyzer.py:952 | ========== AI 分析 3M Company(MMM) ==========
+2026-03-27 05:31:47 | INFO     | src/analyzer.py:953 | [LLM配置] 模型: gemini/gemini-3-flash-preview
+2026-03-27 05:31:47 | INFO     | src/analyzer.py:954 | [LLM配置] Prompt 长度: 3761 字符
+2026-03-27 05:31:47 | INFO     | src/analyzer.py:955 | [LLM配置] 是否包含新闻: 是
+2026-03-27 05:31:47 | INFO     | src/analyzer.py:959 | [LLM Prompt 预览]
+# 决策仪表盘分析请求
+
+## 📊 股票基础信息
+| 项目 | 数据 |
+|------|------|
+| 股票代码 | **MMM** |
+| 股票名称 | **3M Company** |
+| 分析日期 | 2026-03-27 |
+
+---
+
+## 📈 技术面数据
+
+### 今日行情
+| 指标 | 数值 |
+|------|------|
+| 收盘价 | 143.99000549316406 元 |
+| 开盘价 | 147.08999633789062 元 |
+| 最高价 | 147.39999389648438 元 |
+| 最低价 | 143.71099853515625 元 |
+| 涨跌幅 | -3.24% |
+| 成交量 | 281.17 万股 |
+| 成交额 | 4.05 亿元 |
+
+### 均线系统（关键判断指标）
+| 均线 | 数值 | 说明 |
+|------|------|------|
+| MA5 | 145.852001953125 | 短期趋势线 |
+| MA10 | 145.7260009765625 | 中短期趋势线 |
+| MA20 | 150.49...
+2026-03-27 05:31:47 | INFO     | src/analyzer.py:968 | [LLM调用] 开始调用 gemini/gemini-3-flash-preview...
+2026-03-27 05:31:47 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3995 | 
+LiteLLM completion() model= gemini-3-flash-preview; provider = gemini
+2026-03-27 05:31:47 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py:1009 | Warning: Setting temperature < 1.0 for Gemini 3 models (gemini-3-flash-preview) can cause infinite loops, degraded reasoning performance, and failure on complex tasks. Strongly recommended to use temperature = 1.0 (default).
+2026-03-27 05:32:06 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:1656 | Wrapper: Completed Call, calling success_handler
+2026-03-27 05:32:06 | INFO     | src/analyzer.py:981 | [LLM返回] gemini/gemini-3-flash-preview 响应成功, 耗时 19.77s, 响应长度 3997 字符
+2026-03-27 05:32:06 | INFO     | src/analyzer.py:985 | [LLM返回 预览]
+```json
+{
+    "stock_name": "3M公司（MMM）",
+    "sentiment_score": 35,
+    "trend_prediction": "看空",
+    "operation_advice": "观望",
+    "decision_type": "sell",
+    "confidence_level": "高",
+
+    "dashboard": {
+        "core_conclusion": {
+            "one_sentence": "均线空头排列且放量跌破短期均线，趋势走弱，坚决不入场。",
+      ...
+2026-03-27 05:32:06 | INFO     | src/analyzer.py:1025 | [LLM解析] 3M Company(MMM) 分析完成: 看空, 评分 35
+2026-03-27 05:32:06 | INFO     | src/core/pipeline.py:1051 | [MMM] 分析完成: 观望, 评分 35
+2026-03-27 05:32:06 | INFO     | src/core/pipeline.py:1027 | ========== 开始处理 MSFT ==========
+2026-03-27 05:32:06 | INFO     | src/core/pipeline.py:158 | 微软(MSFT) 开始从数据源获取数据...
+2026-03-27 05:32:06 | INFO     | data_provider/base.py:758 | [数据源尝试 2/6] [YfinanceFetcher] 美股/美股指数 MSFT 直接路由...
+2026-03-27 05:32:06 | INFO     | data_provider/base.py:357 | [YfinanceFetcher] 开始获取 MSFT 日线数据: 范围=2026-01-26 ~ 2026-03-27
+2026-03-27 05:32:07 | INFO     | data_provider/base.py:376 | [YfinanceFetcher] MSFT 获取成功: 范围=2026-01-26 ~ 2026-03-27, rows=43, elapsed=0.23s
+2026-03-27 05:32:07 | INFO     | data_provider/base.py:770 | [数据源完成] MSFT 使用 [YfinanceFetcher] 获取成功: rows=43, elapsed=0.23s
+2026-03-27 05:32:07 | INFO     | src/storage.py:1387 | 保存 MSFT 数据成功，新增 43 条
+2026-03-27 05:32:07 | INFO     | src/core/pipeline.py:166 | 微软(MSFT) 数据保存成功（来源: YfinanceFetcher，新增 43 条）
+2026-03-27 05:32:07 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 MSFT 实时行情成功: 价格=365.9700012207031
+2026-03-27 05:32:07 | INFO     | data_provider/base.py:970 | [实时行情] 美股 MSFT 成功获取 (来源: yfinance)
+2026-03-27 05:32:07 | INFO     | src/core/pipeline.py:210 | Microsoft Corporation(MSFT) 实时行情: 价格=365.9700012207031, 量比=None, 换手率=None% (来源: fallback)
+2026-03-27 05:32:07 | WARNING  | data_provider/tushare_fetcher.py:1055 | [Tushare] TushareFetcher 不支持美股 MSFT 的筹码分布
+2026-03-27 05:32:07 | WARNING  | data_provider/base.py:1182 | [筹码分布] MSFT 所有数据源均失败
+2026-03-27 05:32:07 | INFO     | src/core/pipeline.py:284 | Microsoft Corporation(MSFT) 趋势分析: 强势空头, 买入信号=观望, 评分=42
+2026-03-27 05:32:07 | INFO     | src/core/pipeline.py:305 | Microsoft Corporation(MSFT) 开始多维度情报搜索...
+2026-03-27 05:32:07 | INFO     | src/search_service.py:1966 | 开始多维度情报搜索: Microsoft Corporation(MSFT), 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=60), 目标条数=3, provider请求条数=6
+2026-03-27 05:32:07 | INFO     | src/search_service.py:1995 | [情报搜索] 最新消息: 使用 Bocha
+2026-03-27 05:32:09 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Microsoft Corporation MSFT latest news events'
+2026-03-27 05:32:09 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:32:09 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Microsoft Corporation MSFT latest news events' 成功，返回 6 条结果，耗时 1.78s
+2026-03-27 05:32:09 | INFO     | src/search_service.py:1720 | [新闻过滤] MSFT:Bocha:latest_news: provider=Bocha, total=6, kept=0, drop_unknown=0, drop_old=6, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:32:09 | INFO     | src/search_service.py:2012 | [情报搜索] 最新消息: 原始=6条, 过滤后=0条
+2026-03-27 05:32:10 | INFO     | src/search_service.py:1995 | [情报搜索] 机构分析: 使用 Tavily
+2026-03-27 05:32:11 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='Microsoft Corporation analyst rating target price report', 返回 6 条结果
+2026-03-27 05:32:11 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'Microsoft Corporation analyst rating target price report' 成功，返回 6 条结果，耗时 1.69s
+2026-03-27 05:32:11 | INFO     | src/search_service.py:1720 | [新闻过滤] MSFT:Tavily:market_analysis: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:32:11 | INFO     | src/search_service.py:2012 | [情报搜索] 机构分析: 原始=6条, 过滤后=0条
+2026-03-27 05:32:12 | INFO     | src/search_service.py:1995 | [情报搜索] 风险排查: 使用 Bocha
+2026-03-27 05:32:13 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Microsoft Corporation risk insider selling lawsuit litigation'
+2026-03-27 05:32:13 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:32:13 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Microsoft Corporation risk insider selling lawsuit litigation' 成功，返回 6 条结果，耗时 1.14s
+2026-03-27 05:32:13 | INFO     | src/search_service.py:1720 | [新闻过滤] MSFT:Bocha:risk_check: provider=Bocha, total=6, kept=2, drop_unknown=0, drop_old=4, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:32:13 | INFO     | src/search_service.py:2012 | [情报搜索] 风险排查: 原始=6条, 过滤后=2条
+2026-03-27 05:32:14 | INFO     | src/search_service.py:1995 | [情报搜索] 业绩预期: 使用 Tavily
+2026-03-27 05:32:15 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='Microsoft Corporation earnings revenue profit growth forecast', 返回 6 条结果
+2026-03-27 05:32:15 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'Microsoft Corporation earnings revenue profit growth forecast' 成功，返回 6 条结果，耗时 1.48s
+2026-03-27 05:32:15 | INFO     | src/search_service.py:1720 | [新闻过滤] MSFT:Tavily:earnings: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:32:15 | INFO     | src/search_service.py:2012 | [情报搜索] 业绩预期: 原始=6条, 过滤后=0条
+2026-03-27 05:32:16 | INFO     | src/search_service.py:1995 | [情报搜索] 行业分析: 使用 Bocha
+2026-03-27 05:32:17 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Microsoft Corporation industry competitors market share outlook'
+2026-03-27 05:32:17 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:32:17 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Microsoft Corporation industry competitors market share outlook' 成功，返回 6 条结果，耗时 1.12s
+2026-03-27 05:32:17 | INFO     | src/search_service.py:1720 | [新闻过滤] MSFT:Bocha:industry: provider=Bocha, total=6, kept=2, drop_unknown=0, drop_old=4, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:32:17 | INFO     | src/search_service.py:2012 | [情报搜索] 行业分析: 原始=6条, 过滤后=2条
+2026-03-27 05:32:17 | INFO     | src/core/pipeline.py:320 | Microsoft Corporation(MSFT) 情报搜索完成: 共 4 条结果
+2026-03-27 05:32:17 | INFO     | src/storage.py:922 | 保存新闻情报成功: MSFT, 新增 2 条
+2026-03-27 05:32:17 | INFO     | src/storage.py:922 | 保存新闻情报成功: MSFT, 新增 1 条
+2026-03-27 05:32:19 | INFO     | src/analyzer.py:952 | ========== AI 分析 Microsoft Corporation(MSFT) ==========
+2026-03-27 05:32:19 | INFO     | src/analyzer.py:953 | [LLM配置] 模型: gemini/gemini-3-flash-preview
+2026-03-27 05:32:19 | INFO     | src/analyzer.py:954 | [LLM配置] Prompt 长度: 3476 字符
+2026-03-27 05:32:19 | INFO     | src/analyzer.py:955 | [LLM配置] 是否包含新闻: 是
+2026-03-27 05:32:19 | INFO     | src/analyzer.py:959 | [LLM Prompt 预览]
+# 决策仪表盘分析请求
+
+## 📊 股票基础信息
+| 项目 | 数据 |
+|------|------|
+| 股票代码 | **MSFT** |
+| 股票名称 | **Microsoft Corporation** |
+| 分析日期 | 2026-03-27 |
+
+---
+
+## 📈 技术面数据
+
+### 今日行情
+| 指标 | 数值 |
+|------|------|
+| 收盘价 | 365.9700012207031 元 |
+| 开盘价 | 370.81500244140625 元 |
+| 最高价 | 374.71990966796875 元 |
+| 最低价 | 365.19000244140625 元 |
+| 涨跌幅 | -1.24% |
+| 成交量 | 3643.69 万股 |
+| 成交额 | 133.35 亿元 |
+
+### 均线系统（关键判断指标）
+| 均线 | 数值 | 说明 |
+|------|------|------|
+| MA5 | 371.74400024414064 | 短期趋势线 |
+| MA10 | 382.0760009765625 | 中短期趋势线 |...
+2026-03-27 05:32:19 | INFO     | src/analyzer.py:968 | [LLM调用] 开始调用 gemini/gemini-3-flash-preview...
+2026-03-27 05:32:19 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3995 | 
+LiteLLM completion() model= gemini-3-flash-preview; provider = gemini
+2026-03-27 05:32:19 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py:1009 | Warning: Setting temperature < 1.0 for Gemini 3 models (gemini-3-flash-preview) can cause infinite loops, degraded reasoning performance, and failure on complex tasks. Strongly recommended to use temperature = 1.0 (default).
+2026-03-27 05:32:41 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:1656 | Wrapper: Completed Call, calling success_handler
+2026-03-27 05:32:41 | INFO     | src/analyzer.py:981 | [LLM返回] gemini/gemini-3-flash-preview 响应成功, 耗时 21.81s, 响应长度 4053 字符
+2026-03-27 05:32:41 | INFO     | src/analyzer.py:985 | [LLM返回 预览]
+```json
+{
+    "stock_name": "微软（MSFT）",
+    "sentiment_score": 25,
+    "trend_prediction": "强烈看空",
+    "operation_advice": "卖出/观望",
+    "decision_type": "sell",
+    "confidence_level": "高",
+
+    "dashboard": {
+        "core_conclusion": {
+            "one_sentence": "均线强空头排列且面临巨额诉讼风险，技术面与消息面双重承压，坚决不...
+2026-03-27 05:32:41 | INFO     | src/analyzer.py:1025 | [LLM解析] Microsoft Corporation(MSFT) 分析完成: 强烈看空, 评分 25
+2026-03-27 05:32:41 | INFO     | src/core/pipeline.py:1051 | [MSFT] 分析完成: 卖出/观望, 评分 25
+2026-03-27 05:32:41 | INFO     | src/core/pipeline.py:1027 | ========== 开始处理 COST ==========
+2026-03-27 05:32:41 | INFO     | src/core/pipeline.py:158 | 开市客(COST) 开始从数据源获取数据...
+2026-03-27 05:32:41 | INFO     | data_provider/base.py:758 | [数据源尝试 2/6] [YfinanceFetcher] 美股/美股指数 COST 直接路由...
+2026-03-27 05:32:41 | INFO     | data_provider/base.py:357 | [YfinanceFetcher] 开始获取 COST 日线数据: 范围=2026-01-26 ~ 2026-03-27
+2026-03-27 05:32:41 | INFO     | data_provider/base.py:376 | [YfinanceFetcher] COST 获取成功: 范围=2026-01-26 ~ 2026-03-27, rows=43, elapsed=0.20s
+2026-03-27 05:32:41 | INFO     | data_provider/base.py:770 | [数据源完成] COST 使用 [YfinanceFetcher] 获取成功: rows=43, elapsed=0.20s
+2026-03-27 05:32:41 | INFO     | src/storage.py:1387 | 保存 COST 数据成功，新增 43 条
+2026-03-27 05:32:41 | INFO     | src/core/pipeline.py:166 | 开市客(COST) 数据保存成功（来源: YfinanceFetcher，新增 43 条）
+2026-03-27 05:32:42 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 COST 实时行情成功: 价格=979.6500244140625
+2026-03-27 05:32:42 | INFO     | data_provider/base.py:970 | [实时行情] 美股 COST 成功获取 (来源: yfinance)
+2026-03-27 05:32:42 | INFO     | src/core/pipeline.py:210 | Costco Wholesale Corporation(COST) 实时行情: 价格=979.6500244140625, 量比=None, 换手率=None% (来源: fallback)
+2026-03-27 05:32:42 | WARNING  | data_provider/tushare_fetcher.py:1055 | [Tushare] TushareFetcher 不支持美股 COST 的筹码分布
+2026-03-27 05:32:42 | WARNING  | data_provider/base.py:1182 | [筹码分布] COST 所有数据源均失败
+2026-03-27 05:32:42 | INFO     | src/core/pipeline.py:284 | Costco Wholesale Corporation(COST) 趋势分析: 空头排列, 买入信号=观望, 评分=44
+2026-03-27 05:32:42 | INFO     | src/core/pipeline.py:305 | Costco Wholesale Corporation(COST) 开始多维度情报搜索...
+2026-03-27 05:32:42 | INFO     | src/search_service.py:1966 | 开始多维度情报搜索: Costco Wholesale Corporation(COST), 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=60), 目标条数=3, provider请求条数=6
+2026-03-27 05:32:42 | INFO     | src/search_service.py:1995 | [情报搜索] 最新消息: 使用 Bocha
+2026-03-27 05:32:43 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Costco Wholesale Corporation COST latest news events'
+2026-03-27 05:32:43 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:32:43 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Costco Wholesale Corporation COST latest news events' 成功，返回 6 条结果，耗时 1.18s
+2026-03-27 05:32:43 | INFO     | src/search_service.py:1720 | [新闻过滤] COST:Bocha:latest_news: provider=Bocha, total=6, kept=3, drop_unknown=0, drop_old=2, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:32:43 | INFO     | src/search_service.py:2012 | [情报搜索] 最新消息: 原始=6条, 过滤后=3条
+2026-03-27 05:32:44 | INFO     | src/search_service.py:1995 | [情报搜索] 机构分析: 使用 Tavily
+2026-03-27 05:32:45 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='Costco Wholesale Corporation analyst rating target price report', 返回 6 条结果
+2026-03-27 05:32:45 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'Costco Wholesale Corporation analyst rating target price report' 成功，返回 6 条结果，耗时 1.45s
+2026-03-27 05:32:45 | INFO     | src/search_service.py:1720 | [新闻过滤] COST:Tavily:market_analysis: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:32:45 | INFO     | src/search_service.py:2012 | [情报搜索] 机构分析: 原始=6条, 过滤后=0条
+2026-03-27 05:32:46 | INFO     | src/search_service.py:1995 | [情报搜索] 风险排查: 使用 Bocha
+2026-03-27 05:32:47 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Costco Wholesale Corporation risk insider selling lawsuit litigation'
+2026-03-27 05:32:47 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:32:47 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Costco Wholesale Corporation risk insider selling lawsuit litigation' 成功，返回 6 条结果，耗时 1.29s
+2026-03-27 05:32:47 | INFO     | src/search_service.py:1720 | [新闻过滤] COST:Bocha:risk_check: provider=Bocha, total=6, kept=0, drop_unknown=0, drop_old=6, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:32:47 | INFO     | src/search_service.py:2012 | [情报搜索] 风险排查: 原始=6条, 过滤后=0条
+2026-03-27 05:32:47 | INFO     | src/search_service.py:1995 | [情报搜索] 业绩预期: 使用 Tavily
+2026-03-27 05:32:49 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='Costco Wholesale Corporation earnings revenue profit growth forecast', 返回 6 条结果
+2026-03-27 05:32:49 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'Costco Wholesale Corporation earnings revenue profit growth forecast' 成功，返回 6 条结果，耗时 1.38s
+2026-03-27 05:32:49 | INFO     | src/search_service.py:1720 | [新闻过滤] COST:Tavily:earnings: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:32:49 | INFO     | src/search_service.py:2012 | [情报搜索] 业绩预期: 原始=6条, 过滤后=0条
+2026-03-27 05:32:49 | INFO     | src/search_service.py:1995 | [情报搜索] 行业分析: 使用 Bocha
+2026-03-27 05:32:51 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Costco Wholesale Corporation industry competitors market share outlook'
+2026-03-27 05:32:51 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 4 条结果
+2026-03-27 05:32:51 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Costco Wholesale Corporation industry competitors market share outlook' 成功，返回 4 条结果，耗时 1.41s
+2026-03-27 05:32:51 | INFO     | src/search_service.py:1720 | [新闻过滤] COST:Bocha:industry: provider=Bocha, total=4, kept=0, drop_unknown=0, drop_old=4, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:32:51 | INFO     | src/search_service.py:2012 | [情报搜索] 行业分析: 原始=4条, 过滤后=0条
+2026-03-27 05:32:51 | INFO     | src/core/pipeline.py:320 | Costco Wholesale Corporation(COST) 情报搜索完成: 共 3 条结果
+2026-03-27 05:32:51 | INFO     | src/storage.py:922 | 保存新闻情报成功: COST, 新增 3 条
+2026-03-27 05:32:53 | INFO     | src/analyzer.py:952 | ========== AI 分析 Costco Wholesale Corporation(COST) ==========
+2026-03-27 05:32:53 | INFO     | src/analyzer.py:953 | [LLM配置] 模型: gemini/gemini-3-flash-preview
+2026-03-27 05:32:53 | INFO     | src/analyzer.py:954 | [LLM配置] Prompt 长度: 3289 字符
+2026-03-27 05:32:53 | INFO     | src/analyzer.py:955 | [LLM配置] 是否包含新闻: 是
+2026-03-27 05:32:53 | INFO     | src/analyzer.py:959 | [LLM Prompt 预览]
+# 决策仪表盘分析请求
+
+## 📊 股票基础信息
+| 项目 | 数据 |
+|------|------|
+| 股票代码 | **COST** |
+| 股票名称 | **Costco Wholesale Corporation** |
+| 分析日期 | 2026-03-27 |
+
+---
+
+## 📈 技术面数据
+
+### 今日行情
+| 指标 | 数值 |
+|------|------|
+| 收盘价 | 979.6500244140625 元 |
+| 开盘价 | 975.6900024414062 元 |
+| 最高价 | 987.1900024414062 元 |
+| 最低价 | 972.7200927734375 元 |
+| 涨跌幅 | 0.63% |
+| 成交量 | 149.46 万股 |
+| 成交额 | 14.64 亿元 |
+
+### 均线系统（关键判断指标）
+| 均线 | 数值 | 说明 |
+|------|------|------|
+| MA5 | 974.7420043945312 | 短期趋势线 |
+| MA10 | 979.8640014648438 | 中短期趋势线 |...
+2026-03-27 05:32:53 | INFO     | src/analyzer.py:968 | [LLM调用] 开始调用 gemini/gemini-3-flash-preview...
+2026-03-27 05:32:53 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3995 | 
+LiteLLM completion() model= gemini-3-flash-preview; provider = gemini
+2026-03-27 05:32:53 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py:1009 | Warning: Setting temperature < 1.0 for Gemini 3 models (gemini-3-flash-preview) can cause infinite loops, degraded reasoning performance, and failure on complex tasks. Strongly recommended to use temperature = 1.0 (default).
+2026-03-27 05:33:16 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:1656 | Wrapper: Completed Call, calling success_handler
+2026-03-27 05:33:16 | INFO     | src/analyzer.py:981 | [LLM返回] gemini/gemini-3-flash-preview 响应成功, 耗时 22.95s, 响应长度 4004 字符
+2026-03-27 05:33:16 | INFO     | src/analyzer.py:985 | [LLM返回 预览]
+```json
+{
+    "stock_name": "开市客（COST）",
+    "sentiment_score": 35,
+    "trend_prediction": "看空",
+    "operation_advice": "观望",
+    "decision_type": "sell",
+    "confidence_level": "高",
+
+    "dashboard": {
+        "core_conclusion": {
+            "one_sentence": "均线标准空头排列，趋势处于阴跌通道，坚决执行‘不碰空头’原则。",
+  ...
+2026-03-27 05:33:16 | INFO     | src/analyzer.py:1025 | [LLM解析] Costco Wholesale Corporation(COST) 分析完成: 看空, 评分 35
+2026-03-27 05:33:16 | INFO     | src/core/pipeline.py:1051 | [COST] 分析完成: 观望, 评分 35
+2026-03-27 05:33:16 | INFO     | src/core/pipeline.py:1027 | ========== 开始处理 ABBV ==========
+2026-03-27 05:33:16 | INFO     | src/core/pipeline.py:158 | 艾伯维(ABBV) 开始从数据源获取数据...
+2026-03-27 05:33:16 | INFO     | data_provider/base.py:758 | [数据源尝试 2/6] [YfinanceFetcher] 美股/美股指数 ABBV 直接路由...
+2026-03-27 05:33:16 | INFO     | data_provider/base.py:357 | [YfinanceFetcher] 开始获取 ABBV 日线数据: 范围=2026-01-26 ~ 2026-03-27
+2026-03-27 05:33:16 | INFO     | data_provider/base.py:376 | [YfinanceFetcher] ABBV 获取成功: 范围=2026-01-26 ~ 2026-03-27, rows=43, elapsed=0.14s
+2026-03-27 05:33:16 | INFO     | data_provider/base.py:770 | [数据源完成] ABBV 使用 [YfinanceFetcher] 获取成功: rows=43, elapsed=0.14s
+2026-03-27 05:33:16 | INFO     | src/storage.py:1387 | 保存 ABBV 数据成功，新增 43 条
+2026-03-27 05:33:16 | INFO     | src/core/pipeline.py:166 | 艾伯维(ABBV) 数据保存成功（来源: YfinanceFetcher，新增 43 条）
+2026-03-27 05:33:17 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 ABBV 实时行情成功: 价格=211.1199951171875
+2026-03-27 05:33:17 | INFO     | data_provider/base.py:970 | [实时行情] 美股 ABBV 成功获取 (来源: yfinance)
+2026-03-27 05:33:17 | INFO     | src/core/pipeline.py:210 | AbbVie Inc.(ABBV) 实时行情: 价格=211.1199951171875, 量比=None, 换手率=None% (来源: fallback)
+2026-03-27 05:33:17 | WARNING  | data_provider/tushare_fetcher.py:1055 | [Tushare] TushareFetcher 不支持美股 ABBV 的筹码分布
+2026-03-27 05:33:17 | WARNING  | data_provider/base.py:1182 | [筹码分布] ABBV 所有数据源均失败
+2026-03-27 05:33:17 | INFO     | src/core/pipeline.py:284 | AbbVie Inc.(ABBV) 趋势分析: 空头排列, 买入信号=持有, 评分=59
+2026-03-27 05:33:17 | INFO     | src/core/pipeline.py:305 | AbbVie Inc.(ABBV) 开始多维度情报搜索...
+2026-03-27 05:33:17 | INFO     | src/search_service.py:1966 | 开始多维度情报搜索: AbbVie Inc.(ABBV), 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=60), 目标条数=3, provider请求条数=6
+2026-03-27 05:33:17 | INFO     | src/search_service.py:1995 | [情报搜索] 最新消息: 使用 Bocha
+2026-03-27 05:33:18 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='AbbVie Inc. ABBV latest news events'
+2026-03-27 05:33:18 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:33:18 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'AbbVie Inc. ABBV latest news events' 成功，返回 6 条结果，耗时 1.31s
+2026-03-27 05:33:18 | INFO     | src/search_service.py:1720 | [新闻过滤] ABBV:Bocha:latest_news: provider=Bocha, total=6, kept=1, drop_unknown=0, drop_old=5, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:33:18 | INFO     | src/search_service.py:2012 | [情报搜索] 最新消息: 原始=6条, 过滤后=1条
+2026-03-27 05:33:19 | INFO     | src/search_service.py:1995 | [情报搜索] 机构分析: 使用 Tavily
+2026-03-27 05:33:20 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='AbbVie Inc. analyst rating target price report', 返回 6 条结果
+2026-03-27 05:33:20 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'AbbVie Inc. analyst rating target price report' 成功，返回 6 条结果，耗时 1.47s
+2026-03-27 05:33:20 | INFO     | src/search_service.py:1720 | [新闻过滤] ABBV:Tavily:market_analysis: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:33:20 | INFO     | src/search_service.py:2012 | [情报搜索] 机构分析: 原始=6条, 过滤后=0条
+2026-03-27 05:33:21 | INFO     | src/search_service.py:1995 | [情报搜索] 风险排查: 使用 Bocha
+2026-03-27 05:33:22 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='AbbVie Inc. risk insider selling lawsuit litigation'
+2026-03-27 05:33:22 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:33:22 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'AbbVie Inc. risk insider selling lawsuit litigation' 成功，返回 6 条结果，耗时 1.21s
+2026-03-27 05:33:22 | INFO     | src/search_service.py:1720 | [新闻过滤] ABBV:Bocha:risk_check: provider=Bocha, total=6, kept=2, drop_unknown=0, drop_old=4, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:33:22 | INFO     | src/search_service.py:2012 | [情报搜索] 风险排查: 原始=6条, 过滤后=2条
+2026-03-27 05:33:22 | INFO     | src/search_service.py:1995 | [情报搜索] 业绩预期: 使用 Tavily
+2026-03-27 05:33:24 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='AbbVie Inc. earnings revenue profit growth forecast', 返回 6 条结果
+2026-03-27 05:33:24 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'AbbVie Inc. earnings revenue profit growth forecast' 成功，返回 6 条结果，耗时 1.49s
+2026-03-27 05:33:24 | INFO     | src/search_service.py:1720 | [新闻过滤] ABBV:Tavily:earnings: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:33:24 | INFO     | src/search_service.py:2012 | [情报搜索] 业绩预期: 原始=6条, 过滤后=0条
+2026-03-27 05:33:24 | INFO     | src/search_service.py:1995 | [情报搜索] 行业分析: 使用 Bocha
+2026-03-27 05:33:26 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='AbbVie Inc. industry competitors market share outlook'
+2026-03-27 05:33:26 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:33:26 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'AbbVie Inc. industry competitors market share outlook' 成功，返回 6 条结果，耗时 1.21s
+2026-03-27 05:33:26 | INFO     | src/search_service.py:1720 | [新闻过滤] ABBV:Bocha:industry: provider=Bocha, total=6, kept=1, drop_unknown=0, drop_old=5, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:33:26 | INFO     | src/search_service.py:2012 | [情报搜索] 行业分析: 原始=6条, 过滤后=1条
+2026-03-27 05:33:26 | INFO     | src/core/pipeline.py:320 | AbbVie Inc.(ABBV) 情报搜索完成: 共 4 条结果
+2026-03-27 05:33:26 | INFO     | src/storage.py:922 | 保存新闻情报成功: ABBV, 新增 1 条
+2026-03-27 05:33:26 | INFO     | src/storage.py:922 | 保存新闻情报成功: ABBV, 新增 1 条
+2026-03-27 05:33:26 | INFO     | src/storage.py:922 | 保存新闻情报成功: ABBV, 新增 0 条
+2026-03-27 05:33:28 | INFO     | src/analyzer.py:952 | ========== AI 分析 AbbVie Inc.(ABBV) ==========
+2026-03-27 05:33:28 | INFO     | src/analyzer.py:953 | [LLM配置] 模型: gemini/gemini-3-flash-preview
+2026-03-27 05:33:28 | INFO     | src/analyzer.py:954 | [LLM配置] Prompt 长度: 3401 字符
+2026-03-27 05:33:28 | INFO     | src/analyzer.py:955 | [LLM配置] 是否包含新闻: 是
+2026-03-27 05:33:28 | INFO     | src/analyzer.py:959 | [LLM Prompt 预览]
+# 决策仪表盘分析请求
+
+## 📊 股票基础信息
+| 项目 | 数据 |
+|------|------|
+| 股票代码 | **ABBV** |
+| 股票名称 | **AbbVie Inc.** |
+| 分析日期 | 2026-03-27 |
+
+---
+
+## 📈 技术面数据
+
+### 今日行情
+| 指标 | 数值 |
+|------|------|
+| 收盘价 | 211.1199951171875 元 |
+| 开盘价 | 207.19000244140625 元 |
+| 最高价 | 211.4499969482422 元 |
+| 最低价 | 205.77200317382812 元 |
+| 涨跌幅 | 2.04% |
+| 成交量 | 454.79 万股 |
+| 成交额 | 9.60 亿元 |
+
+### 均线系统（关键判断指标）
+| 均线 | 数值 | 说明 |
+|------|------|------|
+| MA5 | 207.90999450683594 | 短期趋势线 |
+| MA10 | 210.0399963378906 | 中短期趋势线 |
+| MA20 | 219.7...
+2026-03-27 05:33:28 | INFO     | src/analyzer.py:968 | [LLM调用] 开始调用 gemini/gemini-3-flash-preview...
+2026-03-27 05:33:28 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3995 | 
+LiteLLM completion() model= gemini-3-flash-preview; provider = gemini
+2026-03-27 05:33:28 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py:1009 | Warning: Setting temperature < 1.0 for Gemini 3 models (gemini-3-flash-preview) can cause infinite loops, degraded reasoning performance, and failure on complex tasks. Strongly recommended to use temperature = 1.0 (default).
+2026-03-27 05:33:48 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:1656 | Wrapper: Completed Call, calling success_handler
+2026-03-27 05:33:48 | INFO     | src/analyzer.py:981 | [LLM返回] gemini/gemini-3-flash-preview 响应成功, 耗时 19.61s, 响应长度 4041 字符
+2026-03-27 05:33:48 | INFO     | src/analyzer.py:985 | [LLM返回 预览]
+```json
+{
+    "stock_name": "艾伯维（ABBV）",
+    "sentiment_score": 45,
+    "trend_prediction": "震荡/看空",
+    "operation_advice": "观望",
+    "decision_type": "hold",
+    "confidence_level": "中",
+
+    "dashboard": {
+        "core_conclusion": {
+            "one_sentence": "趋势处于空头排列，虽有超卖反弹迹象但未反转，建议暂缓入场观望。",...
+2026-03-27 05:33:48 | INFO     | src/analyzer.py:1025 | [LLM解析] AbbVie Inc.(ABBV) 分析完成: 震荡/看空, 评分 45
+2026-03-27 05:33:48 | INFO     | src/core/pipeline.py:1051 | [ABBV] 分析完成: 观望, 评分 45
+2026-03-27 05:33:48 | INFO     | src/core/pipeline.py:1027 | ========== 开始处理 GLD ==========
+2026-03-27 05:33:48 | INFO     | src/core/pipeline.py:158 | 黄金ETF-SPDR(GLD) 开始从数据源获取数据...
+2026-03-27 05:33:48 | INFO     | data_provider/base.py:758 | [数据源尝试 2/6] [YfinanceFetcher] 美股/美股指数 GLD 直接路由...
+2026-03-27 05:33:48 | INFO     | data_provider/base.py:357 | [YfinanceFetcher] 开始获取 GLD 日线数据: 范围=2026-01-26 ~ 2026-03-27
+2026-03-27 05:33:48 | INFO     | data_provider/base.py:376 | [YfinanceFetcher] GLD 获取成功: 范围=2026-01-26 ~ 2026-03-27, rows=43, elapsed=0.25s
+2026-03-27 05:33:48 | INFO     | data_provider/base.py:770 | [数据源完成] GLD 使用 [YfinanceFetcher] 获取成功: rows=43, elapsed=0.26s
+2026-03-27 05:33:48 | INFO     | src/storage.py:1387 | 保存 GLD 数据成功，新增 43 条
+2026-03-27 05:33:48 | INFO     | src/core/pipeline.py:166 | 黄金ETF-SPDR(GLD) 数据保存成功（来源: YfinanceFetcher，新增 43 条）
+2026-03-27 05:33:49 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 GLD 实时行情成功: 价格=400.6400146484375
+2026-03-27 05:33:49 | INFO     | data_provider/base.py:970 | [实时行情] 美股 GLD 成功获取 (来源: yfinance)
+2026-03-27 05:33:49 | INFO     | src/core/pipeline.py:210 | SPDR Gold Shares(GLD) 实时行情: 价格=400.6400146484375, 量比=None, 换手率=None% (来源: fallback)
+2026-03-27 05:33:49 | WARNING  | data_provider/tushare_fetcher.py:1055 | [Tushare] TushareFetcher 不支持美股 GLD 的筹码分布
+2026-03-27 05:33:49 | WARNING  | data_provider/base.py:1182 | [筹码分布] GLD 所有数据源均失败
+2026-03-27 05:33:49 | INFO     | src/core/pipeline.py:284 | SPDR Gold Shares(GLD) 趋势分析: 强势空头, 买入信号=持有, 评分=47
+2026-03-27 05:33:49 | INFO     | src/core/pipeline.py:305 | SPDR Gold Shares(GLD) 开始多维度情报搜索...
+2026-03-27 05:33:49 | INFO     | src/search_service.py:1966 | 开始多维度情报搜索: SPDR Gold Shares(GLD), 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=60), 目标条数=3, provider请求条数=6
+2026-03-27 05:33:49 | INFO     | src/search_service.py:1995 | [情报搜索] 最新消息: 使用 Bocha
+2026-03-27 05:33:50 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='SPDR Gold Shares GLD latest news events'
+2026-03-27 05:33:50 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:33:50 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'SPDR Gold Shares GLD latest news events' 成功，返回 6 条结果，耗时 1.20s
+2026-03-27 05:33:50 | INFO     | src/search_service.py:2012 | [情报搜索] 最新消息: 原始=6条, 过滤后=3条
+2026-03-27 05:33:50 | INFO     | src/search_service.py:1995 | [情报搜索] 机构分析: 使用 Tavily
+2026-03-27 05:33:52 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='SPDR Gold Shares analyst rating target price report', 返回 6 条结果
+2026-03-27 05:33:52 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'SPDR Gold Shares analyst rating target price report' 成功，返回 6 条结果，耗时 1.34s
+2026-03-27 05:33:52 | INFO     | src/search_service.py:1720 | [新闻过滤] GLD:Tavily:market_analysis: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:33:52 | INFO     | src/search_service.py:2012 | [情报搜索] 机构分析: 原始=6条, 过滤后=0条
+2026-03-27 05:33:52 | INFO     | src/search_service.py:1995 | [情报搜索] 风险排查: 使用 Bocha
+2026-03-27 05:33:53 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='SPDR Gold Shares risk insider selling lawsuit litigation'
+2026-03-27 05:33:53 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:33:53 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'SPDR Gold Shares risk insider selling lawsuit litigation' 成功，返回 6 条结果，耗时 1.16s
+2026-03-27 05:33:53 | INFO     | src/search_service.py:1720 | [新闻过滤] GLD:Bocha:risk_check: provider=Bocha, total=6, kept=1, drop_unknown=0, drop_old=5, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:33:53 | INFO     | src/search_service.py:2012 | [情报搜索] 风险排查: 原始=6条, 过滤后=1条
+2026-03-27 05:33:54 | INFO     | src/search_service.py:1995 | [情报搜索] 业绩预期: 使用 Tavily
+2026-03-27 05:33:58 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='SPDR Gold Shares earnings revenue profit growth forecast', 返回 6 条结果
+2026-03-27 05:33:58 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'SPDR Gold Shares earnings revenue profit growth forecast' 成功，返回 6 条结果，耗时 4.47s
+2026-03-27 05:33:58 | INFO     | src/search_service.py:1720 | [新闻过滤] GLD:Tavily:earnings: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:33:58 | INFO     | src/search_service.py:2012 | [情报搜索] 业绩预期: 原始=6条, 过滤后=0条
+2026-03-27 05:33:59 | INFO     | src/search_service.py:1995 | [情报搜索] 行业分析: 使用 Bocha
+2026-03-27 05:34:00 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='SPDR Gold Shares industry competitors market share outlook'
+2026-03-27 05:34:00 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:34:00 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'SPDR Gold Shares industry competitors market share outlook' 成功，返回 6 条结果，耗时 1.19s
+2026-03-27 05:34:00 | INFO     | src/search_service.py:1720 | [新闻过滤] GLD:Bocha:industry: provider=Bocha, total=6, kept=1, drop_unknown=0, drop_old=5, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:34:00 | INFO     | src/search_service.py:2012 | [情报搜索] 行业分析: 原始=6条, 过滤后=1条
+2026-03-27 05:34:01 | INFO     | src/core/pipeline.py:320 | SPDR Gold Shares(GLD) 情报搜索完成: 共 5 条结果
+2026-03-27 05:34:01 | INFO     | src/storage.py:922 | 保存新闻情报成功: GLD, 新增 3 条
+2026-03-27 05:34:01 | INFO     | src/storage.py:922 | 保存新闻情报成功: GLD, 新增 1 条
+2026-03-27 05:34:01 | INFO     | src/storage.py:922 | 保存新闻情报成功: GLD, 新增 0 条
+2026-03-27 05:34:03 | INFO     | src/analyzer.py:952 | ========== AI 分析 SPDR Gold Shares(GLD) ==========
+2026-03-27 05:34:03 | INFO     | src/analyzer.py:953 | [LLM配置] 模型: gemini/gemini-3-flash-preview
+2026-03-27 05:34:03 | INFO     | src/analyzer.py:954 | [LLM配置] Prompt 长度: 3550 字符
+2026-03-27 05:34:03 | INFO     | src/analyzer.py:955 | [LLM配置] 是否包含新闻: 是
+2026-03-27 05:34:03 | INFO     | src/analyzer.py:959 | [LLM Prompt 预览]
+# 决策仪表盘分析请求
+
+## 📊 股票基础信息
+| 项目 | 数据 |
+|------|------|
+| 股票代码 | **GLD** |
+| 股票名称 | **SPDR Gold Shares** |
+| 分析日期 | 2026-03-27 |
+
+---
+
+## 📈 技术面数据
+
+### 今日行情
+| 指标 | 数值 |
+|------|------|
+| 收盘价 | 400.6400146484375 元 |
+| 开盘价 | 408.5299987792969 元 |
+| 最高价 | 411.3699951171875 元 |
+| 最低价 | 400.260009765625 元 |
+| 涨跌幅 | -3.1% |
+| 成交量 | 1472.02 万股 |
+| 成交额 | 58.98 亿元 |
+
+### 均线系统（关键判断指标）
+| 均线 | 数值 | 说明 |
+|------|------|------|
+| MA5 | 405.14801025390625 | 短期趋势线 |
+| MA10 | 422.99700317382815 | 中短期趋势线 |
+| MA20 | 4...
+2026-03-27 05:34:03 | INFO     | src/analyzer.py:968 | [LLM调用] 开始调用 gemini/gemini-3-flash-preview...
+2026-03-27 05:34:03 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3995 | 
+LiteLLM completion() model= gemini-3-flash-preview; provider = gemini
+2026-03-27 05:34:03 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py:1009 | Warning: Setting temperature < 1.0 for Gemini 3 models (gemini-3-flash-preview) can cause infinite loops, degraded reasoning performance, and failure on complex tasks. Strongly recommended to use temperature = 1.0 (default).
+2026-03-27 05:34:24 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:1656 | Wrapper: Completed Call, calling success_handler
+2026-03-27 05:34:24 | INFO     | src/analyzer.py:981 | [LLM返回] gemini/gemini-3-flash-preview 响应成功, 耗时 21.17s, 响应长度 4012 字符
+2026-03-27 05:34:24 | INFO     | src/analyzer.py:985 | [LLM返回 预览]
+```json
+{
+    "stock_name": "SPDR Gold Shares（GLD）",
+    "sentiment_score": 30,
+    "trend_prediction": "强烈看空",
+    "operation_advice": "观望",
+    "decision_type": "sell",
+    "confidence_level": "高",
+
+    "dashboard": {
+        "core_conclusion": {
+            "one_sentence": "均线强空头排列且发散，RSI极度超卖虽有反弹...
+2026-03-27 05:34:24 | INFO     | src/analyzer.py:1025 | [LLM解析] SPDR Gold Shares(GLD) 分析完成: 强烈看空, 评分 30
+2026-03-27 05:34:24 | INFO     | src/core/pipeline.py:1051 | [GLD] 分析完成: 观望, 评分 30
+2026-03-27 05:34:24 | INFO     | src/core/pipeline.py:1027 | ========== 开始处理 PFE ==========
+2026-03-27 05:34:24 | INFO     | src/core/pipeline.py:158 | 辉瑞(PFE) 开始从数据源获取数据...
+2026-03-27 05:34:24 | INFO     | data_provider/base.py:758 | [数据源尝试 2/6] [YfinanceFetcher] 美股/美股指数 PFE 直接路由...
+2026-03-27 05:34:24 | INFO     | data_provider/base.py:357 | [YfinanceFetcher] 开始获取 PFE 日线数据: 范围=2026-01-26 ~ 2026-03-27
+2026-03-27 05:34:24 | INFO     | data_provider/base.py:376 | [YfinanceFetcher] PFE 获取成功: 范围=2026-01-26 ~ 2026-03-27, rows=43, elapsed=0.42s
+2026-03-27 05:34:24 | INFO     | data_provider/base.py:770 | [数据源完成] PFE 使用 [YfinanceFetcher] 获取成功: rows=43, elapsed=0.42s
+2026-03-27 05:34:24 | INFO     | src/storage.py:1387 | 保存 PFE 数据成功，新增 43 条
+2026-03-27 05:34:24 | INFO     | src/core/pipeline.py:166 | 辉瑞(PFE) 数据保存成功（来源: YfinanceFetcher，新增 43 条）
+2026-03-27 05:34:25 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 PFE 实时行情成功: 价格=27.56999969482422
+2026-03-27 05:34:25 | INFO     | data_provider/base.py:970 | [实时行情] 美股 PFE 成功获取 (来源: yfinance)
+2026-03-27 05:34:25 | INFO     | src/core/pipeline.py:210 | Pfizer, Inc.(PFE) 实时行情: 价格=27.56999969482422, 量比=None, 换手率=None% (来源: fallback)
+2026-03-27 05:34:25 | WARNING  | data_provider/tushare_fetcher.py:1055 | [Tushare] TushareFetcher 不支持美股 PFE 的筹码分布
+2026-03-27 05:34:25 | WARNING  | data_provider/base.py:1182 | [筹码分布] PFE 所有数据源均失败
+2026-03-27 05:34:25 | INFO     | src/core/pipeline.py:284 | Pfizer, Inc.(PFE) 趋势分析: 多头排列, 买入信号=强烈买入, 评分=82
+2026-03-27 05:34:25 | INFO     | src/core/pipeline.py:305 | Pfizer, Inc.(PFE) 开始多维度情报搜索...
+2026-03-27 05:34:25 | INFO     | src/search_service.py:1966 | 开始多维度情报搜索: Pfizer, Inc.(PFE), 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=60), 目标条数=3, provider请求条数=6
+2026-03-27 05:34:25 | INFO     | src/search_service.py:1995 | [情报搜索] 最新消息: 使用 Bocha
+2026-03-27 05:34:26 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Pfizer, Inc. PFE latest news events'
+2026-03-27 05:34:26 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:34:26 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Pfizer, Inc. PFE latest news events' 成功，返回 6 条结果，耗时 1.26s
+2026-03-27 05:34:26 | INFO     | src/search_service.py:1720 | [新闻过滤] PFE:Bocha:latest_news: provider=Bocha, total=6, kept=2, drop_unknown=0, drop_old=4, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:34:26 | INFO     | src/search_service.py:2012 | [情报搜索] 最新消息: 原始=6条, 过滤后=2条
+2026-03-27 05:34:27 | INFO     | src/search_service.py:1995 | [情报搜索] 机构分析: 使用 Tavily
+2026-03-27 05:34:29 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='Pfizer, Inc. analyst rating target price report', 返回 6 条结果
+2026-03-27 05:34:29 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'Pfizer, Inc. analyst rating target price report' 成功，返回 6 条结果，耗时 1.97s
+2026-03-27 05:34:29 | INFO     | src/search_service.py:1720 | [新闻过滤] PFE:Tavily:market_analysis: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:34:29 | INFO     | src/search_service.py:2012 | [情报搜索] 机构分析: 原始=6条, 过滤后=0条
+2026-03-27 05:34:29 | INFO     | src/search_service.py:1995 | [情报搜索] 风险排查: 使用 Bocha
+2026-03-27 05:34:30 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Pfizer, Inc. risk insider selling lawsuit litigation'
+2026-03-27 05:34:30 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:34:31 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Pfizer, Inc. risk insider selling lawsuit litigation' 成功，返回 6 条结果，耗时 1.32s
+2026-03-27 05:34:31 | INFO     | src/search_service.py:1720 | [新闻过滤] PFE:Bocha:risk_check: provider=Bocha, total=6, kept=2, drop_unknown=0, drop_old=4, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:34:31 | INFO     | src/search_service.py:2012 | [情报搜索] 风险排查: 原始=6条, 过滤后=2条
+2026-03-27 05:34:31 | INFO     | src/search_service.py:1995 | [情报搜索] 业绩预期: 使用 Tavily
+2026-03-27 05:34:33 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='Pfizer, Inc. earnings revenue profit growth forecast', 返回 6 条结果
+2026-03-27 05:34:33 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'Pfizer, Inc. earnings revenue profit growth forecast' 成功，返回 6 条结果，耗时 1.55s
+2026-03-27 05:34:33 | INFO     | src/search_service.py:1720 | [新闻过滤] PFE:Tavily:earnings: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:34:33 | INFO     | src/search_service.py:2012 | [情报搜索] 业绩预期: 原始=6条, 过滤后=0条
+2026-03-27 05:34:33 | INFO     | src/search_service.py:1995 | [情报搜索] 行业分析: 使用 Bocha
+2026-03-27 05:34:34 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Pfizer, Inc. industry competitors market share outlook'
+2026-03-27 05:34:34 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:34:34 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Pfizer, Inc. industry competitors market share outlook' 成功，返回 6 条结果，耗时 1.16s
+2026-03-27 05:34:34 | INFO     | src/search_service.py:1720 | [新闻过滤] PFE:Bocha:industry: provider=Bocha, total=6, kept=1, drop_unknown=0, drop_old=5, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:34:34 | INFO     | src/search_service.py:2012 | [情报搜索] 行业分析: 原始=6条, 过滤后=1条
+2026-03-27 05:34:35 | INFO     | src/core/pipeline.py:320 | Pfizer, Inc.(PFE) 情报搜索完成: 共 5 条结果
+2026-03-27 05:34:35 | INFO     | src/storage.py:922 | 保存新闻情报成功: PFE, 新增 2 条
+2026-03-27 05:34:35 | INFO     | src/storage.py:922 | 保存新闻情报成功: PFE, 新增 0 条
+2026-03-27 05:34:35 | INFO     | src/storage.py:922 | 保存新闻情报成功: PFE, 新增 1 条
+2026-03-27 05:34:37 | INFO     | src/analyzer.py:952 | ========== AI 分析 Pfizer, Inc.(PFE) ==========
+2026-03-27 05:34:37 | INFO     | src/analyzer.py:953 | [LLM配置] 模型: gemini/gemini-3-flash-preview
+2026-03-27 05:34:37 | INFO     | src/analyzer.py:954 | [LLM配置] Prompt 长度: 3591 字符
+2026-03-27 05:34:37 | INFO     | src/analyzer.py:955 | [LLM配置] 是否包含新闻: 是
+2026-03-27 05:34:37 | INFO     | src/analyzer.py:959 | [LLM Prompt 预览]
+# 决策仪表盘分析请求
+
+## 📊 股票基础信息
+| 项目 | 数据 |
+|------|------|
+| 股票代码 | **PFE** |
+| 股票名称 | **Pfizer, Inc.** |
+| 分析日期 | 2026-03-27 |
+
+---
+
+## 📈 技术面数据
+
+### 今日行情
+| 指标 | 数值 |
+|------|------|
+| 收盘价 | 27.56999969482422 元 |
+| 开盘价 | 27.25 元 |
+| 最高价 | 27.80500030517578 元 |
+| 最低价 | 27.239999771118164 元 |
+| 涨跌幅 | 0.66% |
+| 成交量 | 2877.80 万股 |
+| 成交额 | 7.93 亿元 |
+
+### 均线系统（关键判断指标）
+| 均线 | 数值 | 说明 |
+|------|------|------|
+| MA5 | 27.229999923706053 | 短期趋势线 |
+| MA10 | 27.19099998474121 | 中短期趋势线 |
+| MA20 | 27.03699998855591...
+2026-03-27 05:34:37 | INFO     | src/analyzer.py:968 | [LLM调用] 开始调用 gemini/gemini-3-flash-preview...
+2026-03-27 05:34:37 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3995 | 
+LiteLLM completion() model= gemini-3-flash-preview; provider = gemini
+2026-03-27 05:34:37 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py:1009 | Warning: Setting temperature < 1.0 for Gemini 3 models (gemini-3-flash-preview) can cause infinite loops, degraded reasoning performance, and failure on complex tasks. Strongly recommended to use temperature = 1.0 (default).
+2026-03-27 05:34:57 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:1656 | Wrapper: Completed Call, calling success_handler
+2026-03-27 05:34:57 | INFO     | src/analyzer.py:981 | [LLM返回] gemini/gemini-3-flash-preview 响应成功, 耗时 19.94s, 响应长度 3941 字符
+2026-03-27 05:34:57 | INFO     | src/analyzer.py:985 | [LLM返回 预览]
+```json
+{
+    "stock_name": "辉瑞制药 (PFE)",
+    "sentiment_score": 82,
+    "trend_prediction": "强烈看多",
+    "operation_advice": "买入",
+    "decision_type": "buy",
+    "confidence_level": "高",
+
+    "dashboard": {
+        "core_conclusion": {
+            "one_sentence": "均线多头排列确立，缩量回踩MA5提供低乖离率安全介入点。",
+   ...
+2026-03-27 05:34:57 | INFO     | src/analyzer.py:1025 | [LLM解析] Pfizer, Inc.(PFE) 分析完成: 强烈看多, 评分 82
+2026-03-27 05:34:57 | INFO     | src/core/pipeline.py:1051 | [PFE] 分析完成: 买入, 评分 82
+2026-03-27 05:34:57 | INFO     | src/core/pipeline.py:1027 | ========== 开始处理 O ==========
+2026-03-27 05:34:57 | INFO     | src/core/pipeline.py:158 | Realty Income(O) 开始从数据源获取数据...
+2026-03-27 05:34:57 | INFO     | data_provider/base.py:758 | [数据源尝试 2/6] [YfinanceFetcher] 美股/美股指数 O 直接路由...
+2026-03-27 05:34:57 | INFO     | data_provider/base.py:357 | [YfinanceFetcher] 开始获取 O 日线数据: 范围=2026-01-26 ~ 2026-03-27
+2026-03-27 05:34:57 | INFO     | data_provider/base.py:376 | [YfinanceFetcher] O 获取成功: 范围=2026-01-26 ~ 2026-03-27, rows=43, elapsed=0.25s
+2026-03-27 05:34:57 | INFO     | data_provider/base.py:770 | [数据源完成] O 使用 [YfinanceFetcher] 获取成功: rows=43, elapsed=0.25s
+2026-03-27 05:34:57 | INFO     | src/storage.py:1387 | 保存 O 数据成功，新增 43 条
+2026-03-27 05:34:57 | INFO     | src/core/pipeline.py:166 | Realty Income(O) 数据保存成功（来源: YfinanceFetcher，新增 43 条）
+2026-03-27 05:34:58 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 O 实时行情成功: 价格=60.27000045776367
+2026-03-27 05:34:58 | INFO     | data_provider/base.py:970 | [实时行情] 美股 O 成功获取 (来源: yfinance)
+2026-03-27 05:34:58 | INFO     | src/core/pipeline.py:210 | Realty Income Corporation(O) 实时行情: 价格=60.27000045776367, 量比=None, 换手率=None% (来源: fallback)
+2026-03-27 05:34:58 | WARNING  | data_provider/tushare_fetcher.py:1055 | [Tushare] TushareFetcher 不支持美股 O 的筹码分布
+2026-03-27 05:34:58 | WARNING  | data_provider/base.py:1182 | [筹码分布] O 所有数据源均失败
+2026-03-27 05:34:58 | INFO     | src/core/pipeline.py:284 | Realty Income Corporation(O) 趋势分析: 强势空头, 买入信号=持有, 评分=47
+2026-03-27 05:34:58 | INFO     | src/core/pipeline.py:305 | Realty Income Corporation(O) 开始多维度情报搜索...
+2026-03-27 05:34:58 | INFO     | src/search_service.py:1966 | 开始多维度情报搜索: Realty Income Corporation(O), 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=60), 目标条数=3, provider请求条数=6
+2026-03-27 05:34:58 | INFO     | src/search_service.py:1995 | [情报搜索] 最新消息: 使用 Bocha
+2026-03-27 05:34:59 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Realty Income Corporation O latest news events'
+2026-03-27 05:34:59 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:34:59 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Realty Income Corporation O latest news events' 成功，返回 6 条结果，耗时 1.22s
+2026-03-27 05:34:59 | INFO     | src/search_service.py:1720 | [新闻过滤] O:Bocha:latest_news: provider=Bocha, total=6, kept=2, drop_unknown=0, drop_old=4, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:34:59 | INFO     | src/search_service.py:2012 | [情报搜索] 最新消息: 原始=6条, 过滤后=2条
+2026-03-27 05:34:59 | INFO     | src/search_service.py:1995 | [情报搜索] 机构分析: 使用 Tavily
+2026-03-27 05:35:03 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='Realty Income Corporation analyst rating target price report', 返回 6 条结果
+2026-03-27 05:35:03 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'Realty Income Corporation analyst rating target price report' 成功，返回 6 条结果，耗时 3.66s
+2026-03-27 05:35:03 | INFO     | src/search_service.py:1720 | [新闻过滤] O:Tavily:market_analysis: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:35:03 | INFO     | src/search_service.py:2012 | [情报搜索] 机构分析: 原始=6条, 过滤后=0条
+2026-03-27 05:35:03 | INFO     | src/search_service.py:1995 | [情报搜索] 风险排查: 使用 Bocha
+2026-03-27 05:35:05 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Realty Income Corporation risk insider selling lawsuit litigation'
+2026-03-27 05:35:05 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:35:05 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Realty Income Corporation risk insider selling lawsuit litigation' 成功，返回 6 条结果，耗时 1.12s
+2026-03-27 05:35:05 | INFO     | src/search_service.py:1720 | [新闻过滤] O:Bocha:risk_check: provider=Bocha, total=6, kept=1, drop_unknown=0, drop_old=5, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:35:05 | INFO     | src/search_service.py:2012 | [情报搜索] 风险排查: 原始=6条, 过滤后=1条
+2026-03-27 05:35:05 | INFO     | src/search_service.py:1995 | [情报搜索] 业绩预期: 使用 Tavily
+2026-03-27 05:35:09 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='Realty Income Corporation earnings revenue profit growth forecast', 返回 6 条结果
+2026-03-27 05:35:09 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'Realty Income Corporation earnings revenue profit growth forecast' 成功，返回 6 条结果，耗时 4.16s
+2026-03-27 05:35:09 | INFO     | src/search_service.py:1720 | [新闻过滤] O:Tavily:earnings: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:35:09 | INFO     | src/search_service.py:2012 | [情报搜索] 业绩预期: 原始=6条, 过滤后=0条
+2026-03-27 05:35:10 | INFO     | src/search_service.py:1995 | [情报搜索] 行业分析: 使用 Bocha
+2026-03-27 05:35:11 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Realty Income Corporation industry competitors market share outlook'
+2026-03-27 05:35:11 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:35:11 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Realty Income Corporation industry competitors market share outlook' 成功，返回 6 条结果，耗时 1.23s
+2026-03-27 05:35:11 | INFO     | src/search_service.py:1720 | [新闻过滤] O:Bocha:industry: provider=Bocha, total=6, kept=1, drop_unknown=0, drop_old=5, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:35:11 | INFO     | src/search_service.py:2012 | [情报搜索] 行业分析: 原始=6条, 过滤后=1条
+2026-03-27 05:35:11 | INFO     | src/core/pipeline.py:320 | Realty Income Corporation(O) 情报搜索完成: 共 4 条结果
+2026-03-27 05:35:11 | INFO     | src/storage.py:922 | 保存新闻情报成功: O, 新增 1 条
+2026-03-27 05:35:11 | INFO     | src/storage.py:922 | 保存新闻情报成功: O, 新增 0 条
+2026-03-27 05:35:11 | INFO     | src/storage.py:922 | 保存新闻情报成功: O, 新增 1 条
+2026-03-27 05:35:13 | INFO     | src/analyzer.py:952 | ========== AI 分析 Realty Income Corporation(O) ==========
+2026-03-27 05:35:13 | INFO     | src/analyzer.py:953 | [LLM配置] 模型: gemini/gemini-3-flash-preview
+2026-03-27 05:35:13 | INFO     | src/analyzer.py:954 | [LLM配置] Prompt 长度: 3510 字符
+2026-03-27 05:35:13 | INFO     | src/analyzer.py:955 | [LLM配置] 是否包含新闻: 是
+2026-03-27 05:35:13 | INFO     | src/analyzer.py:959 | [LLM Prompt 预览]
+# 决策仪表盘分析请求
+
+## 📊 股票基础信息
+| 项目 | 数据 |
+|------|------|
+| 股票代码 | **O** |
+| 股票名称 | **Realty Income Corporation** |
+| 分析日期 | 2026-03-27 |
+
+---
+
+## 📈 技术面数据
+
+### 今日行情
+| 指标 | 数值 |
+|------|------|
+| 收盘价 | 60.27000045776367 元 |
+| 开盘价 | 59.95000076293945 元 |
+| 最高价 | 60.650001525878906 元 |
+| 最低价 | 59.900001525878906 元 |
+| 涨跌幅 | -0.2% |
+| 成交量 | 397.76 万股 |
+| 成交额 | 2.40 亿元 |
+
+### 均线系统（关键判断指标）
+| 均线 | 数值 | 说明 |
+|------|------|------|
+| MA5 | 60.38199996948242 | 短期趋势线 |
+| MA10 | 61.75499954223633 | 中短期趋势线 |
+| MA...
+2026-03-27 05:35:13 | INFO     | src/analyzer.py:968 | [LLM调用] 开始调用 gemini/gemini-3-flash-preview...
+2026-03-27 05:35:13 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3995 | 
+LiteLLM completion() model= gemini-3-flash-preview; provider = gemini
+2026-03-27 05:35:13 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py:1009 | Warning: Setting temperature < 1.0 for Gemini 3 models (gemini-3-flash-preview) can cause infinite loops, degraded reasoning performance, and failure on complex tasks. Strongly recommended to use temperature = 1.0 (default).
+2026-03-27 05:35:35 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:1656 | Wrapper: Completed Call, calling success_handler
+2026-03-27 05:35:35 | INFO     | src/analyzer.py:981 | [LLM返回] gemini/gemini-3-flash-preview 响应成功, 耗时 21.93s, 响应长度 4035 字符
+2026-03-27 05:35:35 | INFO     | src/analyzer.py:985 | [LLM返回 预览]
+```json
+{
+    "stock_name": "Realty Income Corporation (O)",
+    "sentiment_score": 35,
+    "trend_prediction": "强烈看空",
+    "operation_advice": "观望",
+    "decision_type": "sell",
+    "confidence_level": "高",
+
+    "dashboard": {
+        "core_conclusion": {
+            "one_sentence": "均线呈标准空头排列，虽RSI...
+2026-03-27 05:35:35 | INFO     | src/analyzer.py:1025 | [LLM解析] Realty Income Corporation(O) 分析完成: 强烈看空, 评分 35
+2026-03-27 05:35:35 | INFO     | src/core/pipeline.py:1051 | [O] 分析完成: 观望, 评分 35
+2026-03-27 05:35:35 | INFO     | src/core/pipeline.py:1027 | ========== 开始处理 BIOA ==========
+2026-03-27 05:35:35 | INFO     | src/core/pipeline.py:158 | BioAge Labs(BIOA) 开始从数据源获取数据...
+2026-03-27 05:35:35 | INFO     | data_provider/base.py:758 | [数据源尝试 2/6] [YfinanceFetcher] 美股/美股指数 BIOA 直接路由...
+2026-03-27 05:35:35 | INFO     | data_provider/base.py:357 | [YfinanceFetcher] 开始获取 BIOA 日线数据: 范围=2026-01-26 ~ 2026-03-27
+2026-03-27 05:35:35 | INFO     | data_provider/base.py:376 | [YfinanceFetcher] BIOA 获取成功: 范围=2026-01-26 ~ 2026-03-27, rows=43, elapsed=0.11s
+2026-03-27 05:35:35 | INFO     | data_provider/base.py:770 | [数据源完成] BIOA 使用 [YfinanceFetcher] 获取成功: rows=43, elapsed=0.11s
+2026-03-27 05:35:36 | INFO     | src/storage.py:1387 | 保存 BIOA 数据成功，新增 43 条
+2026-03-27 05:35:36 | INFO     | src/core/pipeline.py:166 | BioAge Labs(BIOA) 数据保存成功（来源: YfinanceFetcher，新增 43 条）
+2026-03-27 05:35:36 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 BIOA 实时行情成功: 价格=16.25
+2026-03-27 05:35:36 | INFO     | data_provider/base.py:970 | [实时行情] 美股 BIOA 成功获取 (来源: yfinance)
+2026-03-27 05:35:36 | INFO     | src/core/pipeline.py:210 | BioAge Labs, Inc.(BIOA) 实时行情: 价格=16.25, 量比=None, 换手率=None% (来源: fallback)
+2026-03-27 05:35:36 | WARNING  | data_provider/tushare_fetcher.py:1055 | [Tushare] TushareFetcher 不支持美股 BIOA 的筹码分布
+2026-03-27 05:35:36 | WARNING  | data_provider/base.py:1182 | [筹码分布] BIOA 所有数据源均失败
+2026-03-27 05:35:36 | INFO     | src/core/pipeline.py:284 | BioAge Labs, Inc.(BIOA) 趋势分析: 强势空头, 买入信号=观望, 评分=40
+2026-03-27 05:35:36 | INFO     | src/core/pipeline.py:305 | BioAge Labs, Inc.(BIOA) 开始多维度情报搜索...
+2026-03-27 05:35:36 | INFO     | src/search_service.py:1966 | 开始多维度情报搜索: BioAge Labs, Inc.(BIOA), 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=60), 目标条数=3, provider请求条数=6
+2026-03-27 05:35:36 | INFO     | src/search_service.py:1995 | [情报搜索] 最新消息: 使用 Bocha
+2026-03-27 05:35:37 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='BioAge Labs, Inc. BIOA latest news events'
+2026-03-27 05:35:37 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:35:37 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'BioAge Labs, Inc. BIOA latest news events' 成功，返回 6 条结果，耗时 1.24s
+2026-03-27 05:35:37 | INFO     | src/search_service.py:1720 | [新闻过滤] BIOA:Bocha:latest_news: provider=Bocha, total=6, kept=3, drop_unknown=0, drop_old=3, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:35:37 | INFO     | src/search_service.py:2012 | [情报搜索] 最新消息: 原始=6条, 过滤后=3条
+2026-03-27 05:35:38 | INFO     | src/search_service.py:1995 | [情报搜索] 机构分析: 使用 Tavily
+2026-03-27 05:35:40 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='BioAge Labs, Inc. analyst rating target price report', 返回 6 条结果
+2026-03-27 05:35:40 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'BioAge Labs, Inc. analyst rating target price report' 成功，返回 6 条结果，耗时 1.65s
+2026-03-27 05:35:40 | INFO     | src/search_service.py:1720 | [新闻过滤] BIOA:Tavily:market_analysis: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:35:40 | INFO     | src/search_service.py:2012 | [情报搜索] 机构分析: 原始=6条, 过滤后=0条
+2026-03-27 05:35:40 | INFO     | src/search_service.py:1995 | [情报搜索] 风险排查: 使用 Bocha
+2026-03-27 05:35:41 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='BioAge Labs, Inc. risk insider selling lawsuit litigation'
+2026-03-27 05:35:41 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:35:41 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'BioAge Labs, Inc. risk insider selling lawsuit litigation' 成功，返回 6 条结果，耗时 1.21s
+2026-03-27 05:35:41 | INFO     | src/search_service.py:1720 | [新闻过滤] BIOA:Bocha:risk_check: provider=Bocha, total=6, kept=3, drop_unknown=0, drop_old=3, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:35:41 | INFO     | src/search_service.py:2012 | [情报搜索] 风险排查: 原始=6条, 过滤后=3条
+2026-03-27 05:35:42 | INFO     | src/search_service.py:1995 | [情报搜索] 业绩预期: 使用 Tavily
+2026-03-27 05:35:44 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='BioAge Labs, Inc. earnings revenue profit growth forecast', 返回 6 条结果
+2026-03-27 05:35:44 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'BioAge Labs, Inc. earnings revenue profit growth forecast' 成功，返回 6 条结果，耗时 1.80s
+2026-03-27 05:35:44 | INFO     | src/search_service.py:1720 | [新闻过滤] BIOA:Tavily:earnings: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:35:44 | INFO     | src/search_service.py:2012 | [情报搜索] 业绩预期: 原始=6条, 过滤后=0条
+2026-03-27 05:35:44 | INFO     | src/search_service.py:1995 | [情报搜索] 行业分析: 使用 Bocha
+2026-03-27 05:35:45 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='BioAge Labs, Inc. industry competitors market share outlook'
+2026-03-27 05:35:45 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:35:45 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'BioAge Labs, Inc. industry competitors market share outlook' 成功，返回 6 条结果，耗时 1.16s
+2026-03-27 05:35:45 | INFO     | src/search_service.py:1720 | [新闻过滤] BIOA:Bocha:industry: provider=Bocha, total=6, kept=2, drop_unknown=0, drop_old=4, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:35:45 | INFO     | src/search_service.py:2012 | [情报搜索] 行业分析: 原始=6条, 过滤后=2条
+2026-03-27 05:35:46 | INFO     | src/core/pipeline.py:320 | BioAge Labs, Inc.(BIOA) 情报搜索完成: 共 8 条结果
+2026-03-27 05:35:46 | INFO     | src/storage.py:922 | 保存新闻情报成功: BIOA, 新增 3 条
+2026-03-27 05:35:46 | INFO     | src/storage.py:922 | 保存新闻情报成功: BIOA, 新增 1 条
+2026-03-27 05:35:46 | INFO     | src/storage.py:922 | 保存新闻情报成功: BIOA, 新增 1 条
+2026-03-27 05:35:48 | INFO     | src/analyzer.py:952 | ========== AI 分析 BioAge Labs, Inc.(BIOA) ==========
+2026-03-27 05:35:48 | INFO     | src/analyzer.py:953 | [LLM配置] 模型: gemini/gemini-3-flash-preview
+2026-03-27 05:35:48 | INFO     | src/analyzer.py:954 | [LLM配置] Prompt 长度: 4342 字符
+2026-03-27 05:35:48 | INFO     | src/analyzer.py:955 | [LLM配置] 是否包含新闻: 是
+2026-03-27 05:35:48 | INFO     | src/analyzer.py:959 | [LLM Prompt 预览]
+# 决策仪表盘分析请求
+
+## 📊 股票基础信息
+| 项目 | 数据 |
+|------|------|
+| 股票代码 | **BIOA** |
+| 股票名称 | **BioAge Labs, Inc.** |
+| 分析日期 | 2026-03-27 |
+
+---
+
+## 📈 技术面数据
+
+### 今日行情
+| 指标 | 数值 |
+|------|------|
+| 收盘价 | 16.25 元 |
+| 开盘价 | 16.010000228881836 元 |
+| 最高价 | 16.940000534057617 元 |
+| 最低价 | 16.010000228881836 元 |
+| 涨跌幅 | -1.52% |
+| 成交量 | 36.61 万股 |
+| 成交额 | 594.85 万元 |
+
+### 均线系统（关键判断指标）
+| 均线 | 数值 | 说明 |
+|------|------|------|
+| MA5 | 16.729999923706053 | 短期趋势线 |
+| MA10 | 18.611999893188475 | 中短期趋势线 |
+| MA20 | 19.4702...
+2026-03-27 05:35:48 | INFO     | src/analyzer.py:968 | [LLM调用] 开始调用 gemini/gemini-3-flash-preview...
+2026-03-27 05:35:48 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3995 | 
+LiteLLM completion() model= gemini-3-flash-preview; provider = gemini
+2026-03-27 05:35:48 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py:1009 | Warning: Setting temperature < 1.0 for Gemini 3 models (gemini-3-flash-preview) can cause infinite loops, degraded reasoning performance, and failure on complex tasks. Strongly recommended to use temperature = 1.0 (default).
+2026-03-27 05:36:12 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:1656 | Wrapper: Completed Call, calling success_handler
+2026-03-27 05:36:12 | INFO     | src/analyzer.py:981 | [LLM返回] gemini/gemini-3-flash-preview 响应成功, 耗时 23.82s, 响应长度 4133 字符
+2026-03-27 05:36:12 | INFO     | src/analyzer.py:985 | [LLM返回 预览]
+```json
+{
+    "stock_name": "BioAge Labs, Inc. (BIOA)",
+    "sentiment_score": 28,
+    "trend_prediction": "强烈看空",
+    "operation_advice": "观望",
+    "decision_type": "sell",
+    "confidence_level": "高",
+
+    "dashboard": {
+        "core_conclusion": {
+            "one_sentence": "均线空头排列且处于下降通道，暂无止跌迹...
+2026-03-27 05:36:12 | INFO     | src/analyzer.py:1025 | [LLM解析] BioAge Labs, Inc.(BIOA) 分析完成: 强烈看空, 评分 28
+2026-03-27 05:36:12 | INFO     | src/core/pipeline.py:1051 | [BIOA] 分析完成: 观望, 评分 28
+2026-03-27 05:36:12 | INFO     | src/core/pipeline.py:1027 | ========== 开始处理 VZ ==========
+2026-03-27 05:36:12 | INFO     | src/core/pipeline.py:158 | 威瑞森(VZ) 开始从数据源获取数据...
+2026-03-27 05:36:12 | INFO     | data_provider/base.py:758 | [数据源尝试 2/6] [YfinanceFetcher] 美股/美股指数 VZ 直接路由...
+2026-03-27 05:36:12 | INFO     | data_provider/base.py:357 | [YfinanceFetcher] 开始获取 VZ 日线数据: 范围=2026-01-26 ~ 2026-03-27
+2026-03-27 05:36:12 | INFO     | data_provider/base.py:376 | [YfinanceFetcher] VZ 获取成功: 范围=2026-01-26 ~ 2026-03-27, rows=43, elapsed=0.24s
+2026-03-27 05:36:12 | INFO     | data_provider/base.py:770 | [数据源完成] VZ 使用 [YfinanceFetcher] 获取成功: rows=43, elapsed=0.24s
+2026-03-27 05:36:12 | INFO     | src/storage.py:1387 | 保存 VZ 数据成功，新增 43 条
+2026-03-27 05:36:12 | INFO     | src/core/pipeline.py:166 | 威瑞森(VZ) 数据保存成功（来源: YfinanceFetcher，新增 43 条）
+2026-03-27 05:36:12 | INFO     | data_provider/yfinance_fetcher.py:727 | [Yfinance] 获取美股 VZ 实时行情成功: 价格=50.7400016784668
+2026-03-27 05:36:12 | INFO     | data_provider/base.py:970 | [实时行情] 美股 VZ 成功获取 (来源: yfinance)
+2026-03-27 05:36:12 | INFO     | src/core/pipeline.py:210 | Verizon Communications Inc.(VZ) 实时行情: 价格=50.7400016784668, 量比=None, 换手率=None% (来源: fallback)
+2026-03-27 05:36:12 | WARNING  | data_provider/tushare_fetcher.py:1055 | [Tushare] TushareFetcher 不支持美股 VZ 的筹码分布
+2026-03-27 05:36:12 | WARNING  | data_provider/base.py:1182 | [筹码分布] VZ 所有数据源均失败
+2026-03-27 05:36:12 | INFO     | src/core/pipeline.py:284 | Verizon Communications Inc.(VZ) 趋势分析: 弱势多头, 买入信号=买入, 评分=74
+2026-03-27 05:36:12 | INFO     | src/core/pipeline.py:305 | Verizon Communications Inc.(VZ) 开始多维度情报搜索...
+2026-03-27 05:36:12 | INFO     | src/search_service.py:1966 | 开始多维度情报搜索: Verizon Communications Inc.(VZ), 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=60), 目标条数=3, provider请求条数=6
+2026-03-27 05:36:12 | INFO     | src/search_service.py:1995 | [情报搜索] 最新消息: 使用 Bocha
+2026-03-27 05:36:14 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Verizon Communications Inc. VZ latest news events'
+2026-03-27 05:36:14 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:36:14 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Verizon Communications Inc. VZ latest news events' 成功，返回 6 条结果，耗时 1.15s
+2026-03-27 05:36:14 | INFO     | src/search_service.py:1720 | [新闻过滤] VZ:Bocha:latest_news: provider=Bocha, total=6, kept=2, drop_unknown=0, drop_old=4, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:36:14 | INFO     | src/search_service.py:2012 | [情报搜索] 最新消息: 原始=6条, 过滤后=2条
+2026-03-27 05:36:14 | INFO     | src/search_service.py:1995 | [情报搜索] 机构分析: 使用 Tavily
+2026-03-27 05:36:16 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='Verizon Communications Inc. analyst rating target price report', 返回 6 条结果
+2026-03-27 05:36:16 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'Verizon Communications Inc. analyst rating target price report' 成功，返回 6 条结果，耗时 2.00s
+2026-03-27 05:36:16 | INFO     | src/search_service.py:1720 | [新闻过滤] VZ:Tavily:market_analysis: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:36:16 | INFO     | src/search_service.py:2012 | [情报搜索] 机构分析: 原始=6条, 过滤后=0条
+2026-03-27 05:36:17 | INFO     | src/search_service.py:1995 | [情报搜索] 风险排查: 使用 Bocha
+2026-03-27 05:36:18 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Verizon Communications Inc. risk insider selling lawsuit litigation'
+2026-03-27 05:36:18 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:36:18 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Verizon Communications Inc. risk insider selling lawsuit litigation' 成功，返回 6 条结果，耗时 1.15s
+2026-03-27 05:36:18 | INFO     | src/search_service.py:2012 | [情报搜索] 风险排查: 原始=6条, 过滤后=3条
+2026-03-27 05:36:18 | INFO     | src/search_service.py:1995 | [情报搜索] 业绩预期: 使用 Tavily
+2026-03-27 05:36:20 | INFO     | src/search_service.py:299 | [Tavily] 搜索完成，query='Verizon Communications Inc. earnings revenue profit growth forecast', 返回 6 条结果
+2026-03-27 05:36:20 | INFO     | src/search_service.py:237 | [Tavily] 搜索 'Verizon Communications Inc. earnings revenue profit growth forecast' 成功，返回 6 条结果，耗时 1.66s
+2026-03-27 05:36:20 | INFO     | src/search_service.py:1720 | [新闻过滤] VZ:Tavily:earnings: provider=Tavily, total=6, kept=0, drop_unknown=6, drop_old=0, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:36:20 | INFO     | src/search_service.py:2012 | [情报搜索] 业绩预期: 原始=6条, 过滤后=0条
+2026-03-27 05:36:20 | INFO     | src/search_service.py:1995 | [情报搜索] 行业分析: 使用 Bocha
+2026-03-27 05:36:22 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='Verizon Communications Inc. industry competitors market share outlook'
+2026-03-27 05:36:22 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:36:22 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'Verizon Communications Inc. industry competitors market share outlook' 成功，返回 6 条结果，耗时 1.23s
+2026-03-27 05:36:22 | INFO     | src/search_service.py:1720 | [新闻过滤] VZ:Bocha:industry: provider=Bocha, total=6, kept=2, drop_unknown=0, drop_old=4, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:36:22 | INFO     | src/search_service.py:2012 | [情报搜索] 行业分析: 原始=6条, 过滤后=2条
+2026-03-27 05:36:22 | INFO     | src/core/pipeline.py:320 | Verizon Communications Inc.(VZ) 情报搜索完成: 共 7 条结果
+2026-03-27 05:36:22 | INFO     | src/storage.py:922 | 保存新闻情报成功: VZ, 新增 2 条
+2026-03-27 05:36:22 | INFO     | src/storage.py:922 | 保存新闻情报成功: VZ, 新增 2 条
+2026-03-27 05:36:22 | INFO     | src/storage.py:922 | 保存新闻情报成功: VZ, 新增 1 条
+2026-03-27 05:36:24 | INFO     | src/analyzer.py:952 | ========== AI 分析 Verizon Communications Inc.(VZ) ==========
+2026-03-27 05:36:24 | INFO     | src/analyzer.py:953 | [LLM配置] 模型: gemini/gemini-3-flash-preview
+2026-03-27 05:36:24 | INFO     | src/analyzer.py:954 | [LLM配置] Prompt 长度: 4118 字符
+2026-03-27 05:36:24 | INFO     | src/analyzer.py:955 | [LLM配置] 是否包含新闻: 是
+2026-03-27 05:36:24 | INFO     | src/analyzer.py:959 | [LLM Prompt 预览]
+# 决策仪表盘分析请求
+
+## 📊 股票基础信息
+| 项目 | 数据 |
+|------|------|
+| 股票代码 | **VZ** |
+| 股票名称 | **Verizon Communications Inc.** |
+| 分析日期 | 2026-03-27 |
+
+---
+
+## 📈 技术面数据
+
+### 今日行情
+| 指标 | 数值 |
+|------|------|
+| 收盘价 | 50.7400016784668 元 |
+| 开盘价 | 50.56999969482422 元 |
+| 最高价 | 51.244998931884766 元 |
+| 最低价 | 50.42499923706055 元 |
+| 涨跌幅 | 0.71% |
+| 成交量 | 2128.41 万股 |
+| 成交额 | 10.80 亿元 |
+
+### 均线系统（关键判断指标）
+| 均线 | 数值 | 说明 |
+|------|------|------|
+| MA5 | 50.66800079345703 | 短期趋势线 |
+| MA10 | 50.38800048828125 | 中短期趋势线 |
+|...
+2026-03-27 05:36:24 | INFO     | src/analyzer.py:968 | [LLM调用] 开始调用 gemini/gemini-3-flash-preview...
+2026-03-27 05:36:24 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3995 | 
+LiteLLM completion() model= gemini-3-flash-preview; provider = gemini
+2026-03-27 05:36:24 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py:1009 | Warning: Setting temperature < 1.0 for Gemini 3 models (gemini-3-flash-preview) can cause infinite loops, degraded reasoning performance, and failure on complex tasks. Strongly recommended to use temperature = 1.0 (default).
+2026-03-27 05:36:24 | WARNING  | src/analyzer.py:850 | [LiteLLM] gemini/gemini-3-flash-preview failed: litellm.RateLimitError: litellm.RateLimitError: geminiException - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3-flash\nPlease retry in 35.223868987s.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "location": "global",
+              "model": "gemini-3-flash"
+            },
+            "quotaValue": "20"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "35s"
+      }
+    ]
+  }
+}
+
+2026-03-27 05:36:24 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3995 | 
+LiteLLM completion() model= gemini-2.5-flash; provider = gemini
+2026-03-27 05:36:53 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:1656 | Wrapper: Completed Call, calling success_handler
+2026-03-27 05:36:53 | INFO     | src/analyzer.py:981 | [LLM返回] gemini/gemini-3-flash-preview 响应成功, 耗时 29.12s, 响应长度 4773 字符
+2026-03-27 05:36:53 | INFO     | src/analyzer.py:985 | [LLM返回 预览]
+```json
+{
+    "stock_name": "Verizon Communications Inc. (VZ)",
+    "sentiment_score": 50,
+    "trend_prediction": "震荡",
+    "operation_advice": "观望",
+    "decision_type": "hold",
+    "confidence_level": "中",
+
+    "dashboard": {
+        "core_conclusion": {
+            "one_sentence": "均线排列未达多头标准，建议...
+2026-03-27 05:36:53 | INFO     | src/analyzer.py:1025 | [LLM解析] Verizon Communications Inc.(VZ) 分析完成: 震荡, 评分 50
+2026-03-27 05:36:53 | INFO     | src/core/pipeline.py:1051 | [VZ] 分析完成: 观望, 评分 50
+2026-03-27 05:36:53 | INFO     | src/core/pipeline.py:1202 | ===== 分析完成 =====
+2026-03-27 05:36:53 | INFO     | src/core/pipeline.py:1203 | 成功: 12, 失败: 0, 耗时: 427.37 秒
+2026-03-27 05:36:53 | INFO     | src/notification.py:1655 | 日报已保存到: /home/runner/work/daily_stock_analysis/daily_stock_analysis/reports/report_20260327.md
+2026-03-27 05:36:53 | INFO     | src/core/pipeline.py:1233 | 决策仪表盘日报已保存: /home/runner/work/daily_stock_analysis/daily_stock_analysis/reports/report_20260327.md
+2026-03-27 05:36:53 | INFO     | src/core/pipeline.py:1253 | 生成决策仪表盘日报...
+2026-03-27 05:36:53 | INFO     | src/core/pipeline.py:1422 | 通知渠道未配置，跳过推送
+2026-03-27 05:36:53 | INFO     | src/core/market_review.py:49 | 开始执行大盘复盘分析...
+2026-03-27 05:36:53 | INFO     | data_provider/tushare_fetcher.py:141 | Tushare API 初始化成功
+2026-03-27 05:36:53 | INFO     | data_provider/tushare_fetcher.py:198 | ✅ 检测到 TUSHARE_TOKEN 且 API 初始化成功，Tushare 数据源优先级提升为最高 (Priority -1)
+2026-03-27 05:36:53 | INFO     | data_provider/base.py:707 | 已初始化 6 个数据源（按优先级）: TushareFetcher(P-1), YfinanceFetcher(P-1), EfinanceFetcher(P0), AkshareFetcher(P1), BaostockFetcher(P3), PytdxFetcher(P99)
+2026-03-27 05:36:53 | INFO     | src/market_analyzer.py:680 | ========== 开始大盘复盘分析 ==========
+2026-03-27 05:36:53 | INFO     | src/market_analyzer.py:146 | [大盘] 获取主要指数实时行情...
+2026-03-27 05:36:54 | INFO     | data_provider/yfinance_fetcher.py:366 | [Yfinance] 成功获取 4 个美股指数行情
+2026-03-27 05:36:54 | INFO     | data_provider/base.py:1357 | [YfinanceFetcher] 获取指数行情成功
+2026-03-27 05:36:54 | INFO     | src/market_analyzer.py:172 | [大盘] 获取到 4 个指数行情
+2026-03-27 05:36:54 | INFO     | src/market_analyzer.py:256 | [大盘] 开始搜索市场新闻...
+2026-03-27 05:36:54 | INFO     | src/search_service.py:1778 | 搜索股票新闻: US market(market), query='美股 大盘', 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=60), 目标条数=3, provider请求条数=6
+2026-03-27 05:36:55 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='美股 大盘'
+2026-03-27 05:36:55 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:36:55 | INFO     | src/search_service.py:237 | [Bocha] 搜索 '美股 大盘' 成功，返回 6 条结果，耗时 1.23s
+2026-03-27 05:36:55 | INFO     | src/search_service.py:1720 | [新闻过滤] market:Bocha:stock_news: provider=Bocha, total=6, kept=2, drop_unknown=0, drop_old=4, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:36:55 | INFO     | src/search_service.py:1816 | 使用 Bocha 搜索成功
+2026-03-27 05:36:55 | INFO     | src/market_analyzer.py:269 | [大盘] 搜索 '美股 大盘' 获取 2 条结果
+2026-03-27 05:36:55 | INFO     | src/search_service.py:1778 | 搜索股票新闻: US market(market), query='US stock market', 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=60), 目标条数=3, provider请求条数=6
+2026-03-27 05:36:56 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='US stock market'
+2026-03-27 05:36:56 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:36:56 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'US stock market' 成功，返回 6 条结果，耗时 1.22s
+2026-03-27 05:36:56 | INFO     | src/search_service.py:1720 | [新闻过滤] market:Bocha:stock_news: provider=Bocha, total=6, kept=3, drop_unknown=0, drop_old=3, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:36:56 | INFO     | src/search_service.py:1816 | 使用 Bocha 搜索成功
+2026-03-27 05:36:56 | INFO     | src/market_analyzer.py:269 | [大盘] 搜索 'US stock market' 获取 3 条结果
+2026-03-27 05:36:56 | INFO     | src/search_service.py:1778 | 搜索股票新闻: US market(market), query='S&P 500 NASDAQ', 时间范围: 近3天 (profile=short, NEWS_MAX_AGE_DAYS=60), 目标条数=3, provider请求条数=6
+2026-03-27 05:36:58 | INFO     | src/search_service.py:671 | [Bocha] 搜索完成，query='S&P 500 NASDAQ'
+2026-03-27 05:36:58 | INFO     | src/search_service.py:695 | [Bocha] 成功解析 6 条结果
+2026-03-27 05:36:58 | INFO     | src/search_service.py:237 | [Bocha] 搜索 'S&P 500 NASDAQ' 成功，返回 6 条结果，耗时 1.16s
+2026-03-27 05:36:58 | INFO     | src/search_service.py:1720 | [新闻过滤] market:Bocha:stock_news: provider=Bocha, total=6, kept=3, drop_unknown=0, drop_old=2, drop_future=0, window=[2026-03-25,2026-03-28]
+2026-03-27 05:36:58 | INFO     | src/search_service.py:1816 | 使用 Bocha 搜索成功
+2026-03-27 05:36:58 | INFO     | src/market_analyzer.py:269 | [大盘] 搜索 'S&P 500 NASDAQ' 获取 3 条结果
+2026-03-27 05:36:58 | INFO     | src/market_analyzer.py:271 | [大盘] 共获取 8 条市场新闻
+2026-03-27 05:36:58 | INFO     | src/market_analyzer.py:296 | [大盘] 调用大模型生成复盘报告...
+2026-03-27 05:36:58 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:3995 | 
+LiteLLM completion() model= gemini-3-flash-preview; provider = gemini
+2026-03-27 05:36:58 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/llms/vertex_ai/gemini/vertex_and_google_ai_studio_gemini.py:1009 | Warning: Setting temperature < 1.0 for Gemini 3 models (gemini-3-flash-preview) can cause infinite loops, degraded reasoning performance, and failure on complex tasks. Strongly recommended to use temperature = 1.0 (default).
+2026-03-27 05:37:14 | INFO     | /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/litellm/utils.py:1656 | Wrapper: Completed Call, calling success_handler
+2026-03-27 05:37:14 | INFO     | src/market_analyzer.py:301 | [大盘] 复盘报告生成成功，长度: 2808 字符
+2026-03-27 05:37:14 | INFO     | src/market_analyzer.py:691 | ========== 大盘复盘分析完成 ==========
+2026-03-27 05:37:14 | INFO     | src/notification.py:1655 | 日报已保存到: /home/runner/work/daily_stock_analysis/daily_stock_analysis/reports/market_review_20260327.md
+2026-03-27 05:37:14 | INFO     | src/core/market_review.py:97 | 大盘复盘报告已保存: /home/runner/work/daily_stock_analysis/daily_stock_analysis/reports/market_review_20260327.md
+2026-03-27 05:37:14 | INFO     | main.py:372 | 
+===== 分析结果摘要 =====
+2026-03-27 05:37:14 | INFO     | main.py:375 | 🟢 Pfizer, Inc.(PFE): 买入 | 评分 82 | 强烈看多
+2026-03-27 05:37:14 | INFO     | main.py:375 | 🟢 Enbridge Inc(ENB): 买入 | 评分 78 | 看多
+2026-03-27 05:37:14 | INFO     | main.py:375 | ⚪ Verizon Communications Inc.(VZ): 观望 | 评分 50 | 震荡
+2026-03-27 05:37:14 | INFO     | main.py:375 | ⚪ AbbVie Inc.(ABBV): 观望 | 评分 45 | 震荡/看空
+2026-03-27 05:37:14 | INFO     | main.py:375 | ⚪ Philip Morris International Inc(PM): 观望 | 评分 35 | 看空
+2026-03-27 05:37:14 | INFO     | main.py:375 | ⚪ Addus HomeCare Corporation(ADUS): 观望 | 评分 35 | 看空
+2026-03-27 05:37:14 | INFO     | main.py:375 | ⚪ 3M Company(MMM): 观望 | 评分 35 | 看空
+2026-03-27 05:37:14 | INFO     | main.py:375 | ⚪ Costco Wholesale Corporation(COST): 观望 | 评分 35 | 看空
+2026-03-27 05:37:14 | INFO     | main.py:375 | ⚪ Realty Income Corporation(O): 观望 | 评分 35 | 强烈看空
+2026-03-27 05:37:14 | INFO     | main.py:375 | ⚪ SPDR Gold Shares(GLD): 观望 | 评分 30 | 强烈看空
+2026-03-27 05:37:14 | INFO     | main.py:375 | ⚪ BioAge Labs, Inc.(BIOA): 观望 | 评分 28 | 强烈看空
+2026-03-27 05:37:14 | INFO     | main.py:375 | 🔴 Microsoft Corporation(MSFT): 卖出/观望 | 评分 25 | 强烈看空
+2026-03-27 05:37:14 | INFO     | main.py:380 | 
+任务执行完成
+2026-03-27 05:37:16 | INFO     | main.py:426 | 开始自动回测...
+2026-03-27 05:37:16 | INFO     | main.py:434 | 自动回测完成: processed=0 saved=0 completed=0 insufficient=0 errors=0
+2026-03-27 05:37:16 | INFO     | main.py:697 | 
+程序执行完成
