@@ -64,6 +64,7 @@ class NotificationChannel(Enum):
     DISCORD = "discord"    # Discord 机器人 (Bot)
     SLACK = "slack"        # Slack
     ASTRBOT = "astrbot"
+    PUSHDEER = "pushdeer"
     UNKNOWN = "unknown"    # 未知
 
 
@@ -105,7 +106,8 @@ class NotificationService(
     Serverchan3Sender,
     SlackSender,
     TelegramSender,
-    WechatSender
+    WechatSender,
+    PushDeerSender
 ):
     """
     通知服务
@@ -159,6 +161,7 @@ class NotificationService(
         SlackSender.__init__(self, config)
         TelegramSender.__init__(self, config)
         WechatSender.__init__(self, config)
+        PushDeerSender.__init__(self, config)
 
         # 检测所有已配置的渠道
         self._available_channels = self._detect_all_channels()
@@ -306,6 +309,10 @@ class NotificationService(
         # AstrBot
         if self._is_astrbot_configured():
             channels.append(NotificationChannel.ASTRBOT)
+        # --- 添加 PushDeer 检测 ---
+        # 假设 PushDeerSender 中有 _is_pushdeer_configured 方法
+        if hasattr(self, '_is_pushdeer_configured') and self._is_pushdeer_configured():
+            channels.append(NotificationChannel.PUSHDEER)
         return channels
 
     def is_available(self) -> bool:
@@ -1677,6 +1684,8 @@ class NotificationService(
                         result = self.send_to_slack(content)
                 elif channel == NotificationChannel.ASTRBOT:
                     result = self.send_to_astrbot(content)
+                elif channel == NotificationChannel.PUSHDEER:
+                    result = self.send_to_pushdeer(content) #
                 else:
                     logger.warning(f"不支持的通知渠道: {channel}")
                     result = False
