@@ -588,6 +588,9 @@ class Config:
     astrbot_token: Optional[str] = None
     astrbot_url: Optional[str] = None
 
+    # PushDeer 配置 (手机推送)
+    pushdeer_key: Optional[str] = None
+
     # 单股推送模式：每分析完一只股票立即推送，而不是汇总后推送
     single_stock_notify: bool = False
 
