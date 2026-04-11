@@ -217,4 +217,4 @@ class NotificationService(
                         success_count += 1
                 # ... 其他 channel 的调用逻辑 (wechat.send, feishu.send 等) ...
             except Exception as e:
-                logger.error(f"发送到渠道 {channel}
+                logger.error(f"发送到渠道 {channel} 失败: {str(e)}")
