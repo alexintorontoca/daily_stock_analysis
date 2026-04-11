@@ -198,6 +198,8 @@ class NotificationService(
             channels.append(NotificationChannel.SLACK)
         if self._is_astrbot_configured():
             channels.append(NotificationChannel.ASTRBOT)
+        if hasattr(self, 'pushkey') and self.pushkey:
+            channels.append(NotificationChannel.PUSHDEER)
             
         return channels
 
