@@ -15,6 +15,7 @@ import logging
 import threading
 import time
 import uuid
+import pytz # <-- 添加A股美股按时间分流出报告
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date, datetime, timedelta, timezone
@@ -1288,6 +1289,32 @@ class StockAnalysisPipeline:
         if not stock_codes:
             logger.error("未配置自选股列表，请在 .env 文件中设置 STOCK_LIST")
             return []
+
+        # ==================== 按收盘时间A股美股分流出报告（插入点开始） ====================
+        # 核心逻辑：基于北京时间实现 A股/美股 收盘后 1 小时自动分流
+        bj_tz = pytz.timezone('Asia/Shanghai')
+        now_bj = datetime.now(bj_tz)
+        hour_bj = now_bj.hour
+        
+        # 1. A 股分流：北京时间 15:00 - 21:00 运行
+        # 涵盖 15:00 收盘后 1 小时（16:00）的触发
+        if 15 <= hour_bj <= 21:
+            stock_codes = [s for s in stock_codes if s[0].isdigit()]
+            logger.info(f"【分流】当前北京时间 {hour_bj}点，仅分析 A 股 (数量: {len(stock_codes)})")
+            
+        # 2. 美股分流：北京时间 04:00 - 10:00 运行
+        # 涵盖美股收盘后 1 小时（约 05:00）的触发
+        elif 4 <= hour_bj <= 10:
+            stock_codes = [s for s in stock_codes if s[0].isalpha()]
+            logger.info(f"【分流】当前北京时间 {hour_bj}点，仅分析美股 (数量: {len(stock_codes)})")
+        
+        # 如果过滤后列表为空，说明在非目标时段运行，直接退出避免产生空报告
+        if not stock_codes:
+            logger.info(f"当前时间({hour_bj}点)无匹配市场分析任务，自动结束")
+            return []
+        # ==================== 按收盘时间A股美股分流出报告（插入点结束） ====================
+
+        resume_reference_time = datetime.now(timezone.utc)
         
         logger.info(f"===== 开始分析 {len(stock_codes)} 只股票 =====")
         logger.info(f"股票列表: {', '.join(stock_codes)}")
