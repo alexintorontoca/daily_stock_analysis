@@ -1638,10 +1638,14 @@ class NotificationService(
         success_count = 0
         fail_count = 0
 
+          
         for channel in self._available_channels:
             channel_name = ChannelDetector.get_channel_name(channel)
+            # 自动判断当前渠道是否需要将 Markdown 转为图片发送
             use_image = self._should_use_image_for_channel(channel, image_bytes)
+            
             try:
+                result = False
                 if channel == NotificationChannel.WECHAT:
                     if use_image:
                         result = self._send_wechat_image(image_bytes)
@@ -1660,6 +1664,7 @@ class NotificationService(
                         receivers = self.get_all_email_receivers()
                     elif email_stock_codes and self._stock_email_groups:
                         receivers = self.get_receivers_for_stocks(email_stock_codes)
+                    
                     if use_image:
                         result = self._send_email_with_inline_image(
                             image_bytes, receivers=receivers
@@ -1671,11 +1676,11 @@ class NotificationService(
                 elif channel == NotificationChannel.PUSHPLUS:
                     result = self.send_to_pushplus(content)
                 elif channel == NotificationChannel.SERVERCHAN3:
-                    result = self.send_to_serverchan3(content)
+                    # 注意：Server酱通常需要 title 和 content
+                    result = self.send_to_serverchan3(title, content)
 
-                # === 新增：PushDeer 分支 ===
+                # === PushDeer 分支：确保使用适配器方法 ===
                 elif channel == NotificationChannel.PUSHDEER:
-                    # 调用 pushdeer_sender.py 中我们定义的具体方法
                     result = self.send_to_pushdeer(content, title=title)
                 
                 elif channel == NotificationChannel.CUSTOM:
@@ -1702,12 +1707,14 @@ class NotificationService(
 
                 if result:
                     success_count += 1
+                    logger.info(f"成功发送通知到渠道: {channel_name}")
                 else:
                     fail_count += 1
+                    logger.warning(f"发送通知到渠道 {channel_name} 失败")
 
             except Exception as e:
-                logger.error(f"{channel_name} 发送失败: {e}")
                 fail_count += 1
+                logger.error(f"发送到 {channel_name} 时发生异常: {e}")
 
         logger.info(f"通知发送完成：成功 {success_count} 个，失败 {fail_count} 个")
         return success_count > 0 or context_success
