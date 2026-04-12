@@ -45,6 +45,7 @@ from src.notification_sender import (
     SlackSender,
     TelegramSender,
     WechatSender,
+    PushDeerSender,
     WECHAT_IMAGE_MAX_BYTES
 )
 
