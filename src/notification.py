@@ -65,6 +65,7 @@ class NotificationChannel(Enum):
     DISCORD = "discord"    # Discord 机器人 (Bot)
     SLACK = "slack"        # Slack
     ASTRBOT = "astrbot"
+    PUSHDEER = "pushdeer"
     UNKNOWN = "unknown"    # 未知
 
 
@@ -90,6 +91,7 @@ class ChannelDetector:
             NotificationChannel.DISCORD: "Discord机器人",
             NotificationChannel.SLACK: "Slack",
             NotificationChannel.ASTRBOT: "ASTRBOT机器人",
+            NotificationChannel.PUSHDEER: "PushDeer",
             NotificationChannel.UNKNOWN: "未知渠道",
         }
         return names.get(channel, "未知渠道")
@@ -134,6 +136,7 @@ class NotificationService(
         检测所有已配置的渠道，推送时会向所有渠道发送
         """
         config = get_config()
+        self.config = config # 建议显式保存一份 config 引用
         self._source_message = source_message
         self._context_channels: List[str] = []
 
@@ -148,6 +151,10 @@ class NotificationService(
         # 仅分析结果摘要（Issue #262）：true 时只推送汇总，不含个股详情
         self._report_summary_only = getattr(config, 'report_summary_only', False)
         self._history_compare_cache: Dict[Tuple[int, Tuple[Tuple[str, str], ...]], Dict[str, List[Dict[str, Any]]]] = {}
+
+        # === 核心修正：在初始化各渠道前，提取 pushkey ===
+        # 这样下面的 _detect_all_channels 才能通过 hasattr(self, 'pushkey') 找到它
+        self.pushkey = getattr(config, 'pushdeer_key', None)
 
         # 初始化各渠道
         AstrbotSender.__init__(self, config)
@@ -309,8 +316,8 @@ class NotificationService(
         # AstrBot
         if self._is_astrbot_configured():
             channels.append(NotificationChannel.ASTRBOT)
-        # 加上 PushDeer 的检测
-        if hasattr(self, 'pushkey') and self.pushkey:
+        # === 简化检测逻辑 ===
+        if self.pushkey: # 只要上面 __init__ 赋值成功，这里就为 True
             channels.append(NotificationChannel.PUSHDEER)
         return channels
 
@@ -1668,8 +1675,8 @@ class NotificationService(
 
                 # === 新增：PushDeer 分支 ===
                 elif channel == NotificationChannel.PUSHDEER:
-                    # PushDeer 通常直接发送 Markdown 文本
-                    result = self.send_to_pushdeer(content)
+                    # 调用 pushdeer_sender.py 中我们定义的具体方法
+                    result = self.send_to_pushdeer(content, title=title)
                 
                 elif channel == NotificationChannel.CUSTOM:
                     if use_image:
