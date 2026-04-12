@@ -1,14 +1,26 @@
 import requests
 import logging
 
+logger = logging.getLogger(__name__)
+
 class PushDeerSender:
-    def __init__(self, pushkey):
-        self.pushkey = pushkey
+    def __init__(self, config):
+        """
+        适配系统框架：从统一的 config 对象中读取配置
+        """
+        self.pushkey = getattr(config, 'pushdeer_key', None)
         self.url = "https://api2.getpushdeer.com/message/push"
 
-    def send(self, title, content):
+    def _is_pushdeer_configured(self) -> bool:
+        """提供给 NotificationService 用于自动探测渠道"""
+        return bool(self.pushkey)
+
+    def send_to_pushdeer(self, content: str, title: str = "A股自选股日报") -> bool:
+        """
+        适配系统调用名：send_to_pushdeer
+        """
         if not self.pushkey:
-            logging.error("PushDeer pushkey is missing.")
+            logger.error("PushDeer pushkey 未配置。")
             return False
         
         data = {
@@ -18,14 +30,15 @@ class PushDeerSender:
             "type": "markdown"
         }
         try:
-            response = requests.post(self.url, data=data)
+            # 建议增加 timeout 防止网络问题导致主程序卡死
+            response = requests.post(self.url, data=data, timeout=10)
             result = response.json()
             if result.get("code") == 0:
-                logging.info("PushDeer notification sent successfully.")
+                logger.info("PushDeer 通知发送成功。")
                 return True
             else:
-                logging.error(f"PushDeer sending failed: {result}")
+                logger.error(f"PushDeer 发送失败: {result}")
                 return False
         except Exception as e:
-            logging.error(f"Error sending PushDeer notification: {e}")
+            logger.error(f"发送 PushDeer 通知时发生错误: {e}")
             return False
