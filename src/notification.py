@@ -208,15 +208,26 @@ class NotificationService(
     def push_report(self, title: str, content: str) -> bool:
         """
         这个方法负责遍历所有可用渠道并发送。
-        你需要在这里确保 PushDeer 被调用。
         """
         success_count = 0
         for channel in self._available_channels:
             try:
+                res = False
+                # === 新增：PushDeer 发送分支 ===
                 if channel == NotificationChannel.PUSHDEER:
-                    # 调用你代码里的 send 方法
-                    if self.send(title, content):
-                        success_count += 1
-                # ... 其他 channel 的调用逻辑 (wechat.send, feishu.send 等) ...
+                    # 注意：调用的是你 pushdeer_sender.py 里的发送方法
+                    res = self.send_to_pushdeer(content) 
+                
+                # --- 以下是原始仓库中其他渠道可能的逻辑 (请根据你文件实际情况补全) ---
+                elif channel == NotificationChannel.WECHAT:
+                    res = self.send_to_wechat(content)
+                elif channel == NotificationChannel.FEISHU:
+                    res = self.send_to_feishu(content)
+                # ... 其他 channel 照旧 ...
+
+                if res:
+                    success_count += 1
             except Exception as e:
-                logger.error(f"发送到渠道 {channel} 失败: {str(e)}")
+                logger.error(f"发送到 {channel.value} 失败: {e}")
+
+        return success_count > 0
