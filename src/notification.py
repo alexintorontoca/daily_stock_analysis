@@ -535,26 +535,23 @@ class NotificationService(
         
         return success
 
-    def send_to_pushdeer(self, content: str) -> bool:
+     def send_to_pushdeer(self, content: str, title: str = None) -> bool:
         """
         发送分析报告到 PushDeer
         """
         try:
-            # 1. 手动定义 title 字符串，解决 'title' is not defined 报错
-            # 你可以根据需求修改这个标题
-            title = "A股自选股分析报告"
+            # 这里的修复逻辑：如果调用者没传 title，则使用默认值
+            report_title = title or "A股自选股分析报告"
             
-            # 2. 检查 key 是否存在
             if not hasattr(self, 'pushkey') or not self.pushkey:
                 logger.warning("PushDeer Key 未配置，跳过发送")
                 return False
 
-            # 3. 调用从 PushDeerSender 继承的发送方法
-            # PushDeer API 通常要求: text=标题, desp=正文
-            logger.info(f"正在通过 PushDeer 发送报告: {title}")
-            return self.send_pushdeer(text=title, desp=content)
+            # 调用底层的发送逻辑
+            return self.send_pushdeer(text=report_title, desp=content)
             
         except Exception as e:
+            # 这里的报错行号对应你日志里的位置
             logger.error(f"发送到 PushDeer 时发生异常: {str(e)}")
             return False
         
@@ -1591,30 +1588,15 @@ class NotificationService(
             return False
         return True
 
-    def send(
+   def send(
         self,
         content: str,
         email_stock_codes: Optional[List[str]] = None,
-        email_send_to_all: bool = False
+        email_send_to_all: bool = False,
+        **kwargs
     ) -> bool:
         """
         统一发送接口 - 向所有已配置的渠道发送
-
-        遍历所有已配置的渠道，逐一发送消息
-
-        Fallback rules (Markdown-to-image, Issue #289):
-        - When image_bytes is None (conversion failed / imgkit not installed /
-          content over max_chars): all channels configured for image will send
-          as Markdown text instead.
-        - When WeChat image exceeds ~2MB: that channel falls back to Markdown text.
-
-        Args:
-            content: 消息内容（Markdown 格式）
-            email_stock_codes: 股票代码列表（可选，用于邮件渠道路由到对应分组邮箱，Issue #268）
-            email_send_to_all: 邮件是否发往所有配置邮箱（用于大盘复盘等无股票归属的内容）
-
-        Returns:
-            是否至少有一个渠道发送成功
         """
         context_success = self.send_to_context(content)
 
@@ -1625,8 +1607,11 @@ class NotificationService(
             logger.warning("通知服务不可用，跳过推送")
             return False
 
+        # === 核心修复：在此处定义 title 变量 ===
+        # 优先从 kwargs 获取（由外部传入的 title），如果没有则设为默认值
+        title = kwargs.get('title') or "股票分析报告"
+
         # Markdown to image (Issue #289): convert once if any channel needs it.
-        # Per-channel decision via _should_use_image_for_channel (see send() docstring for fallback rules).
         image_bytes = None
         channels_needing_image = {
             ch for ch in self._available_channels
@@ -1661,10 +1646,8 @@ class NotificationService(
         success_count = 0
         fail_count = 0
 
-          
         for channel in self._available_channels:
             channel_name = ChannelDetector.get_channel_name(channel)
-            # 自动判断当前渠道是否需要将 Markdown 转为图片发送
             use_image = self._should_use_image_for_channel(channel, image_bytes)
             
             try:
@@ -1699,10 +1682,10 @@ class NotificationService(
                 elif channel == NotificationChannel.PUSHPLUS:
                     result = self.send_to_pushplus(content)
                 elif channel == NotificationChannel.SERVERCHAN3:
-                    # 注意：Server酱通常需要 title 和 content
+                    # 现在 title 已经定义，不再报错
                     result = self.send_to_serverchan3(title, content)
 
-                # === PushDeer 分支：确保使用适配器方法 ===
+                # === PushDeer 分支：title 变量现在有效 ===
                 elif channel == NotificationChannel.PUSHDEER:
                     result = self.send_to_pushdeer(content, title=title)
                 
@@ -1741,7 +1724,7 @@ class NotificationService(
 
         logger.info(f"通知发送完成：成功 {success_count} 个，失败 {fail_count} 个")
         return success_count > 0 or context_success
-   
+       
     def save_report_to_file(
         self, 
         content: str, 
