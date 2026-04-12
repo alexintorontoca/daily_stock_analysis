@@ -1659,6 +1659,12 @@ class StockAnalysisPipeline:
                         else:
                             result = self.notifier.send_to_slack(report)
                         non_wechat_success = result or non_wechat_success
+                    # === 新增：处理 PushDeer 的逻辑 ===
+                    elif channel == NotificationChannel.PUSHDEER:
+                        # 调用 notification.py 中定义的发送方法
+                        # 注意：根据你之前的 notification.py，直接调用 send_to_pushdeer 或通用 send
+                        result = self.notifier.send_to_pushdeer(report)
+                        non_wechat_success = result or non_wechat_success
                     else:
                         logger.warning(f"未知通知渠道: {channel}")
 
