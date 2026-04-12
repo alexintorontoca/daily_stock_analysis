@@ -537,23 +537,42 @@ class NotificationService(
 
     def send_to_pushdeer(self, content: str, title: str = None) -> bool:
         """
-        发送分析报告到 PushDeer
+        发送分析报告到 PushDeer (直接请求版)
         """
         try:
+            import requests
+            
             # 优先使用传入的 title，若无则使用默认值
             report_title = title or "A股自选股分析报告"
             
-            if not hasattr(self, 'pushkey') or not self.pushkey:
+            # 确保 pushkey 存在 (从配置中获取)
+            pushkey = getattr(self, 'pushkey', None)
+            if not pushkey:
                 logger.warning("PushDeer Key 未配置，跳过发送")
                 return False
 
-            # 调用底层的发送逻辑
-            # PushDeer: text 为标题, desp 为内容
-            return self.send_pushdeer(text=report_title, desp=content)
+            # PushDeer API 地址
+            url = "https://api2.pushdeer.com/message/push"
+            data = {
+                "pushkey": pushkey,
+                "text": report_title,
+                "desp": content,
+                "type": "markdown"
+            }
             
+            logger.info(f"正在向 PushDeer 推送: {report_title}")
+            response = requests.post(url, data=data, timeout=10)
+            result = response.json()
+            
+            if result.get("content", {}).get("result") == "ok" or result.get("code") == 0:
+                return True
+            else:
+                logger.error(f"PushDeer 返回错误: {result}")
+                return False
+                
         except Exception as e:
             logger.error(f"发送到 PushDeer 时发生异常: {str(e)}")
-            return False
+            return False       
         
     def generate_daily_report(
         self,
