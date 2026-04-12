@@ -2176,6 +2176,7 @@ class Config:
             or (self.pushover_user_key and self.pushover_api_token)
             or self.pushplus_token
             or self.serverchan3_sendkey
+            or self.push_deer_key
             or self.custom_webhook_urls
             or (self.discord_bot_token and self.discord_main_channel_id)
             or self.discord_webhook_url
