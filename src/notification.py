@@ -535,12 +535,12 @@ class NotificationService(
         
         return success
 
-   def send_to_pushdeer(self, content: str, title: str = None) -> bool:
+    def send_to_pushdeer(self, content: str, title: str = None) -> bool:
         """
         发送分析报告到 PushDeer
         """
         try:
-            # 这里的修复逻辑：如果调用者没传 title，则使用默认值
+            # 优先使用传入的 title，若无则使用默认值
             report_title = title or "A股自选股分析报告"
             
             if not hasattr(self, 'pushkey') or not self.pushkey:
@@ -548,10 +548,10 @@ class NotificationService(
                 return False
 
             # 调用底层的发送逻辑
+            # PushDeer: text 为标题, desp 为内容
             return self.send_pushdeer(text=report_title, desp=content)
             
         except Exception as e:
-            # 这里的报错行号对应你日志里的位置
             logger.error(f"发送到 PushDeer 时发生异常: {str(e)}")
             return False
         
