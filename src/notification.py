@@ -1588,7 +1588,7 @@ class NotificationService(
             return False
         return True
 
-   def send(
+    def send(
         self,
         content: str,
         email_stock_codes: Optional[List[str]] = None,
@@ -1607,11 +1607,10 @@ class NotificationService(
             logger.warning("通知服务不可用，跳过推送")
             return False
 
-        # === 核心修复：在此处定义 title 变量 ===
-        # 优先从 kwargs 获取（由外部传入的 title），如果没有则设为默认值
+        # === 核心修复：定义 title 变量，防止 NameError ===
         title = kwargs.get('title') or "股票分析报告"
 
-        # Markdown to image (Issue #289): convert once if any channel needs it.
+        # Markdown to image logic
         image_bytes = None
         channels_needing_image = {
             ch for ch in self._available_channels
@@ -1623,22 +1622,9 @@ class NotificationService(
                 content, max_chars=self._markdown_to_image_max_chars
             )
             if image_bytes:
-                logger.info("Markdown 已转换为图片，将向 %s 发送图片",
-                            [ch.value for ch in channels_needing_image])
+                logger.info("Markdown 已转换为图片")
             elif channels_needing_image:
-                try:
-                    from src.config import get_config
-                    engine = getattr(get_config(), "md2img_engine", "wkhtmltoimage")
-                except Exception:
-                    engine = "wkhtmltoimage"
-                hint = (
-                    "npm i -g markdown-to-file" if engine == "markdown-to-file"
-                    else "wkhtmltopdf (apt install wkhtmltopdf / brew install wkhtmltopdf)"
-                )
-                logger.warning(
-                    "Markdown 转图片失败，将回退为文本发送。请检查 MARKDOWN_TO_IMAGE_CHANNELS 配置并安装 %s",
-                    hint,
-                )
+                logger.warning("Markdown 转图片失败，回退为文本发送")
 
         channel_names = self.get_channel_names()
         logger.info(f"正在向 {len(self._available_channels)} 个渠道发送通知：{channel_names}")
@@ -1682,27 +1668,20 @@ class NotificationService(
                 elif channel == NotificationChannel.PUSHPLUS:
                     result = self.send_to_pushplus(content)
                 elif channel == NotificationChannel.SERVERCHAN3:
-                    # 现在 title 已经定义，不再报错
                     result = self.send_to_serverchan3(title, content)
-
-                # === PushDeer 分支：title 变量现在有效 ===
                 elif channel == NotificationChannel.PUSHDEER:
+                    # 确保这里传递了 title 参数
                     result = self.send_to_pushdeer(content, title=title)
-                
                 elif channel == NotificationChannel.CUSTOM:
                     if use_image:
-                        result = self._send_custom_webhook_image(
-                            image_bytes, fallback_content=content
-                        )
+                        result = self._send_custom_webhook_image(image_bytes, fallback_content=content)
                     else:
                         result = self.send_to_custom(content)
                 elif channel == NotificationChannel.DISCORD:
                     result = self.send_to_discord(content)
                 elif channel == NotificationChannel.SLACK:
                     if use_image:
-                        result = self._send_slack_image(
-                            image_bytes, fallback_content=content
-                        )
+                        result = self._send_slack_image(image_bytes, fallback_content=content)
                     else:
                         result = self.send_to_slack(content)
                 elif channel == NotificationChannel.ASTRBOT:
