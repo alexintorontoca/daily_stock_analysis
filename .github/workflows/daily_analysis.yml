@@ -3,7 +3,10 @@ name: 每日股票分析
 on:
   # 定时触发 - 每天北京时间 18:00 (UTC 10:00)
   schedule:
-    - cron: '0 10 * * 1-5'     # 周一到周五，UTC 10:00 = 北京时间 18:00
+    # 修改：A股报告改为北京时间 17:00 (UTC 09:00)
+    - cron: '0 9 * * 1-5'
+    # 新增：美股报告改为北京时间 07:00 (UTC 23:00)
+    - cron: '0 23 * * 0-4'
   
   # 手动触发
   workflow_dispatch:
@@ -51,6 +54,7 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
+          pip install pytz  # <--- 用北京时间判断时区
       
       - name: 创建必要目录
         run: |
