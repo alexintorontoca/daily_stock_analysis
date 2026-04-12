@@ -154,7 +154,7 @@ class NotificationService(
 
         # === 核心修正：在初始化各渠道前，提取 pushkey ===
         # 这样下面的 _detect_all_channels 才能通过 hasattr(self, 'pushkey') 找到它
-        self.pushkey = getattr(config, 'pushdeer_key', None)
+        self.pushkey = getattr(config, 'push_deer_key', None)
 
         # 初始化各渠道
         AstrbotSender.__init__(self, config)
@@ -168,7 +168,7 @@ class NotificationService(
         SlackSender.__init__(self, config)
         TelegramSender.__init__(self, config)
         WechatSender.__init__(self, config)
-        PushDeerSender.__init__(self, config)
+        PushDeerSender.__init__(self, pushkey=self.pushkey)
 
         # 检测所有已配置的渠道
         self._available_channels = self._detect_all_channels()
