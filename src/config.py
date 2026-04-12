@@ -563,9 +563,9 @@ class Config:
     # When configured, each group's report is sent to that group's emails only.
     stock_email_groups: List[Tuple[List[str], List[str]]] = field(default_factory=list)
 
-    # Pushover 配置（手机/桌面推送通知）
-    pushover_user_key: Optional[str] = None  # 用户 Key（https://pushover.net 获取）
-    pushover_api_token: Optional[str] = None  # 应用 API Token
+    # over 配置（手机/桌面推送通知）
+    over_user_key: Optional[str] = None  # 用户 Key（https://over.net 获取）
+    over_api_token: Optional[str] = None  # 应用 API Token
     
     # 自定义 Webhook（支持多个，逗号分隔）
     # 适用于：钉钉、Discord、Slack、自建服务等任意支持 POST JSON 的 Webhook
@@ -2176,7 +2176,7 @@ class Config:
             or (self.pushover_user_key and self.pushover_api_token)
             or self.pushplus_token
             or self.serverchan3_sendkey
-            or self.push_deer_key
+            or self.pushdeer_key
             or self.custom_webhook_urls
             or (self.discord_bot_token and self.discord_main_channel_id)
             or self.discord_webhook_url
