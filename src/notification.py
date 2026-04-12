@@ -534,6 +534,29 @@ class NotificationService(
                 logger.error(f"飞书 Stream 分块 {i+1}/{len(chunks)} 发送失败")
         
         return success
+
+    def send_to_pushdeer(self, content: str) -> bool:
+        """
+        发送分析报告到 PushDeer
+        """
+        try:
+            # 1. 手动定义 title 字符串，解决 'title' is not defined 报错
+            # 你可以根据需求修改这个标题
+            title = "A股自选股分析报告"
+            
+            # 2. 检查 key 是否存在
+            if not hasattr(self, 'pushkey') or not self.pushkey:
+                logger.warning("PushDeer Key 未配置，跳过发送")
+                return False
+
+            # 3. 调用从 PushDeerSender 继承的发送方法
+            # PushDeer API 通常要求: text=标题, desp=正文
+            logger.info(f"正在通过 PushDeer 发送报告: {title}")
+            return self.send_pushdeer(text=title, desp=content)
+            
+        except Exception as e:
+            logger.error(f"发送到 PushDeer 时发生异常: {str(e)}")
+            return False
         
     def generate_daily_report(
         self,
