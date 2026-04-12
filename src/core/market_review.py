@@ -13,6 +13,7 @@
 import logging
 from datetime import datetime
 from typing import Optional
+import pytz  # 引入时区处理
 
 from src.config import get_config
 from src.notification import NotificationService
@@ -69,16 +70,39 @@ def run_market_review(
     logger.info("开始执行大盘复盘分析...")
     config = get_config()
     review_text = _get_market_review_text(getattr(config, "report_language", "zh"))
+    
+    # === 新增逻辑：基于北京时间自动判定市场类型 ===
+    beijing_tz = pytz.timezone('Asia/Shanghai')
+    now_bj = datetime.now(beijing_tz)
+    hour_bj = now_bj.hour
+    
+    # 默认从配置获取 region
     region = (
         override_region
         if override_region is not None
         else (getattr(config, 'market_review_region', 'cn') or 'cn')
     )
-    if region not in ('cn', 'us', 'both'):
-        region = 'cn'
+
+    # 如果配置是 'both'，我们根据当前时间进行自动切分
+    # A股收盘后(15:00-19:00)执行CN，美股收盘后(04:00-10:00)执行US
+    if region == 'both':
+        if 13 <= hour_bj <= 19:
+            auto_region = 'cn'
+            logger.info(f"当前北京时间 {hour_bj}点，自动切换至 A 股复盘模式")
+        elif 4 <= hour_bj <= 11:
+            auto_region = 'us'
+            logger.info(f"当前北京时间 {hour_bj}点，自动切换至美股复盘模式")
+        else:
+            auto_region = 'both' # 其他时间保持原样
+    else:
+        auto_region = region
+
+    if auto_region not in ('cn', 'us', 'both'):
+        auto_region = 'cn'
+    # ============================================
 
     try:
-        if region == 'both':
+        if auto_region == 'both':
             # 顺序执行 A 股 + 美股，合并报告
             cn_analyzer = MarketAnalyzer(
                 search_service=search_service, analyzer=analyzer, region='cn'
@@ -103,14 +127,17 @@ def run_market_review(
             market_analyzer = MarketAnalyzer(
                 search_service=search_service,
                 analyzer=analyzer,
-                region=region,
+                region=auto_region, # 使用判定后的 auto_region
             )
             review_report = market_analyzer.run_daily_review()
         
         if review_report:
             # 保存报告到文件
-            date_str = datetime.now().strftime('%Y%m%d')
-            report_filename = f"market_review_{date_str}.md"
+            date_str = now_bj.strftime('%Y%m%d')
+            # === 修改点：文件名加上市场后缀以便区分 ===
+            market_suffix = auto_region.upper()
+            report_filename = f"market_review_{market_suffix}_{date_str}.md"
+            
             filepath = notifier.save_report_to_file(
                 f"{review_text['root_title']}\n\n{review_report}",
                 report_filename
@@ -121,14 +148,16 @@ def run_market_review(
             if merge_notification and send_notification:
                 logger.info("合并推送模式：跳过大盘复盘单独推送，将在个股+大盘复盘后统一发送")
             elif send_notification and notifier.is_available():
-                # 添加标题
-                report_content = f"{review_text['push_title']}\n\n{review_report}"
+                # === 修改点：推送标题也加上市场后缀 ===
+                push_title = f"{review_text['push_title']} ({market_suffix})"
+                report_content = f"{push_title}\n\n{review_report}"
 
-                success = notifier.send(report_content, email_send_to_all=True)
+                # 显式传递 title 给 notifier.send
+                success = notifier.send(report_content, email_send_to_all=True, title=push_title)
                 if success:
-                    logger.info("大盘复盘推送成功")
+                    logger.info(f"{market_suffix} 大盘复盘推送成功")
                 else:
-                    logger.warning("大盘复盘推送失败")
+                    logger.warning(f"{market_suffix} 大盘复盘推送失败")
             elif not send_notification:
                 logger.info("已跳过推送通知 (--no-notify)")
             
