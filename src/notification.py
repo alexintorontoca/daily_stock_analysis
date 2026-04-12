@@ -168,7 +168,7 @@ class NotificationService(
         SlackSender.__init__(self, config)
         TelegramSender.__init__(self, config)
         WechatSender.__init__(self, config)
-        PushDeerSender.__init__(self, sendkey=self.pushkey)
+        PushDeerSender.__init__(self, config)
 
         # 检测所有已配置的渠道
         self._available_channels = self._detect_all_channels()
