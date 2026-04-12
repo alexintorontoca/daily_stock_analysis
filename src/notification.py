@@ -154,7 +154,7 @@ class NotificationService(
 
         # === 核心修正：在初始化各渠道前，提取 pushkey ===
         # 这样下面的 _detect_all_channels 才能通过 hasattr(self, 'pushkey') 找到它
-        self.pushkey = getattr(config, 'push_deer_key', None)
+        self.pushkey = getattr(config, 'pushdeer_key', None)
 
         # 初始化各渠道
         AstrbotSender.__init__(self, config)
