@@ -535,7 +535,7 @@ class NotificationService(
         
         return success
 
-     def send_to_pushdeer(self, content: str, title: str = None) -> bool:
+   def send_to_pushdeer(self, content: str, title: str = None) -> bool:
         """
         发送分析报告到 PushDeer
         """
