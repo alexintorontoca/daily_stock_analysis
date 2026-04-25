@@ -45,7 +45,6 @@ from src.notification_sender import (
     SlackSender,
     TelegramSender,
     WechatSender,
-    PushDeerSender,
     WECHAT_IMAGE_MAX_BYTES
 )
 
@@ -65,7 +64,6 @@ class NotificationChannel(Enum):
     DISCORD = "discord"    # Discord 机器人 (Bot)
     SLACK = "slack"        # Slack
     ASTRBOT = "astrbot"
-    PUSHDEER = "pushdeer"
     UNKNOWN = "unknown"    # 未知
 
 
@@ -91,7 +89,6 @@ class ChannelDetector:
             NotificationChannel.DISCORD: "Discord机器人",
             NotificationChannel.SLACK: "Slack",
             NotificationChannel.ASTRBOT: "ASTRBOT机器人",
-            NotificationChannel.PUSHDEER: "PushDeer",
             NotificationChannel.UNKNOWN: "未知渠道",
         }
         return names.get(channel, "未知渠道")
@@ -109,7 +106,6 @@ class NotificationService(
     SlackSender,
     TelegramSender,
     WechatSender,
-    PushDeerSender
 ):
     """
     通知服务
@@ -152,10 +148,7 @@ class NotificationService(
         self._report_summary_only = getattr(config, 'report_summary_only', False)
         self._history_compare_cache: Dict[Tuple[int, Tuple[Tuple[str, str], ...]], Dict[str, List[Dict[str, Any]]]] = {}
 
-        # === 核心修正：在初始化各渠道前，提取 pushkey ===
-        # 这样下面的 _detect_all_channels 才能通过 hasattr(self, 'pushkey') 找到它
-        self.pushkey = getattr(config, 'pushdeer_key', None)
-
+      
         # 初始化各渠道
         AstrbotSender.__init__(self, config)
         CustomWebhookSender.__init__(self, config)
@@ -168,7 +161,7 @@ class NotificationService(
         SlackSender.__init__(self, config)
         TelegramSender.__init__(self, config)
         WechatSender.__init__(self, config)
-        PushDeerSender.__init__(self, config)
+        
 
         # 检测所有已配置的渠道
         self._available_channels = self._detect_all_channels()
@@ -316,9 +309,7 @@ class NotificationService(
         # AstrBot
         if self._is_astrbot_configured():
             channels.append(NotificationChannel.ASTRBOT)
-        # === 简化检测逻辑 ===
-        if self.pushkey: # 只要上面 __init__ 赋值成功，这里就为 True
-            channels.append(NotificationChannel.PUSHDEER)
+        
         return channels
 
     def is_available(self) -> bool:
@@ -535,44 +526,7 @@ class NotificationService(
         
         return success
 
-    def send_to_pushdeer(self, content: str, title: str = None) -> bool:
-        """
-        发送分析报告到 PushDeer (直接请求版)
-        """
-        try:
-            import requests
-            
-            # 优先使用传入的 title，若无则使用默认值
-            report_title = title or "A股自选股分析报告"
-            
-            # 确保 pushkey 存在 (从配置中获取)
-            pushkey = getattr(self, 'pushkey', None)
-            if not pushkey:
-                logger.warning("PushDeer Key 未配置，跳过发送")
-                return False
-
-            # PushDeer API 地址
-            url = "https://api2.pushdeer.com/message/push"
-            data = {
-                "pushkey": pushkey,
-                "text": report_title,
-                "desp": content,
-                "type": "markdown"
-            }
-            
-            logger.info(f"正在向 PushDeer 推送: {report_title}")
-            response = requests.post(url, data=data, timeout=10)
-            result = response.json()
-            
-            if result.get("content", {}).get("result") == "ok" or result.get("code") == 0:
-                return True
-            else:
-                logger.error(f"PushDeer 返回错误: {result}")
-                return False
-                
-        except Exception as e:
-            logger.error(f"发送到 PushDeer 时发生异常: {str(e)}")
-            return False       
+     
         
     def generate_daily_report(
         self,
@@ -1688,9 +1642,6 @@ class NotificationService(
                     result = self.send_to_pushplus(content)
                 elif channel == NotificationChannel.SERVERCHAN3:
                     result = self.send_to_serverchan3(title, content)
-                elif channel == NotificationChannel.PUSHDEER:
-                    # 确保这里传递了 title 参数
-                    result = self.send_to_pushdeer(content, title=title)
                 elif channel == NotificationChannel.CUSTOM:
                     if use_image:
                         result = self._send_custom_webhook_image(image_bytes, fallback_content=content)
