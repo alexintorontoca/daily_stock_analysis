@@ -202,9 +202,10 @@ class EmailSender:
                 server = smtplib.SMTP(smtp_server, smtp_port, timeout=30)
                 server.starttls()
             
-            server.login(sender, password)
+            smtp_user = "resend" if smtp_server == "smtp.resend.com" else sender
+            server.login(smtp_user, password)
             server.send_message(msg)
-            
+                                
             logger.info(f"邮件发送成功，收件人: {receivers}")
             return True
             
@@ -266,7 +267,9 @@ class EmailSender:
             else:
                 server = smtplib.SMTP(smtp_server, smtp_port, timeout=30)
                 server.starttls()
-            server.login(sender, password)
+                  
+            smtp_user = "resend" if smtp_server == "smtp.resend.com" else sender
+            server.login(smtp_user, password)
             server.send_message(msg)
             logger.info("邮件（内联图片）发送成功，收件人: %s", receivers)
             return True
