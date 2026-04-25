@@ -45,6 +45,8 @@ SMTP_CONFIGS = {
     "aliyun.com": {"server": "smtp.aliyun.com", "port": 465, "ssl": True},
     # 139邮箱
     "139.com": {"server": "smtp.139.com", "port": 465, "ssl": True},
+    # Resend（自定义域名发件）
+    "autni.eu.org": {"server": "smtp.resend.com", "port": 465, "ssl": True},
 }
 
 
