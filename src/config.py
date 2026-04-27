@@ -588,9 +588,6 @@ class Config:
     astrbot_token: Optional[str] = None
     astrbot_url: Optional[str] = None
 
-    # PushDeer 配置 (手机推送)
-    pushdeer_key: Optional[str] = None
-
     # 单股推送模式：每分析完一只股票立即推送，而不是汇总后推送
     single_stock_notify: bool = False
 
@@ -1237,7 +1234,6 @@ class Config:
             email_password=os.getenv('EMAIL_PASSWORD'),
             email_receivers=[r.strip() for r in os.getenv('EMAIL_RECEIVERS', '').split(',') if r.strip()],
             stock_email_groups=cls._parse_stock_email_groups(),
-            pushdeer_key=os.getenv("PUSHDEER_KEY", "").strip(),
             pushover_user_key=os.getenv('PUSHOVER_USER_KEY'),
             pushover_api_token=os.getenv('PUSHOVER_API_TOKEN'),
             pushplus_token=os.getenv('PUSHPLUS_TOKEN'),
@@ -2177,7 +2173,6 @@ class Config:
             or (self.pushover_user_key and self.pushover_api_token)
             or self.pushplus_token
             or self.serverchan3_sendkey
-            or self.pushdeer_key
             or self.custom_webhook_urls
             or (self.discord_bot_token and self.discord_main_channel_id)
             or self.discord_webhook_url
