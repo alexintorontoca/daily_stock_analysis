@@ -3,8 +3,8 @@
 Email 发送提醒服务
 
 职责：
-1. 通过 SMTP 发送 Email 消息
-2. 若设置 RESEND_PROXY_URL，改走 Cloudflare resend-proxy Worker 的 GET 接口
+1. 通过 SMTP 发送 Email 消息（发件人+密码齐全时优先走 SMTP）
+2. 无 SMTP 配置且设置 RESEND_PROXY_URL 时，改走 Cloudflare resend-proxy Worker 的 GET 接口
    （参数 to / subject / text，发件人由 Worker 固定，不需要 SMTP 密码）
 """
 import logging
@@ -50,6 +50,8 @@ SMTP_CONFIGS = {
     "aliyun.com": {"server": "smtp.aliyun.com", "port": 465, "ssl": True},
     # 139邮箱
     "139.com": {"server": "smtp.139.com", "port": 465, "ssl": True},
+    # Resend：autni.eu.org 发件域名走 Resend SMTP，登录名固定为 resend，密码为 Resend API Key
+    "autni.eu.org": {"server": "smtp.resend.com", "port": 465, "ssl": True, "username": "resend"},
 }
 
 
@@ -72,10 +74,12 @@ class EmailSender:
         self._stock_email_groups = getattr(config, 'stock_email_groups', None) or []
         
     def _is_email_configured(self) -> bool:
-        """检查邮件配置是否完整：SMTP 需发件人+授权码；resend-proxy 只需地址+收件人"""
+        """检查邮件配置是否完整：SMTP 需发件人+密码；无 SMTP 时 resend-proxy 只需地址+收件人"""
+        if self._email_config['sender'] and self._email_config['password']:
+            return True
         if self._email_config.get('resend_proxy_url'):
             return bool(self._email_config['receivers'])
-        return bool(self._email_config['sender'] and self._email_config['password'])
+        return False
     
     def get_receivers_for_stocks(self, stock_codes: List[str]) -> List[str]:
         """
@@ -194,7 +198,10 @@ class EmailSender:
             return False
 
         receivers = receivers or self._email_config['receivers']
-        if self._email_config.get('resend_proxy_url'):
+        sender = self._email_config['sender']
+        password = self._email_config['password']
+        # SMTP 优先：发件人+密码齐全时走 SMTP，不再走代理，避免代理的 URL 长度限制
+        if self._email_config.get('resend_proxy_url') and not (sender and password):
             if subject is None:
                 date_str = datetime.now().strftime('%Y-%m-%d')
                 subject = f"📈 股票智能分析报告 - {date_str}"
@@ -203,8 +210,6 @@ class EmailSender:
                 sanitized_content, subject, receivers, timeout_seconds=timeout_seconds
             )
         
-        sender = self._email_config['sender']
-        password = self._email_config['password']
         receivers = receivers or self._email_config['receivers']
         server: Optional[smtplib.SMTP] = None
         
@@ -256,7 +261,9 @@ class EmailSender:
                 server = smtplib.SMTP(smtp_server, smtp_port, timeout=timeout_seconds or 30)
                 server.starttls()
             
-            server.login(sender, password)
+            # Resend SMTP 的登录名固定为 resend（不是发件地址），其余邮箱沿用发件地址
+            login_username = (smtp_config or {}).get('username', sender)
+            server.login(login_username, password)
             server.send_message(msg)
             
             logger.info(f"邮件发送成功，收件人: {receivers}")
@@ -280,7 +287,7 @@ class EmailSender:
         """Send email with inline image attachment (Issue #289)."""
         if not self._is_email_configured():
             return False
-        if self._email_config.get('resend_proxy_url'):
+        if self._email_config.get('resend_proxy_url') and not (self._email_config['sender'] and self._email_config['password']):
             logger.warning("resend-proxy 只支持纯文本，图片版邮件未发送（请勿在 Actions 里开启转图渠道）")
             return False
         sender = self._email_config['sender']
@@ -323,7 +330,7 @@ class EmailSender:
             else:
                 server = smtplib.SMTP(smtp_server, smtp_port, timeout=30)
                 server.starttls()
-            server.login(sender, password)
+            server.login((smtp_config or {}).get('username', sender), password)
             server.send_message(msg)
             logger.info("邮件（内联图片）发送成功，收件人: %s", receivers)
             return True
