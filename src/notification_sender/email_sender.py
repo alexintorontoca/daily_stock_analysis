@@ -4,6 +4,8 @@ Email 发送提醒服务
 
 职责：
 1. 通过 SMTP 发送 Email 消息
+2. 若设置 RESEND_PROXY_URL，改走 Cloudflare resend-proxy Worker 的 GET 接口
+   （参数 to / subject / text，发件人由 Worker 固定，不需要 SMTP 密码）
 """
 import logging
 from typing import Optional, List
@@ -13,7 +15,10 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
 from email.header import Header
 from email.utils import formataddr
+import os
 import smtplib
+import urllib.parse
+import urllib.request
 
 from data_provider.base import normalize_stock_code
 from src.config import Config
@@ -62,11 +67,14 @@ class EmailSender:
             'sender_name': getattr(config, 'email_sender_name', 'daily_stock_analysis股票分析助手'),
             'password': config.email_password,
             'receivers': config.email_receivers or ([config.email_sender] if config.email_sender else []),
+            'resend_proxy_url': (os.environ.get('RESEND_PROXY_URL') or getattr(config, 'resend_proxy_url', None) or '').strip() or None,
         }
         self._stock_email_groups = getattr(config, 'stock_email_groups', None) or []
         
     def _is_email_configured(self) -> bool:
-        """检查邮件配置是否完整（只需邮箱和授权码）"""
+        """检查邮件配置是否完整：SMTP 需发件人+授权码；resend-proxy 只需地址+收件人"""
+        if self._email_config.get('resend_proxy_url'):
+            return bool(self._email_config['receivers'])
         return bool(self._email_config['sender'] and self._email_config['password'])
     
     def get_receivers_for_stocks(self, stock_codes: List[str]) -> List[str]:
@@ -131,6 +139,37 @@ class EmailSender:
             except Exception:
                 pass
     
+    def _send_via_resend_proxy(
+        self,
+        content: str,
+        subject: str,
+        receivers: List[str],
+        timeout_seconds: Optional[float] = None,
+    ) -> bool:
+        """经 resend-proxy Worker 的 GET 接口发信（Worker 固定发件人，纯文本）。
+
+        Worker 只读查询参数 to / subject / text，一次请求只接受一个收件人，
+        故逐个收件人调用；任一收件人失败即返回 False。
+        """
+        proxy_url = (self._email_config.get('resend_proxy_url') or '').rstrip('/')
+        for receiver in receivers:
+            params = urllib.parse.urlencode(
+                {'to': receiver, 'subject': subject, 'text': content}
+            )
+            url = f"{proxy_url}?{params}"
+            try:
+                req = urllib.request.Request(url, method='GET')
+                with urllib.request.urlopen(req, timeout=timeout_seconds or 30) as resp:
+                    resp.read()
+                    if resp.status != 200:
+                        logger.error(f"resend-proxy 发送失败：收件人 {receiver}，状态 {resp.status}")
+                        return False
+            except Exception as e:
+                logger.error(f"resend-proxy 发送失败：收件人 {receiver}，{e}")
+                return False
+        logger.info(f"resend-proxy 邮件发送成功，收件人: {receivers}")
+        return True
+
     def send_to_email(
         self,
         content: str,
@@ -153,6 +192,16 @@ class EmailSender:
         if not self._is_email_configured():
             logger.warning("邮件配置不完整，跳过推送")
             return False
+
+        receivers = receivers or self._email_config['receivers']
+        if self._email_config.get('resend_proxy_url'):
+            if subject is None:
+                date_str = datetime.now().strftime('%Y-%m-%d')
+                subject = f"📈 股票智能分析报告 - {date_str}"
+            sanitized_content = strip_hidden_markdown_metadata(content).strip()
+            return self._send_via_resend_proxy(
+                sanitized_content, subject, receivers, timeout_seconds=timeout_seconds
+            )
         
         sender = self._email_config['sender']
         password = self._email_config['password']
@@ -230,6 +279,9 @@ class EmailSender:
     ) -> bool:
         """Send email with inline image attachment (Issue #289)."""
         if not self._is_email_configured():
+            return False
+        if self._email_config.get('resend_proxy_url'):
+            logger.warning("resend-proxy 只支持纯文本，图片版邮件未发送（请勿在 Actions 里开启转图渠道）")
             return False
         sender = self._email_config['sender']
         password = self._email_config['password']
