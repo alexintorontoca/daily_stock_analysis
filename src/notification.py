@@ -17,6 +17,7 @@ A股自选股智能分析系统 - 通知层
 from __future__ import annotations
 
 import logging
+import os
 import time
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -516,7 +517,18 @@ class NotificationService(
         ):
             channels.append(NotificationChannel.TELEGRAM)
 
-        if getattr(config, "email_sender", None) and getattr(config, "email_password", None):
+        # Fork patch: resend-proxy 模式下不需要 SMTP 发件人+密码，
+        # 只要代理地址与收件人齐全，邮件渠道即视为已配置（与 EmailSender
+        # 的 _is_email_configured 保持一致，否则推送会在检测阶段被跳过）。
+        _resend_proxy_url = (
+            os.environ.get("RESEND_PROXY_URL")
+            or getattr(config, "resend_proxy_url", None)
+            or ""
+        ).strip()
+        if (
+            getattr(config, "email_sender", None)
+            and getattr(config, "email_password", None)
+        ) or (_resend_proxy_url and getattr(config, "email_receivers", None)):
             channels.append(NotificationChannel.EMAIL)
 
         if (
