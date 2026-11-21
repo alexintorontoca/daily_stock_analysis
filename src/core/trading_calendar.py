@@ -637,6 +637,38 @@ def get_open_markets_today() -> Set[str]:
     return result
 
 
+def get_markets_with_fresh_session(lookback_days: int = 1) -> Set[str]:
+    """
+    Markets whose latest completed trading session is fresh enough to analyze.
+
+    A daily post-close report runs after the US close, which is already the
+    next calendar day in Asia: on Friday 17:05 EST the Beijing date is
+    Saturday, so a strict "open today" check wrongly drops every A-share
+    and skips the CN market review even though Friday's session closed
+    hours ago and has not been analyzed yet. A market counts here when its
+    most recent session is today or yesterday (market-local time), so real
+    holidays still skip (latest session 3+ days ago) while the
+    day-after-a-session case is covered.
+    """
+    if not _XCALS_AVAILABLE:
+        return set(MARKET_TIMEZONE)
+    result: Set[str] = set()
+    for mkt, tz_name in MARKET_TIMEZONE.items():
+        try:
+            tz = ZoneInfo(tz_name)
+            today = datetime.now(tz).date()
+            if is_market_open(mkt, today) or is_market_open(
+                mkt, today - timedelta(days=lookback_days)
+            ):
+                result.add(mkt)
+        except Exception as e:
+            logger.warning(
+                "get_markets_with_fresh_session fail-open for %s: %s", mkt, e
+            )
+            result.add(mkt)
+    return result
+
+
 def compute_effective_region(
     config_region: str, open_markets: Set[str]
 ) -> Optional[str]:
