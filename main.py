@@ -499,11 +499,11 @@ def _compute_trading_day_filter(
 
     from src.core.trading_calendar import (
         get_market_for_stock,
-        get_open_markets_today,
+        get_markets_with_fresh_session,
         compute_effective_region,
     )
 
-    open_markets = get_open_markets_today()
+    open_markets = get_markets_with_fresh_session()
     filtered_codes = []
     for code in stock_codes:
         mkt = get_market_for_stock(code)
@@ -1910,8 +1910,8 @@ def main() -> int:
             # explicit --market-review invocation when the flag is disabled.
             effective_region = None
             if not getattr(args, 'force_run', False) and getattr(config, 'trading_day_check_enabled', True):
-                from src.core.trading_calendar import get_open_markets_today, compute_effective_region as _compute_region
-                open_markets = get_open_markets_today()
+                from src.core.trading_calendar import get_markets_with_fresh_session, compute_effective_region as _compute_region
+                open_markets = get_markets_with_fresh_session()
                 effective_region = _compute_region(
                     getattr(config, 'market_review_region', 'cn') or 'cn', open_markets
                 )
